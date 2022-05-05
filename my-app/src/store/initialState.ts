@@ -1,15 +1,5 @@
-export enum Language {
-  RU = 'RU',
-  EN = 'EN',
-}
-
-interface AppState {
-  language: Language;
-}
-
-interface InitialState {
-  app: AppState;
-}
+import InitialState from '../types/store/InitialState';
+import Language from '../types/store/language';
 
 export const initialState: InitialState = {
   app: {
