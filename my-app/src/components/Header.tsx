@@ -2,10 +2,12 @@ import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+
 const StyledNavLink = styled(NavLink)`
   color: inherit;
   text-decoration: none;
 `;
+
 const Header: FC = () => {
   return (
     <Box>
@@ -22,7 +24,7 @@ const Header: FC = () => {
             <StyledNavLink to={'/'}> Header </StyledNavLink>
           </Typography>
           <Button color="inherit">
-            <StyledNavLink to={'/register'}> Sign-up </StyledNavLink>
+            <StyledNavLink to={'/registration'}> Sign-up </StyledNavLink>
           </Button>
           <Button color="inherit">
             <StyledNavLink to={'/login'}> Login </StyledNavLink>

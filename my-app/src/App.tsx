@@ -8,7 +8,8 @@ import Login from './components/Login';
 import Main from './components/Main';
 import NotFound from './components/NotFound';
 import RegisterForm from './components/RegisterForm';
-import Welcom from './components/Welcom';
+import Welcome from './components/Welcome';
+
 const StyledBox = styled(Box)`
   font-size: 24px;
 `;
@@ -20,8 +21,8 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/welcom" element={<Welcom />} />
-          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/registration" element={<RegisterForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
