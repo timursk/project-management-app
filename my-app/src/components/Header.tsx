@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+import LanguageToggle from './LanguageToggle/LanguageToggle';
+import { useTranslation } from 'react-i18next';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -9,6 +11,7 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const Header: FC = () => {
+  const { t } = useTranslation();
   return (
     <Box>
       <AppBar position="static">
@@ -21,13 +24,14 @@ const Header: FC = () => {
             sx={{ mr: 2 }}
           ></IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <StyledNavLink to={'/'}> Header </StyledNavLink>
+            <StyledNavLink to={'/'}>{t('header.title')}</StyledNavLink>
           </Typography>
+          <LanguageToggle />
           <Button color="inherit">
-            <StyledNavLink to={'/registration'}> Sign-up </StyledNavLink>
+            <StyledNavLink to={'/registration'}>{t('header.registration')}</StyledNavLink>
           </Button>
           <Button color="inherit">
-            <StyledNavLink to={'/login'}> Login </StyledNavLink>
+            <StyledNavLink to={'/login'}>{t('header.login')}</StyledNavLink>
           </Button>
         </Toolbar>
       </AppBar>
