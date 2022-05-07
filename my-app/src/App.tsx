@@ -3,6 +3,9 @@ import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import i18n from './localization/i18n';
+import LanguageToggle from './components/LanguageToggle/LanguageToggle';
+import { useTranslation } from 'react-i18next';
 import Header from './components/Header';
 import Login from './components/Login';
 import Main from './components/Main';
@@ -15,6 +18,7 @@ const StyledBox = styled(Box)`
 `;
 
 function App() {
+  const { t } = useTranslation();
   return (
     <StyledBox>
       <Header />
