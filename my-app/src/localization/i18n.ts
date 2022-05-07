@@ -13,6 +13,7 @@ const resources = {
     translation: translationRU,
   },
 };
+
 i18n
   .use(Backend)
   .use(languageDetector)
