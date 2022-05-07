@@ -1,7 +1,13 @@
-import InitialAppState from './initialAppState';
+import Board from './board';
+import Column from './column';
+import Task from './task';
+import User from './user';
 
 interface InitialState {
-  app: InitialAppState;
+  user: User;
+  boards: Board[];
+  columns: Column[];
+  tasks: Task[];
 }
 
 export default InitialState;

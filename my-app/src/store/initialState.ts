@@ -1,8 +1,11 @@
-import InitialState from '../types/store/InitialState';
-import Language from '../types/store/language';
+import InitialState from '../types/store/initialState';
 
 export const initialState: InitialState = {
-  app: {
-    language: Language.RU,
+  user: {
+    name: null,
+    login: null,
   },
+  boards: null,
+  columns: null,
+  tasks: null,
 };
