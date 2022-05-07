@@ -8,17 +8,21 @@ interface CardDevelopProps {
 }
 
 const CardDevelop: FC<CardDevelopProps> = ({ name, description }) => {
+  const cardStyle = {
+    marginTop: '30px ',
+  };
   return (
-    <Card sx={{ marginTop: '30px' }}>
+    <Card sx={cardStyle}>
       <CardActionArea>
-        <CardMedia image={person} component="img" height={220} alt="green iguana" />
-
+        <CardMedia image={person} component="img" alt="person" />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography variant="h5" component="p">
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
+          <Typography variant="body1" color="text.secondary">
+            {description} + Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex temporibus
+            molestias obcaecati minus iusto, magnam totam unde quo, exercitationem doloremque
+            perspiciatis veniam et? Provident, blanditiis.
           </Typography>
         </CardContent>
       </CardActionArea>

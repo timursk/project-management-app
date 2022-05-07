@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { FC } from 'react';
+=======
+import React, { FC, useState } from 'react';
+>>>>>>> c4171f1 (fix: card position)
 import { useTranslation } from 'react-i18next';
 <<<<<<< HEAD
 
@@ -15,6 +19,7 @@ import {
   TextField,
   Typography,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import CardDevelop from './CardDevelop/CardDevelop';
 
@@ -82,25 +87,27 @@ const Welcom: FC = () => {
           {t('welcome.about.team.name')}
         </Typography>
         <Grid container justifyContent={'space-around'}>
-          <Grid item>
+          <Grid item xl={3} xs={7}>
             <CardDevelop name="Dmitriy" description="something about Dmitriy" />
           </Grid>
-          <Grid item>
+          <Grid item xl={3} xs={7}>
             <CardDevelop name="Timur" description="something about Timur" />
           </Grid>
-          <Grid item>
-            <CardDevelop name="Alice" description="something about Alice" />
+          <Grid item xl={3} xs={7}>
+            <CardDevelop name="Timur" description="something about Timur" />
           </Grid>
         </Grid>
         <Typography mt={3} variant="subtitle1">
-          {' '}
           {t('welcome.about.team.description')}
         </Typography>
       </div>
     </Container>
   );
+<<<<<<< HEAD
   // >>>>>>> 11f6752 (feat: create first elment and send-state to sign)
 >>>>>>> 16288f1 (feat: team elemnt and refactor)
+=======
+>>>>>>> c4171f1 (fix: card position)
 };
 
 export default Welcom;
