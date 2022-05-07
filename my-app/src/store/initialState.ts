@@ -1,4 +1,4 @@
-import InitialState from '../types/store/initialState';
+import InitialState from '../types/store/InitialState';
 
 export const initialState: InitialState = {
   user: {
