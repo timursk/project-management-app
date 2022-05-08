@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Token from '../../types/api/token';
 import User from '../../types/store/user';
 import { initialState } from '../initialState';
 import { RootState } from '../store';
+import { loginUser } from './actionCreators';
 
 const initialAppState = initialState.user;
 
@@ -12,6 +14,17 @@ const userReducer = createSlice({
     saveInfo: (state, action: PayloadAction<User>) => {
       state.login = action.payload.login;
       state.name = action.payload.name;
+    },
+  },
+  extraReducers: {
+    [loginUser.fulfilled.type]: (state, action: PayloadAction<Token>) => {
+      state.name = action.payload.token;
+    },
+    [loginUser.pending.type]: (state) => {
+      state.name = 'LOADING';
+    },
+    [loginUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.name = action.payload;
     },
   },
 });
