@@ -22,6 +22,7 @@ export const boardsApi = createApi({
         },
       }),
     }),
+
     getBoardById: build.query<Board, GetBoardArg>({
       query: ({ id, token }) => ({
         url: `${ENDPOINTS.BOARDS}/${id}`,
@@ -31,6 +32,7 @@ export const boardsApi = createApi({
         },
       }),
     }),
+
     createBoard: build.mutation<BoardResult, CreateBoardArg>({
       query: ({ title, token }) => ({
         url: ENDPOINTS.BOARDS,
@@ -41,6 +43,7 @@ export const boardsApi = createApi({
         body: { title },
       }),
     }),
+
     updateBoard: build.mutation<BoardResult, UpdateBoardArg>({
       query: ({ id, title, token }) => ({
         url: `${ENDPOINTS.BOARDS}/${id}`,
@@ -51,6 +54,7 @@ export const boardsApi = createApi({
         body: { title },
       }),
     }),
+
     deleteBoard: build.mutation<null, GetBoardArg>({
       query: ({ id, token }) => ({
         url: `${ENDPOINTS.BOARDS}/${id}`,

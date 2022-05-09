@@ -1,0 +1,78 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { API_URL, ENDPOINTS } from '../utils/constants';
+import Column from '../types/store/column';
+import Token from '../types/api/token';
+
+type BoardId = { boardId: string };
+type ColumnId = { columnId: string };
+
+type ColumnResult = Omit<Column, 'tasks'>;
+
+type GetAllColumnsArg = BoardId & Token;
+type GetColumnByIdArg = BoardId & ColumnId & Token;
+
+type CreateColumnArg = BoardId & Pick<Column, 'title' | 'order'> & Token;
+type CreateColumnRes = BoardId & Pick<Column, 'title' | 'order'>;
+
+type UpdateColumnArg = BoardId & ColumnId & Pick<Column, 'title' | 'order'> & Token;
+
+const getColumnUrl = (boardId: string, columnId?: string) =>
+  `${ENDPOINTS.BOARDS}/${boardId}${ENDPOINTS.COLUMNS}${columnId ? `/${columnId}` : ''}`;
+
+export const columnsApi = createApi({
+  reducerPath: 'columnsApi',
+  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  endpoints: (build) => ({
+    getAllColumns: build.query<ColumnResult[], GetAllColumnsArg>({
+      query: ({ boardId, token }) => ({
+        url: getColumnUrl(boardId),
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
+    getColumnById: build.query<Column, GetColumnByIdArg>({
+      query: ({ boardId, columnId, token }) => ({
+        url: getColumnUrl(boardId, columnId),
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
+    createColumn: build.mutation<CreateColumnRes, CreateColumnArg>({
+      query: ({ title, order, boardId, token }) => ({
+        url: getColumnUrl(boardId),
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: { title, order },
+      }),
+    }),
+
+    updateColumn: build.mutation<ColumnResult, UpdateColumnArg>({
+      query: ({ title, order, columnId, boardId, token }) => ({
+        url: getColumnUrl(boardId, columnId),
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: { title, order },
+      }),
+    }),
+
+    deleteColumn: build.mutation<null, GetColumnByIdArg>({
+      query: ({ columnId, boardId, token }) => ({
+        url: getColumnUrl(boardId, columnId),
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+  }),
+});
