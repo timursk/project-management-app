@@ -1,6 +1,6 @@
-interface User {
+interface IUser {
   login: string;
   password: string;
 }
 
-export default User;
+export default IUser;

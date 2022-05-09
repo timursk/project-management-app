@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { loginService } from '../../services/loginService';
-import User from '../../types/api/user';
+import IUser from '../../types/api/user';
 
 type CustomError = {
   message: string;
 };
 
-export const loginUser = createAsyncThunk('user/login', async (user: User, thunkApi) => {
+export const loginUser = createAsyncThunk('user/login', async (user: IUser, thunkApi) => {
   try {
     const response = await loginService(user);
     return response;
