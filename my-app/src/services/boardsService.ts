@@ -47,7 +47,7 @@ const boardsApi = createApi({
     updateBoard: build.mutation<BoardResult, UpdateBoardArg>({
       query: ({ id, title, token }) => ({
         url: `${ENDPOINTS.BOARDS}/${id}`,
-        method: 'UPDATE',
+        method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
         },
