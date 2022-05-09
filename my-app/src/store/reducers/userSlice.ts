@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import SignupUser from '../../types/api/signupUser';
 import Token from '../../types/api/token';
 import User from '../../types/store/user';
 import { initialState } from '../initialState';
 import { RootState } from '../store';
-import { loginUser } from './actionCreators';
+import { loginUser, signupUser } from './actionCreators';
 
 const initialAppState = initialState.user;
 
@@ -24,6 +25,17 @@ const userReducer = createSlice({
       state.name = 'LOADING';
     },
     [loginUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.name = action.payload;
+    },
+
+    [signupUser.fulfilled.type]: (state, action: PayloadAction<SignupUser>) => {
+      state.name = action.payload.name;
+      state.login = action.payload.login;
+    },
+    [signupUser.pending.type]: (state) => {
+      state.name = 'LOADING';
+    },
+    [signupUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
   },
