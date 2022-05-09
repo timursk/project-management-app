@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { API_URL, ENDPOINTS } from '../utils/constants';
+import { API_URL } from '../utils/constants';
 import Column from '../types/store/column';
 import Token from '../types/api/token';
+import { getColumnUrl } from '../utils/utils';
 
 type BoardId = { boardId: string };
 type ColumnId = { columnId: string };
@@ -16,10 +17,7 @@ type CreateColumnRes = BoardId & Pick<Column, 'title' | 'order'>;
 
 type UpdateColumnArg = BoardId & ColumnId & Pick<Column, 'title' | 'order'> & Token;
 
-const getColumnUrl = (boardId: string, columnId?: string) =>
-  `${ENDPOINTS.BOARDS}/${boardId}${ENDPOINTS.COLUMNS}${columnId ? `/${columnId}` : ''}`;
-
-export const columnsApi = createApi({
+const columnsApi = createApi({
   reducerPath: 'columnsApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (build) => ({
@@ -76,3 +74,5 @@ export const columnsApi = createApi({
     }),
   }),
 });
+
+export default columnsApi;

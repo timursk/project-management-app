@@ -9,7 +9,7 @@ type CreateBoardArg = Pick<Board, 'title'> & Token;
 type UpdateBoardArg = Pick<Board, 'title' | 'id'> & Token;
 type GetBoardArg = Pick<Board, 'id'> & Token;
 
-export const boardsApi = createApi({
+const boardsApi = createApi({
   reducerPath: 'boardsApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (build) => ({
@@ -66,3 +66,5 @@ export const boardsApi = createApi({
     }),
   }),
 });
+
+export default boardsApi;
