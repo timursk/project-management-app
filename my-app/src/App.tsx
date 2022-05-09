@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import i18n from './localization/i18n';
 import LanguageToggle from './components/LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 import Header from './components/Header';
 import Login from './components/Login';
 import Main from './components/Main';
