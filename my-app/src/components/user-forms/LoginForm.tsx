@@ -1,12 +1,14 @@
-import { Button, FormControlLabel, styled, Switch } from '@mui/material';
+import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
 
 const LoginForm: FC = () => {
+  const { t } = useTranslation();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
@@ -15,8 +17,15 @@ const LoginForm: FC = () => {
         password: '',
       },
       validationSchema: yup.object().shape({
-        login: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-        password: yup.string().required('Password is required'),
+        login: yup
+          .string()
+          .min(2, t('userForms.isShort', { field: t('userForms.login') }))
+          .max(50, t('userForms.isLong', { field: t('userForms.login') }))
+          .required(t('userForms.isRequired', { field: t('userForms.login') })),
+
+        password: yup
+          .string()
+          .required(t('userForms.isRequired', { field: t('userForms.password') })),
       }),
       onSubmit: (values) => {
         alert(JSON.stringify(values, null, 2));
@@ -34,7 +43,7 @@ const LoginForm: FC = () => {
         type="text"
         onChange={handleChange}
         value={values.login}
-        label="Login"
+        label={t('userForms.login')}
         helperText={errors.login && touched.login ? errors.login : ''}
         onBlur={handleBlur}
       />
@@ -48,18 +57,18 @@ const LoginForm: FC = () => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.password}
-        label="Password"
+        label={t('userForms.password')}
       />
 
       <StyledPasswordSwitch
         control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
-        label="Show passwords"
+        label={t('userForms.showPassword')}
       />
       <Button variant="text" type="reset">
-        Reset
+        {t('userForms.reset')}
       </Button>
       <Button variant="contained" type="submit" disabled={!isValid}>
-        Login
+        {t('userForms.enter')}
       </Button>
     </StyledForm>
   );

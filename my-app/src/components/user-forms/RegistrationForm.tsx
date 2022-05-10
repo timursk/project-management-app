@@ -1,12 +1,14 @@
-import { Button, FormControlLabel, styled, Switch } from '@mui/material';
+import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
 
 const RegistrationForm = () => {
+  const { t } = useTranslation();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
@@ -17,17 +19,24 @@ const RegistrationForm = () => {
         passwordConfirmation: '',
       },
       validationSchema: yup.object().shape({
-        login: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-        email: yup.string().email('Invalid email').required('Required'),
+        login: yup
+          .string()
+          .min(2, t('userForms.isShort', { field: t('userForms.login') }))
+          .max(50, t('userForms.isLong', { field: t('userForms.login') }))
+          .required(t('userForms.isRequired', { field: t('userForms.login') })),
+        email: yup
+          .string()
+          .email(t('userForms.isInvalid', { field: t('userForms.email') }))
+          .required(t('userForms.isRequired', { field: t('userForms.email') })),
         password: yup
           .string()
-          .required('Password is required')
-          .min(6, 'Password is too short (6 chars minimum)')
-          .matches(/[a-zA-Z0-9]/, 'Password can only contain Latin letters and numbers.'),
+          .required(t('userForms.isRequired', { field: t('userForms.password') }))
+          .min(6, t('userForms.isShort', { field: t('userForms.password') }))
+          .matches(/[a-zA-Z0-9]/, t('userForms.passwordRequirements')),
         passwordConfirmation: yup
           .string()
-          .required('Confirmation is required')
-          .oneOf([yup.ref('password'), null], 'Passwords must match'),
+          .required(t('userForms.isRequired', { field: t('userForms.passwordConfirmation') }))
+          .oneOf([yup.ref('password'), null], t('userForms.matchPasswords')),
       }),
       onSubmit: (values) => {
         alert(JSON.stringify(values, null, 2));
@@ -45,7 +54,7 @@ const RegistrationForm = () => {
         type="text"
         onChange={handleChange}
         value={values.login}
-        label="Login"
+        label={t('userForms.login')}
         helperText={errors.login && touched.login ? errors.login : ''}
         onBlur={handleBlur}
       />
@@ -57,7 +66,7 @@ const RegistrationForm = () => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.email}
-        label="Email"
+        label={t('userForms.email')}
         helperText={errors.email && touched.email ? errors.email : ''}
       />
       <StyledField
@@ -69,7 +78,7 @@ const RegistrationForm = () => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.password}
-        label="Password"
+        label={t('userForms.password')}
       />
 
       <StyledField
@@ -85,17 +94,17 @@ const RegistrationForm = () => {
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.passwordConfirmation}
-        label="Password confirmation"
+        label={t('userForms.passwordConfirmation')}
       />
       <StyledPasswordSwitch
         control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
-        label="Show passwords"
+        label={t('userForms.showPassword')}
       />
       <Button variant="text" type="reset">
-        Reset
+        {t('userForms.reset')}
       </Button>
       <Button variant="contained" type="submit" disabled={!isValid}>
-        Submit
+        {t('userForms.submit')}
       </Button>
     </StyledForm>
   );
