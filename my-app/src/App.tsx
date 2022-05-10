@@ -10,19 +10,7 @@ import NotFound from './components/NotFound';
 import RegisterForm from './components/RegisterForm';
 import Welcome from './components/Welcome';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-
-const StyledBox = styled(Box)`
-  min-height: 100vh;
-  font-size: 24px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-`;
-
-const StyledContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
-`;
+import { StyledBox, StyledContainer } from './app-styles';
 
 function App() {
   return (
