@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import CardDevelop from '../CardDevelop/CardDevelop';
 import { StyledForm, StyledGridItem, StyledImg, StyledTextField } from './style';
+import welcomeHero from '../../assets/images/welcomeHero.png';
 
 const Welcom: FC = () => {
   const { t } = useTranslation();
@@ -47,10 +48,7 @@ const Welcom: FC = () => {
 
         {!matches && (
           <Grid item xs={4}>
-            <StyledImg
-              src="https://d2k1ftgv7pobq7.cloudfront.net/meta/p/res/images/spirit/hero/6a3ccd8e5c9a0e8ebea4235d12da6b24/hero.png"
-              alt=""
-            />
+            <StyledImg src={welcomeHero} alt="" />
           </Grid>
         )}
       </Grid>

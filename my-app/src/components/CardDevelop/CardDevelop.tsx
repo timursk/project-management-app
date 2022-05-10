@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import person from '../../assets/images/person.png';
