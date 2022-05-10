@@ -11,7 +11,9 @@ type GetBoardArg = Pick<Board, 'id'> & Token;
 
 const boardsApi = createApi({
   reducerPath: 'boardsApi',
+
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+
   endpoints: (build) => ({
     getAllBoards: build.query<Board[], Token>({
       query: ({ token }) => ({

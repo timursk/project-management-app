@@ -19,7 +19,9 @@ type UpdateColumnArg = BoardId & ColumnId & Pick<Column, 'title' | 'order'> & To
 
 const columnsApi = createApi({
   reducerPath: 'columnsApi',
+
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+
   endpoints: (build) => ({
     getAllColumns: build.query<ColumnResult[], GetAllColumnsArg>({
       query: ({ boardId, token }) => ({

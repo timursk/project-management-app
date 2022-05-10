@@ -7,6 +7,9 @@ import { loginUser, signupUser } from './actionCreators';
 const initialState = {
   name: '',
   login: '',
+  token: '',
+  isLoading: false,
+  error: '',
 };
 
 const userReducer = createSlice({
@@ -20,24 +23,30 @@ const userReducer = createSlice({
   },
   extraReducers: {
     [loginUser.fulfilled.type]: (state, action: PayloadAction<Token>) => {
-      state.name = action.payload.token;
+      state.token = action.payload.token;
+      state.isLoading = false;
+      state.error = '';
     },
+
     [loginUser.pending.type]: (state) => {
-      state.name = 'LOADING';
+      state.isLoading = true;
     },
+
     [loginUser.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+      state.error = action.payload;
     },
 
     [signupUser.fulfilled.type]: (state, action: PayloadAction<SignupUser>) => {
       state.name = action.payload.name;
       state.login = action.payload.login;
     },
+
     [signupUser.pending.type]: (state) => {
-      state.name = 'LOADING';
+      state.isLoading = true;
     },
+
     [signupUser.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+      state.error = action.payload;
     },
   },
 });
