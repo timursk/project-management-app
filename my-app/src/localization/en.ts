@@ -19,4 +19,8 @@ export default {
   notFound: {
     header: '404: Page not found',
   },
+  error: {
+    text: 'Oops, something went wrong',
+    button: 'Try again',
+  },
 };
