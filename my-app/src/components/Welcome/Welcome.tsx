@@ -12,11 +12,10 @@ const Welcom: FC = () => {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
-  const handlerEmail = (eve: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    eve.preventDefault();
-    setEmail(eve.target.value);
+  const handlerEmail = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    event.preventDefault();
+    setEmail(event.target.value);
   };
-
   return (
     <Container>
       <Grid container height={760} alignItems={'center'}>
@@ -32,7 +31,7 @@ const Welcom: FC = () => {
               label="Email"
               variant="outlined"
               value={email}
-              onChange={(eve) => handlerEmail(eve)}
+              onChange={(event) => handlerEmail(event)}
             />
             <Button
               onClick={() => navigate('/registration', { state: { email } })}
@@ -48,7 +47,7 @@ const Welcom: FC = () => {
 
         {!matches && (
           <Grid item xs={4}>
-            <StyledImg src={welcomeHero} alt="" />
+            <StyledImg src={welcomeHero} alt="hero" />
           </Grid>
         )}
       </Grid>
