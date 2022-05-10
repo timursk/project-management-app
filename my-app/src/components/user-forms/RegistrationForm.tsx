@@ -4,11 +4,10 @@ import { useState } from 'react';
 import * as yup from 'yup';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
-
-const CentredSwitchLabel = styled(FormControlLabel)(() => ({ alignSelf: 'center' }));
+import StyledPasswordSwitch from './StyledPasswordSwitch';
 
 const RegistrationForm = () => {
-  const [isPasswordShown, setIsPasswordShown] = useState<boolean>();
+  const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
@@ -88,8 +87,8 @@ const RegistrationForm = () => {
         value={values.passwordConfirmation}
         label="Password confirmation"
       />
-      <CentredSwitchLabel
-        control={<Switch onChange={togglePasswordShown} defaultChecked={isPasswordShown} />}
+      <StyledPasswordSwitch
+        control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
         label="Show passwords"
       />
       <Button variant="text" type="reset">
