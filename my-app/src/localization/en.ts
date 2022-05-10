@@ -14,9 +14,9 @@ export default {
     header: 'Sign up',
   },
   welcome: {
-<<<<<<< HEAD
-    header: 'Welcome!',
-=======
+    // <<<<<<< HEAD
+
+    // =======
     header: 'Trello-clone helps teams move work forward.',
     main: `Collaborate, manage projects, and reach new productivity peaks. From high rises to the home office, the way your team works is unique—accomplish it all with Trello-clone.`,
     button: {
@@ -28,7 +28,7 @@ export default {
       dmitriy: 'some',
       timur: 'some',
     },
->>>>>>> 16288f1 (feat: team elemnt and refactor)
+    // >>>>>>> 16288f1 (feat: team elemnt and refactor)
   },
   notFound: {
     header: '404: Page not found',
