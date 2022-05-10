@@ -19,12 +19,17 @@ const StyledBox = styled(Box)`
   grid-template-rows: auto 1fr auto;
 `;
 
+const StyledContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+`;
+
 function App() {
   return (
     <StyledBox>
       <Header />
       <ErrorBoundary>
-        <Container>
+        <StyledContainer>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/welcome" element={<Welcome />} />
@@ -32,7 +37,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Container>
+        </StyledContainer>
       </ErrorBoundary>
       <Footer />
     </StyledBox>

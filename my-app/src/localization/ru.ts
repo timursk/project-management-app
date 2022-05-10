@@ -18,6 +18,7 @@ export default {
   },
   notFound: {
     header: '404: Страница не найдена',
+    goHome: 'На главную страницу',
   },
   error: {
     text: 'Ой! Все пошло не по плану!',

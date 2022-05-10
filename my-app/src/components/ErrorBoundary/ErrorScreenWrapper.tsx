@@ -5,6 +5,7 @@ const ErrorScreenWrapper = styled(Container)(() => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  flexGrow: 1,
 }));
 
 export default ErrorScreenWrapper;
