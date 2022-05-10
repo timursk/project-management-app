@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SignupUser from '../../types/api/signupUser';
 import Token from '../../types/api/token';
 import User from '../../types/store/user';
-import { RootState } from '../store';
 import { loginUser, signupUser } from './thunk';
 
 const initialState = {
