@@ -2,15 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SignupUser from '../../types/api/signupUser';
 import Token from '../../types/api/token';
 import User from '../../types/store/user';
-import { initialState } from '../initialState';
 import { RootState } from '../store';
-import { loginUser, signupUser } from './actionCreators';
+import { loginUser, signupUser } from './thunk';
 
-const initialAppState = initialState.user;
+const initialState = {
+  name: '',
+  login: '',
+};
 
 const userReducer = createSlice({
   name: 'userReducer',
-  initialState: initialAppState,
+  initialState,
   reducers: {
     saveInfo: (state, action: PayloadAction<User>) => {
       state.login = action.payload.login;
@@ -41,10 +43,6 @@ const userReducer = createSlice({
   },
 });
 
-//actions
 export const { saveInfo } = userReducer.actions;
-//selectors
-export const selectName = (state: RootState) => state.userReducer.name;
-export const selectLogin = (state: RootState) => state.userReducer.login;
 
 export default userReducer.reducer;
