@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
+import { API_URL } from '../../constants';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
@@ -29,6 +30,13 @@ const LoginForm: FC = () => {
       }),
       onSubmit: (values) => {
         alert(JSON.stringify(values, null, 2));
+        fetch(`${API_URL}signin`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values, null, 2),
+        });
       },
     });
 

@@ -39,6 +39,7 @@ export default {
     password: 'Password',
     passwordConfirmation: 'Password confirmation',
     email: 'E-mail',
+    name: 'Name',
     isShort: '{{field}} is too short!',
     isLong: '{{field}} is too  long!',
     isRequired: '{{field}} is required',

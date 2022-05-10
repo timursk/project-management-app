@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
+import { API_URL } from '../../constants';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
@@ -14,7 +15,9 @@ const RegistrationForm = () => {
     useFormik({
       initialValues: {
         login: '',
-        email: '',
+        name: '',
+
+        // email: '',
         password: '',
         passwordConfirmation: '',
       },
@@ -24,10 +27,10 @@ const RegistrationForm = () => {
           .min(2, t('userForms.isShort', { field: t('userForms.login') }))
           .max(50, t('userForms.isLong', { field: t('userForms.login') }))
           .required(t('userForms.isRequired', { field: t('userForms.login') })),
-        email: yup
+        name: yup
           .string()
-          .email(t('userForms.isInvalid', { field: t('userForms.email') }))
-          .required(t('userForms.isRequired', { field: t('userForms.email') })),
+          .max(50, t('userForms.isLong', { field: t('userForms.name') }))
+          .required(t('userForms.isRequired', { field: t('userForms.name') })),
         password: yup
           .string()
           .required(t('userForms.isRequired', { field: t('userForms.password') }))
@@ -40,6 +43,14 @@ const RegistrationForm = () => {
       }),
       onSubmit: (values) => {
         alert(JSON.stringify(values, null, 2));
+        const { login, name, password } = values;
+        fetch(`${API_URL}signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ login, name, password }, null, 2),
+        });
       },
     });
 
@@ -59,15 +70,15 @@ const RegistrationForm = () => {
         onBlur={handleBlur}
       />
       <StyledField
-        error={errors.email && touched.email}
-        id="email"
-        name="email"
-        type="email"
+        error={errors.name && touched.name}
+        id="name"
+        name="name"
+        type="text"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={values.email}
-        label={t('userForms.email')}
-        helperText={errors.email && touched.email ? errors.email : ''}
+        value={values.name}
+        label={t('userForms.name')}
+        helperText={errors.name && touched.name ? errors.name : ''}
       />
       <StyledField
         helperText={errors.password && touched.password ? errors.password : ''}

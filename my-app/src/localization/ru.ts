@@ -39,6 +39,7 @@ export default {
     password: 'Пароль',
     passwordConfirmation: 'Подтверждение пароля',
     email: 'Почта',
+    name: 'Имя',
     isShort: '{{field}} слишком короткий!',
     isLong: '{{field}} слишком длинный!',
     isRequired: '{{field}} - значение необходимо',
