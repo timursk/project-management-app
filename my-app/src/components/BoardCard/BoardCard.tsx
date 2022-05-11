@@ -1,39 +1,11 @@
-import {
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Tooltip,
-  Zoom,
-  CardActionArea,
-} from '@mui/material';
+import { CardContent, IconButton, Tooltip, Zoom, CardActionArea } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { FC, useState } from 'react';
-import { Box, typography } from '@mui/system';
-import styled from '@emotion/styled';
+import { StyledCard, StyledTypography, StyledBox } from './styles';
 
 interface BoardCardProps {
   title: string;
 }
-
-const StyledCard = styled(Card)`
-  position: relative;
-  min-width: 140px;
-  max-width: 400px;
-  min-height: 80px;
-`;
-
-const StyledTypography = styled(Typography)`
-  height: 80px;
-  color: text.secondary;
-`;
-
-const StyledBox = styled(Box)`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  transition: 0.2s;
-`;
 
 const BoardCard: FC<BoardCardProps> = ({ title }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
