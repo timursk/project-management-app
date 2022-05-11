@@ -11,6 +11,7 @@ export const StyledCard = styled(Card)`
 export const StyledTypography = styled(Typography)`
   height: 80px;
   color: text.secondary;
+  font-size: 1.5rem;
 `;
 
 export const StyledBox = styled(Box)`
