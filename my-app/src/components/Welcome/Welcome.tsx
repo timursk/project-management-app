@@ -6,7 +6,7 @@ import CardDevelop from '../CardDevelop/CardDevelop';
 import { StyledForm, StyledGridItem, StyledImg, StyledTextField } from './style';
 import welcomeHero from '../../assets/images/welcomeHero.png';
 
-const Welcom: FC = () => {
+const Welcome: FC = () => {
   const { t } = useTranslation();
   const matches = useMediaQuery('(max-width:1100px)');
   const [email, setEmail] = useState('');
@@ -74,4 +74,4 @@ const Welcom: FC = () => {
   );
 };
 
-export default Welcom;
+export default Welcome;
