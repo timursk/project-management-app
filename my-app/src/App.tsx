@@ -8,9 +8,12 @@ import Login from './components/Login';
 import Main from './components/Main';
 import NotFound from './components/NotFound';
 import RegisterForm from './components/RegisterForm';
-import Welcome from './components/Welcome';
+
+import Welcome from './components/Welcome/Welcome';
+
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { StyledBox, StyledContainer } from './app-styles';
+
 
 function App() {
   return (
