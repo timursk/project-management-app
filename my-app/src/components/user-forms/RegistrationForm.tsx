@@ -20,7 +20,7 @@ const RegistrationForm = () => {
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
-        login: '',
+        login: login || '',
         name: '',
         password: '',
         passwordConfirmation: '',

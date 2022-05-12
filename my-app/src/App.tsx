@@ -10,8 +10,15 @@ import Welcome from './components/Welcome/Welcome';
 
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { StyledBox, StyledContainer } from './app-styles';
+import { useEffect } from 'react';
+import { useAppDispatch } from './store/hooks';
+import { initUser } from './store/reducers/actionCreators';
 
 function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(initUser());
+  }, []);
   return (
     <StyledBox>
       <Header />

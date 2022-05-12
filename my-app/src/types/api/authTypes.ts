@@ -12,3 +12,10 @@ export interface SignupUser {
 export interface Token {
   token: string;
 }
+
+export interface UserInfo {
+  name: string;
+  login: string;
+  token: string;
+  id: string;
+}
