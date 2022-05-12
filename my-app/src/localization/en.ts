@@ -5,7 +5,9 @@ export default {
     login: 'Sign in',
   },
   main: {
-    header: 'Main',
+    header: 'Boards',
+    add: 'Add board',
+    delete: 'Delete',
   },
   loginForm: {
     header: 'Sign in:',

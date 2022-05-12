@@ -3,6 +3,8 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header';
 import Login from './components/user-forms/LoginForm';
 import Main from './components/Main';
+import Login from './components/Login';
+import Main from './components/Main/Main';
 import NotFound from './components/NotFound';
 import RegistrationForm from './components/user-forms/RegistrationForm';
 
