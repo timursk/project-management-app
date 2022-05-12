@@ -28,8 +28,7 @@ const Main: FC = () => {
       <div>Boards: </div>
       <Grid container spacing={4} justifyContent="center" justifyItems="center">
         {data &&
-          data.map((board) => {
-            const { id, title } = board;
+          data.map(({ id, title }) => {
             return (
               <Grid key={id} item xs={6} sm={6} md={4}>
                 <BoardCard id={id} title={title} />

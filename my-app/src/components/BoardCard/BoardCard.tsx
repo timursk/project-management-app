@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { StyledCard, StyledTypography, StyledBox } from './styles';
 import boardsApi from '../../services/boardsService';
 import { useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface BoardCardProps {
   id: string;
@@ -12,6 +13,8 @@ interface BoardCardProps {
 
 const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   let token = useAppSelector((state) => state.userReducer.token);
   //temporarily
   token =
@@ -29,9 +32,13 @@ const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
     deleteBoard({ id, token });
   };
 
+  const handleOpen = () => {
+    navigate(`/board/${id}`);
+  };
+
   return (
     <StyledCard raised={isHover} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <CardActionArea>
+      <CardActionArea onClick={handleOpen}>
         <CardContent>
           <StyledTypography sx={{ color: 'primary.contrastText' }} variant="body2">
             {title}
