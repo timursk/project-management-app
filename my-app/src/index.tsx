@@ -7,16 +7,20 @@ import './localization/i18n';
 import Loader from './components/Loader/Loader';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { ThemeProvider } from '@mui/system';
+import theme from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <Suspense fallback={<Loader />}>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </BrowserRouter>
+      </ThemeProvider>
     </Suspense>
   </React.StrictMode>
 );
