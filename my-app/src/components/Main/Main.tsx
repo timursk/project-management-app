@@ -23,11 +23,9 @@ const Main: FC = () => {
   };
 
   useEffect(() => {
-    if (isError && error) {
-      if ('status' in error && error.status === 401) {
-        alert('Token has expired! Redirecting...');
-        navigate('/Welcome');
-      }
+    if (isError && 'status' in error && error.status === 401) {
+      alert('Token has expired! Redirecting...');
+      navigate('/Welcome');
     }
   }, [error, isError, navigate]);
 
