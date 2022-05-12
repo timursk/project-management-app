@@ -1,21 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import {
+  ColumnResult,
+  GetAllColumnsArg,
+  GetColumnByIdArg,
+  CreateColumnRes,
+  CreateColumnArg,
+  UpdateColumnArg,
+} from '../types/api/columnsApiTypes';
+import { Column } from '../types/store/storeTypes';
 import { API_URL } from '../utils/constants';
-import Column from '../types/store/column';
-import Token from '../types/api/token';
 import { getColumnUrl } from '../utils/utils';
-
-type BoardId = { boardId: string };
-type ColumnId = { columnId: string };
-
-type ColumnResult = Omit<Column, 'tasks'>;
-
-type GetAllColumnsArg = BoardId & Token;
-type GetColumnByIdArg = BoardId & ColumnId & Token;
-
-type CreateColumnArg = BoardId & Pick<Column, 'title' | 'order'> & Token;
-type CreateColumnRes = BoardId & Pick<Column, 'title' | 'order'>;
-
-type UpdateColumnArg = BoardId & ColumnId & Pick<Column, 'title' | 'order'> & Token;
 
 const columnsApi = createApi({
   reducerPath: 'columnsApi',

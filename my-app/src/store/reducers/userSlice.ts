@@ -1,10 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import SignupUser from '../../types/api/signupUser';
-import Token from '../../types/api/token';
-import User from '../../types/store/user';
+import { SignupUser, Token } from '../../types/api/authTypes';
 import { loginUser, signupUser } from './actionCreators';
 
-const initialState = {
+interface User {
+  name: string;
+  login: string;
+  token: string;
+  isLoading: boolean;
+  error: string;
+}
+
+const initialState: User = {
   name: '',
   login: '',
   token: '',

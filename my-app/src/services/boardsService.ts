@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import Token from '../types/api/token';
-import Board from '../types/store/board';
+import { Token } from '../types/api/authTypes';
+import {
+  GetBoardArg,
+  BoardResult,
+  CreateBoardArg,
+  UpdateBoardArg,
+} from '../types/api/boardsApiTypes';
+import { Board } from '../types/store/storeTypes';
 import { API_URL, ENDPOINTS } from '../utils/constants';
-
-type BoardResult = Pick<Board, 'title' | 'id'>;
-
-type CreateBoardArg = Pick<Board, 'title'> & Token;
-type UpdateBoardArg = Pick<Board, 'title' | 'id'> & Token;
-type GetBoardArg = Pick<Board, 'id'> & Token;
 
 const boardsApi = createApi({
   reducerPath: 'boardsApi',

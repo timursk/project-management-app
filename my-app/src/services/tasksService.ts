@@ -1,18 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import Token from '../types/api/token';
-import Task from '../types/store/task';
+import {
+  GetAllTasksArg,
+  GetTaskByIdArg,
+  CreateTaskArg,
+  UpdateTaskArg,
+} from '../types/api/tasksApiTypes';
+import { Task } from '../types/store/storeTypes';
 import { API_URL } from '../utils/constants';
 import { getTaskUrl } from '../utils/utils';
-
-type BoardId = { boardId: string };
-type ColumnId = { columnId: string };
-type TaskId = { taskId: string };
-
-type GetAllTasksArg = BoardId & ColumnId & Token;
-type GetTaskByIdArg = BoardId & ColumnId & TaskId & Token;
-
-type CreateTaskArg = Omit<Task, 'id'> & Token;
-type UpdateTaskArg = Task & Token;
 
 const tasksApi = createApi({
   reducerPath: 'tasksApi',

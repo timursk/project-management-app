@@ -1,4 +1,4 @@
-import SignupUser from '../types/api/signupUser';
+import { SignupUser } from '../types/api/authTypes';
 import { API_URL, ENDPOINTS } from '../utils/constants';
 
 type SignupService = (user: SignupUser) => Promise<SignupUser>;

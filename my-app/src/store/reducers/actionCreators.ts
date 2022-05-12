@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { loginService } from '../../services/loginService';
 import { signupService } from '../../services/signupService';
-import LoginUser from '../../types/api/loginUser';
-import SignupUser from '../../types/api/signupUser';
+import { LoginUser, SignupUser } from '../../types/api/authTypes';
 
 type CustomError = {
   message: string;

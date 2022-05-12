@@ -1,5 +1,4 @@
-import LoginUser from '../types/api/loginUser';
-import Token from '../types/api/token';
+import { LoginUser, Token } from '../types/api/authTypes';
 import { API_URL, ENDPOINTS } from '../utils/constants';
 
 type LoginService = (user: LoginUser) => Promise<Token>;
