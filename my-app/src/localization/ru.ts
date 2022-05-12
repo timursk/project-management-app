@@ -52,5 +52,6 @@ export default {
     showPassword: 'Показать пароль',
     unknownError: 'Неизвестная ошибка. Попробуйте, пожалуйста, позже',
     invalidLoginOrPassword: 'Неверная пара логин и пароль.',
+    duplicateUser: 'Пользователь создан ранее!',
   },
 };

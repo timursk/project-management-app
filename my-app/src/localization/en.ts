@@ -52,5 +52,6 @@ export default {
     showPassword: 'Show password',
     unknownError: 'Unknown error. Please try later',
     invalidLoginOrPassword: 'Wrong login or password.',
+    duplicateUser: 'User already exists!',
   },
 };

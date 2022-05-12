@@ -1,9 +1,10 @@
 import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
-import { API_URL } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { signupUser } from '../../store/reducers/actionCreators';
+import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
@@ -12,6 +13,10 @@ import { registrationValidationSchema } from './validation-schemas';
 const RegistrationForm = () => {
   const { t } = useTranslation();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const login = useAppSelector((state) => state.userReducer.login);
+  const error = useAppSelector((state) => state.userReducer.error);
+  const isLoading = useAppSelector((state) => state.userReducer.isLoading);
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
@@ -22,17 +27,16 @@ const RegistrationForm = () => {
       },
       validationSchema: registrationValidationSchema,
       onSubmit: (values) => {
-        alert(JSON.stringify(values, null, 2));
         const { login, name, password } = values;
-        fetch(`${API_URL}signup`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ login, name, password }, null, 2),
-        });
+        dispatch(signupUser({ login, name, password }));
       },
     });
+
+  const errorMessage = useMemo(() => {
+    if (isLoading || !error) return '';
+    if (error === 'Duplicate user') return t('userForms.duplicateUser');
+    return t('userForms.unknownError');
+  }, [error, isLoading, t]);
 
   const togglePasswordShown = () => setIsPasswordShown((prevState) => !prevState);
 
@@ -91,6 +95,7 @@ const RegistrationForm = () => {
         control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
         label={t('userForms.showPassword')}
       />
+      {!isLoading && error && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
       <Button variant="text" type="reset">
         {t('userForms.reset')}
       </Button>
