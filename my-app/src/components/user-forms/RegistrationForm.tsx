@@ -7,6 +7,7 @@ import { API_URL } from '../../constants';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
+import { registrationValidationSchema } from './validation-schemas';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
@@ -16,31 +17,10 @@ const RegistrationForm = () => {
       initialValues: {
         login: '',
         name: '',
-
-        // email: '',
         password: '',
         passwordConfirmation: '',
       },
-      validationSchema: yup.object().shape({
-        login: yup
-          .string()
-          .min(2, t('userForms.isShort', { field: t('userForms.login') }))
-          .max(50, t('userForms.isLong', { field: t('userForms.login') }))
-          .required(t('userForms.isRequired', { field: t('userForms.login') })),
-        name: yup
-          .string()
-          .max(50, t('userForms.isLong', { field: t('userForms.name') }))
-          .required(t('userForms.isRequired', { field: t('userForms.name') })),
-        password: yup
-          .string()
-          .required(t('userForms.isRequired', { field: t('userForms.password') }))
-          .min(6, t('userForms.isShort', { field: t('userForms.password') }))
-          .matches(/[a-zA-Z0-9]/, t('userForms.passwordRequirements')),
-        passwordConfirmation: yup
-          .string()
-          .required(t('userForms.isRequired', { field: t('userForms.passwordConfirmation') }))
-          .oneOf([yup.ref('password'), null], t('userForms.matchPasswords')),
-      }),
+      validationSchema: registrationValidationSchema,
       onSubmit: (values) => {
         alert(JSON.stringify(values, null, 2));
         const { login, name, password } = values;

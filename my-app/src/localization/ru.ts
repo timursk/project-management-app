@@ -50,5 +50,7 @@ export default {
     submit: 'Создать',
     enter: 'Вход',
     showPassword: 'Показать пароль',
+    unknownError: 'Неизвестная ошибка. Попробуйте, пожалуйста, позже',
+    invalidLoginOrPassword: 'Неверная пара логин и пароль.',
   },
 };

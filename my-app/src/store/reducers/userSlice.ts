@@ -22,9 +22,16 @@ const userReducer = createSlice({
   name: 'userReducer',
   initialState,
   reducers: {
-    saveInfo: (state, action: PayloadAction<User>) => {
+    saveInfo: (state: User, action: PayloadAction<Pick<User, 'name' | 'login'>>) => {
       state.login = action.payload.login;
       state.name = action.payload.name;
+    },
+    resetInfo: (state: User) => {
+      state.login = '';
+      state.name = '';
+      state.error = '';
+      state.token = '';
+      state.isLoading = false;
     },
   },
   extraReducers: {
@@ -40,6 +47,7 @@ const userReducer = createSlice({
 
     [loginUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
 
     [signupUser.fulfilled.type]: (state, action: PayloadAction<SignupUser>) => {
@@ -53,10 +61,11 @@ const userReducer = createSlice({
 
     [signupUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
   },
 });
 
-export const { saveInfo } = userReducer.actions;
+export const { saveInfo, resetInfo } = userReducer.actions;
 
 export default userReducer.reducer;

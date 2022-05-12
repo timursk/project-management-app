@@ -10,6 +10,7 @@ type CustomError = {
 export const loginUser = createAsyncThunk('user/login', async (user: LoginUser, thunkApi) => {
   try {
     const response = await loginService(user);
+    window.localStorage.setItem('PMA-token', response.token);
     return response;
   } catch (e) {
     const error = e as CustomError;

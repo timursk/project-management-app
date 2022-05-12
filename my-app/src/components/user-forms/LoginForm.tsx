@@ -1,46 +1,46 @@
 import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
-import { API_URL } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { loginUser } from '../../store/reducers/actionCreators';
+import { resetInfo, saveInfo } from '../../store/reducers/userSlice';
+import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
+import { loginValidationSchema } from './validation-schemas';
 
 const LoginForm: FC = () => {
+  const dispatch = useAppDispatch();
+  const login = useAppSelector((state) => state.userReducer.login);
+  const error = useAppSelector((state) => state.userReducer.error);
+  const isLoading = useAppSelector((state) => state.userReducer.isLoading);
   const { t } = useTranslation();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
-        login: '',
+        login: login || '',
         password: '',
       },
-      validationSchema: yup.object().shape({
-        login: yup
-          .string()
-          .min(2, t('userForms.isShort', { field: t('userForms.login') }))
-          .max(50, t('userForms.isLong', { field: t('userForms.login') }))
-          .required(t('userForms.isRequired', { field: t('userForms.login') })),
-
-        password: yup
-          .string()
-          .required(t('userForms.isRequired', { field: t('userForms.password') })),
-      }),
+      validationSchema: loginValidationSchema,
       onSubmit: (values) => {
-        alert(JSON.stringify(values, null, 2));
-        fetch(`${API_URL}signin`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values, null, 2),
-        });
+        dispatch(saveInfo({ login: values.login, name: '' }));
+        dispatch(loginUser(values));
+      },
+      onReset: () => {
+        dispatch(resetInfo());
       },
     });
 
   const togglePasswordShown = () => setIsPasswordShown((prevState) => !prevState);
+
+  const errorMessage = useMemo(() => {
+    if (isLoading || !error) return '';
+    if (error === 'Invalid user or password') return t('userForms.invalidLoginOrPassword');
+    return t('userForms.unknownError');
+  }, [error, isLoading, t]);
 
   return (
     <StyledForm onSubmit={handleSubmit} onReset={handleReset}>
@@ -72,6 +72,7 @@ const LoginForm: FC = () => {
         control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
         label={t('userForms.showPassword')}
       />
+      {!isLoading && error && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
       <Button variant="text" type="reset">
         {t('userForms.reset')}
       </Button>
