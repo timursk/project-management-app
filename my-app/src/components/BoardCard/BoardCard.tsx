@@ -2,13 +2,21 @@ import { CardContent, IconButton, Tooltip, Zoom, CardActionArea } from '@mui/mat
 import ClearIcon from '@mui/icons-material/Clear';
 import { FC, useState } from 'react';
 import { StyledCard, StyledTypography, StyledBox } from './styles';
+import boardsApi from '../../services/boardsService';
+import { useAppSelector } from '../../store/hooks';
 
 interface BoardCardProps {
+  id: string;
   title: string;
 }
 
-const BoardCard: FC<BoardCardProps> = ({ title }) => {
+const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
+  let token = useAppSelector((state) => state.userReducer.token);
+  //temporarily
+  token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTNiNjY4NS00OTA0LTRlNGMtYWM5MS00MGRjNjBhN2JlZTkiLCJsb2dpbiI6InRlc3QiLCJpYXQiOjE2NTIyNjg3NzF9.z3z283PgbUDkcblzNR-SZO01qW68dRPGWQxLy-X_ydQ';
+  const [deleteBoard, {}] = boardsApi.useDeleteBoardMutation();
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -17,17 +25,23 @@ const BoardCard: FC<BoardCardProps> = ({ title }) => {
     setIsHover(false);
   };
 
+  const handleDelete = (id: string) => {
+    deleteBoard({ id, token });
+  };
+
   return (
     <StyledCard raised={isHover} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <CardActionArea>
         <CardContent>
-          <StyledTypography variant="body2">{title}</StyledTypography>
+          <StyledTypography sx={{ color: 'primary.contrastText' }} variant="body2">
+            {title}
+          </StyledTypography>
         </CardContent>
       </CardActionArea>
 
       <StyledBox sx={{ opacity: `${isHover ? 1 : 0}` }}>
         <Tooltip title="Delete" placement="left" TransitionComponent={Zoom}>
-          <IconButton>
+          <IconButton onClick={() => handleDelete(id)}>
             <ClearIcon />
           </IconButton>
         </Tooltip>

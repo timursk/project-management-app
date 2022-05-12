@@ -6,6 +6,7 @@ export const StyledCard = styled(Card)`
   min-width: 140px;
   max-width: 400px;
   min-height: 80px;
+  background-color: purple;
 `;
 
 export const StyledTypography = styled(Typography)`
