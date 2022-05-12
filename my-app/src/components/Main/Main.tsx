@@ -1,6 +1,7 @@
 import { Grid, IconButton, Tooltip, Typography, Zoom } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import boardsApi from '../../services/boardsService';
 import BoardCard from '../BoardCard/BoardCard';
 import Loader from '../Loader/Loader';
@@ -11,26 +12,32 @@ const token =
 
 const Main: FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const { data, isError, isLoading } = boardsApi.useGetAllBoardsQuery({ token });
+  const { data, isError, isLoading, error } = boardsApi.useGetAllBoardsQuery({ token });
   const [createBoard, {}] = boardsApi.useCreateBoardMutation();
-  console.log(data);
+
   const handleAdd = () => {
     const title = prompt();
     createBoard({ token, title });
   };
 
+  useEffect(() => {
+    if (isError && error) {
+      if ('status' in error && error.status === 401) {
+        alert('Token has expired! Redirecting...');
+        navigate('/Welcome');
+      }
+    }
+  }, [error, isError, navigate]);
+
   if (isLoading) {
     return <Loader />;
   }
 
-  if (isError) {
-    return <p>ERROR</p>;
-  }
-
   return (
     <>
-      <Typography variant="h2">{t('main.header')}: </Typography>
+      <Typography variant="h2">{`${t('main.header')} (${data?.length || 0})`}</Typography>
       <StyledGrid container spacing={4}>
         {data &&
           data.map(({ id, title }) => {
