@@ -1,7 +1,8 @@
 import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
-import { FC, useState, useMemo } from 'react';
+import { FC, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginUser } from '../../store/reducers/actionCreators';
 import { resetInfo, saveInfo } from '../../store/reducers/userSlice';
@@ -13,9 +14,12 @@ import { loginValidationSchema } from './validation-schemas';
 
 const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const login = useAppSelector((state) => state.userReducer.login);
   const error = useAppSelector((state) => state.userReducer.error);
   const isLoading = useAppSelector((state) => state.userReducer.isLoading);
+  const token = useAppSelector((state) => state.userReducer.token);
   const { t } = useTranslation();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
@@ -41,6 +45,10 @@ const LoginForm: FC = () => {
     if (error === 'Invalid user or password') return t('userForms.invalidLoginOrPassword');
     return t('userForms.unknownError');
   }, [error, isLoading, t]);
+
+  useEffect(() => {
+    if (token) navigate('/');
+  }, [navigate, token]);
 
   return (
     <StyledForm onSubmit={handleSubmit} onReset={handleReset}>

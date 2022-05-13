@@ -1,7 +1,8 @@
 import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { signupUser } from '../../store/reducers/actionCreators';
 import FormErrorMessage from './FormErrorMessage';
@@ -12,11 +13,16 @@ import { registrationValidationSchema } from './validation-schemas';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
-  const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+
   const login = useAppSelector((state) => state.userReducer.login);
   const error = useAppSelector((state) => state.userReducer.error);
   const isLoading = useAppSelector((state) => state.userReducer.isLoading);
+  const token = useAppSelector((state) => state.userReducer.token);
+
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
@@ -39,6 +45,10 @@ const RegistrationForm = () => {
   }, [error, isLoading, t]);
 
   const togglePasswordShown = () => setIsPasswordShown((prevState) => !prevState);
+
+  useEffect(() => {
+    if (token) navigate('/');
+  }, [navigate, token]);
 
   return (
     <StyledForm onSubmit={handleSubmit} onReset={handleReset}>
