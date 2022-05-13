@@ -1,6 +1,3 @@
-import styled from '@emotion/styled';
-import { Container } from '@mui/material';
-import { Box } from '@mui/system';
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header';
@@ -13,7 +10,6 @@ import Welcome from './components/Welcome/Welcome';
 
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { StyledBox, StyledContainer } from './app-styles';
-
 
 function App() {
   return (
