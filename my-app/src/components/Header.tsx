@@ -15,6 +15,7 @@ const StyledNavLink = styled(NavLink)`
 const Header: FC = () => {
   const { t } = useTranslation();
   const token = useAppSelector((state) => state.userReducer.token);
+
   return (
     <Box>
       <AppBar position="static">
@@ -29,7 +30,7 @@ const Header: FC = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <StyledNavLink to={'/'}>{t('header.title')}</StyledNavLink>
           </Typography>
-          <LanguageToggle />
+
           {token ? (
             <UserMenu />
           ) : (
@@ -42,6 +43,7 @@ const Header: FC = () => {
               </Button>
             </>
           )}
+          <LanguageToggle />
         </Toolbar>
       </AppBar>
     </Box>

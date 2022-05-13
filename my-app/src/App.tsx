@@ -16,9 +16,11 @@ import { initUser } from './store/reducers/actionCreators';
 
 function App() {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(initUser());
   }, []);
+
   return (
     <StyledBox>
       <Header />

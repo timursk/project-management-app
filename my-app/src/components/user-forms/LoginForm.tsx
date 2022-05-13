@@ -15,13 +15,15 @@ import { loginValidationSchema } from './validation-schemas';
 const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const login = useAppSelector((state) => state.userReducer.login);
   const error = useAppSelector((state) => state.userReducer.error);
   const isLoading = useAppSelector((state) => state.userReducer.isLoading);
   const token = useAppSelector((state) => state.userReducer.token);
-  const { t } = useTranslation();
+
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
