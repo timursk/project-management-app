@@ -54,4 +54,9 @@ export default {
     invalidLoginOrPassword: 'Неверная пара логин и пароль.',
     duplicateUser: 'Пользователь создан ранее!',
   },
+  userMenu: {
+    logout: 'Выйти',
+    edit: 'Настроить',
+    delete: 'Удалить пользователя',
+  },
 };

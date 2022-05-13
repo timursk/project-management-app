@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SignupUser, Token, UserInfo } from '../../types/api/authTypes';
-import { initUser, loginUser, signupUser } from './actionCreators';
+import { initUser, loginUser, logoutUser, signupUser } from './actionCreators';
 
 interface User {
   name: string;
@@ -75,6 +75,21 @@ const userReducer = createSlice({
     },
 
     [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+
+    [logoutUser.fulfilled.type]: (state) => {
+      state.name = '';
+      state.login = '';
+      state.token = '';
+    },
+
+    [logoutUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+
+    [logoutUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.isLoading = false;
     },

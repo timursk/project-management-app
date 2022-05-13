@@ -4,6 +4,8 @@ import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
+import UserMenu from './UserMenu/UserMenu';
+import { useAppSelector } from '../store/hooks';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -12,6 +14,7 @@ const StyledNavLink = styled(NavLink)`
 
 const Header: FC = () => {
   const { t } = useTranslation();
+  const token = useAppSelector((state) => state.userReducer.token);
   return (
     <Box>
       <AppBar position="static">
@@ -27,12 +30,18 @@ const Header: FC = () => {
             <StyledNavLink to={'/'}>{t('header.title')}</StyledNavLink>
           </Typography>
           <LanguageToggle />
-          <Button color="inherit">
-            <StyledNavLink to={'/registration'}>{t('header.registration')}</StyledNavLink>
-          </Button>
-          <Button color="inherit">
-            <StyledNavLink to={'/login'}>{t('header.login')}</StyledNavLink>
-          </Button>
+          {token ? (
+            <UserMenu />
+          ) : (
+            <>
+              <Button color="inherit">
+                <StyledNavLink to={'/registration'}>{t('header.registration')}</StyledNavLink>
+              </Button>
+              <Button color="inherit">
+                <StyledNavLink to={'/login'}>{t('header.login')}</StyledNavLink>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

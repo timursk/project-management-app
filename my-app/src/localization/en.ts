@@ -54,4 +54,9 @@ export default {
     invalidLoginOrPassword: 'Wrong login or password.',
     duplicateUser: 'User already exists!',
   },
+  userMenu: {
+    logout: 'Logout',
+    edit: 'Edit',
+    delete: 'Delete user',
+  },
 };
