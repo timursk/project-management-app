@@ -34,28 +34,3 @@ const BoardCardControls = ({ id }: Props) => {
 };
 
 export default BoardCardControls;
-
-{
-  /* <ClickAwayListener onClickAway={handleClickAway}>
-  <Box sx={{ position: 'relative' }}>
-    <Tooltip title={'change color'} placement="top" TransitionComponent={Zoom}>
-      <IconButton onClick={handleClick}>
-        <FormatColorFillIcon />
-      </IconButton>
-    </Tooltip>
-
-    {open ? (
-      <Box sx={styles}>
-        <p style={{ marginTop: 0 }}>Change color:</p>
-        <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {['yellow', 'red', 'blue', 'green', 'purple', 'orange'].map((color, index) => (
-            <Grid item xs={2} sm={4} md={4} key={index}>
-              <Box sx={{ height: 30, background: `${color}` }} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    ) : null}
-  </Box>
-</ClickAwayListener>; */
-}
