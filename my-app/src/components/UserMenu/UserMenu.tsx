@@ -13,22 +13,29 @@ import { logoutUser } from '../../store/reducers/actionCreators';
 
 const UserMenu = () => {
   const { t } = useTranslation();
-  const login = useAppSelector((state) => state.userReducer.login);
   const dispatch = useAppDispatch();
+
+  const login = useAppSelector((state) => state.userReducer.login);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   // TODO add delete and settings options
   const goToEdit = () => alert('Edit user profile');
+
   const handleLogout = () => {
     // TODO add modal confirmation
     dispatch(logoutUser());
   };
+
   const handleDelete = () => alert('Delete user');
 
   return (

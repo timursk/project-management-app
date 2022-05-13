@@ -32,8 +32,11 @@ export const signupUser = createAsyncThunk('user/signup', async (user: SignupUse
 export const initUser = createAsyncThunk('user/init', async (_, thunkApi) => {
   try {
     const token: string = window.localStorage.getItem('PMA-token');
-    const response = await getUserService(token);
-    return { ...response, token };
+    if (token) {
+      const response = await getUserService(token);
+      return { ...response, token };
+    }
+    return { name: '', login: '', id: '', token: '' };
   } catch (e) {
     const error = e as CustomError;
     return thunkApi.rejectWithValue(error.message);
