@@ -37,13 +37,16 @@ const Main: FC = () => {
       setData(boardsData);
       return;
     }
-    const filtered = boardsData.filter((board) => board.title.includes(value));
+
+    const filtered = boardsData.filter(({ title }) =>
+      title.toLowerCase().includes(value.toLowerCase())
+    );
     setData(filtered);
   }, [value, setValue, boardsData]);
 
   const handleAdd = () => {
     let title = prompt();
-    while (title.length > 40) {
+    while (title && title.length > 40) {
       alert('MAX 40 symbols');
       title = prompt();
     }
