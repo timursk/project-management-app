@@ -42,7 +42,11 @@ const Main: FC = () => {
   }, [value, setValue, boardsData]);
 
   const handleAdd = () => {
-    const title = prompt();
+    let title = prompt();
+    while (title.length > 40) {
+      alert('MAX 40 symbols');
+      title = prompt();
+    }
     createBoard({ token, title });
   };
 

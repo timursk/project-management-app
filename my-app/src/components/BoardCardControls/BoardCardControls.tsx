@@ -1,15 +1,18 @@
 import { Tooltip, Zoom, IconButton } from '@mui/material';
-import React from 'react';
+import React, { Dispatch, MouseEventHandler, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import ClearIcon from '@mui/icons-material/Clear';
 import boardsApi from '../../services/boardsService';
 import { useAppSelector } from '../../store/hooks';
+import EditIcon from '@mui/icons-material/Edit';
+import { StyledBox, StyledColumn } from './styles';
 
 type Props = {
   id: string;
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
 };
 
-const BoardCardControls = ({ id }: Props) => {
+const BoardCardControls = ({ id, setIsEdit }: Props) => {
   const { t } = useTranslation();
 
   let token = useAppSelector((state) => state.userReducer.token);
@@ -22,13 +25,33 @@ const BoardCardControls = ({ id }: Props) => {
     deleteBoard({ id, token });
   };
 
+  const handleUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    setIsEdit(true);
+  };
+
   return (
     <>
-      <Tooltip title={t('main.delete')} placement="top" TransitionComponent={Zoom}>
-        <IconButton onClick={() => handleDelete(id)}>
-          <ClearIcon />
-        </IconButton>
-      </Tooltip>
+      <StyledBox>
+        <StyledColumn>
+          <Tooltip title={t('main.delete')} placement="top" TransitionComponent={Zoom}>
+            <IconButton onClick={() => handleDelete(id)}>
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip
+            sx={{ marginTop: '-10px' }}
+            title={t('main.edit')}
+            placement="top"
+            TransitionComponent={Zoom}
+          >
+            <IconButton onClick={handleUpdate}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </StyledColumn>
+      </StyledBox>
     </>
   );
 };

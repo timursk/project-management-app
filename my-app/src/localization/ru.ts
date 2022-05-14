@@ -8,6 +8,7 @@ export default {
     header: 'Доски',
     add: 'Добавить доску',
     delete: 'Удалить',
+    edit: 'Редактировать',
   },
   loginForm: {
     header: 'Вход',
