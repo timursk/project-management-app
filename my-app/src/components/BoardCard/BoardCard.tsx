@@ -32,9 +32,6 @@ const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
     const { target } = e;
     const { children } = editRef.current;
 
-    console.log(editRef.current);
-    console.log(target);
-
     if (editRef.current === target) {
       return;
     }
