@@ -14,6 +14,14 @@ interface ConfirmModalProps {
 }
 const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText }) => {
   const { t } = useTranslation();
+
+  const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const dataValue = (e.target as HTMLElement).getAttribute('data-role');
+    if (dataValue === 'modal-overlay') {
+      onClose();
+    }
+  }, []);
+
   const handleEsc = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
@@ -31,7 +39,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText })
 
   return (
     <Portal>
-      <StyledOverlay>
+      <StyledOverlay data-role="modal-overlay" onClick={handleClickOverlay}>
         <StyledModal>
           <StyledModalCloseButton onClick={onClose}>
             <CloseIcon color="primary" aria-label={t('modal.closeModal')} />
