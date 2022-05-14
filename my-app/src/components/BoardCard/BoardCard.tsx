@@ -1,19 +1,15 @@
-import { CardContent, CardActionArea, Input } from '@mui/material';
-import { FC, FormEvent, useEffect, useRef, useState } from 'react';
-import { StyledCard, StyledEditBox, StyledTypography } from './styles';
+import { CardContent, CardActionArea, Grid } from '@mui/material';
+import { FC, useEffect, useRef, useState } from 'react';
+import { StyledCard, StyledDimmer, StyledTypography } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import BoardCardControls from '../BoardCardControls/BoardCardControls';
-import { Box } from '@mui/system';
-import boardsApi from '../../services/boardsService';
+import BoardEdit from '../BoardEdit/BoardEdit';
 
 interface BoardCardProps {
   id: string;
   title: string;
 }
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTNiNjY4NS00OTA0LTRlNGMtYWM5MS00MGRjNjBhN2JlZTkiLCJsb2dpbiI6InRlc3QiLCJpYXQiOjE2NTIyNjg3NzF9.z3z283PgbUDkcblzNR-SZO01qW68dRPGWQxLy-X_ydQ';
 
 const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
   const { t } = useTranslation();
@@ -21,33 +17,23 @@ const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [editValue, setEditValue] = useState<string>('');
 
   const editRef = useRef<HTMLElement>(null);
 
-  const [updateBoard, {}] = boardsApi.useUpdateBoardMutation();
-
   const handleClick = (e: Event) => {
-    if (!editRef.current) return;
-    const { target } = e;
-    const { children } = editRef.current;
-
-    if (editRef.current === target) {
+    if (!editRef.current) {
       return;
     }
-    for (let i = 0; i < children.length; i++) {
-      if (target === children[i]) return;
-    }
 
-    setIsEdit(false);
-    setEditValue('');
+    if (editRef.current === e.target) {
+      setIsEdit(false);
+    }
   };
 
   useEffect(() => {
     if (!isEdit) {
       return;
     }
-
     window.addEventListener('click', handleClick);
 
     return () => {
@@ -66,41 +52,30 @@ const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
     navigate(`/board/${id}`);
   };
 
-  const handleUpdate = (e: FormEvent) => {
-    e.preventDefault();
-    if (editValue.length > 40) {
-      alert('TOO BIG');
-      return;
-    }
-    updateBoard({ id, token, title: editValue });
-    setIsEdit(false);
-  };
-
   return (
-    <StyledCard raised={isHover} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <CardActionArea onClick={handleOpen}>
-        <CardContent>
-          <StyledTypography sx={{ color: 'primary' }} variant="body2">
-            {title}
-          </StyledTypography>
-        </CardContent>
-      </CardActionArea>
+    <>
+      {isEdit && <StyledDimmer ref={editRef} />}
 
-      <BoardCardControls id={id} setIsEdit={setIsEdit} />
-      {isEdit && (
-        <StyledEditBox>
-          <Box sx={{ height: '100%' }} component="form" onSubmit={handleUpdate}>
-            <Input
-              autoFocus
-              ref={editRef}
-              sx={{ width: '100%', padding: '20px', height: '100%' }}
-              onChange={(e) => setEditValue(e.target.value)}
-              placeholder={title}
-            />
-          </Box>
-        </StyledEditBox>
-      )}
-    </StyledCard>
+      <Grid item xs={12} sm={6} md={4}>
+        <StyledCard
+          raised={isHover}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <CardActionArea onClick={handleOpen}>
+            <CardContent>
+              <StyledTypography sx={{ color: 'primary' }} variant="body2">
+                {title}
+              </StyledTypography>
+            </CardContent>
+          </CardActionArea>
+
+          <BoardCardControls id={id} setIsEdit={setIsEdit} />
+
+          {isEdit && <BoardEdit id={id} title={title} setIsEdit={setIsEdit} />}
+        </StyledCard>
+      </Grid>
+    </>
   );
 };
 

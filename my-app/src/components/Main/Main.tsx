@@ -1,4 +1,4 @@
-import { Grid, IconButton, Tooltip, Zoom } from '@mui/material';
+import { IconButton, Tooltip, Zoom } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -61,12 +61,9 @@ const Main: FC = () => {
       <StyledGrid container spacing={4}>
         {data &&
           data.map(({ id, title }) => {
-            return (
-              <Grid key={id} item xs={12} sm={6} md={4}>
-                <BoardCard id={id} title={title} />
-              </Grid>
-            );
+            return <BoardCard key={id} id={id} title={title} />;
           })}
+
         <StyledGridItem item xs={12} sm={6} md={4}>
           <Tooltip title={t('main.add')} placement="left" TransitionComponent={Zoom}>
             <IconButton onClick={handleAdd}>

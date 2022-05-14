@@ -18,22 +18,13 @@ export const StyledTypography = styled(Typography)`
   word-wrap: break-word;
 `;
 
-export const StyledEditBox = styled(Box)`
-  position: absolute;
+export const StyledDimmer = styled(Box)`
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-radius: 4px;
+  width: 100vw;
+  height: 100vh;
+  background: #0009;
+  color: #fff;
   z-index: 10;
 `;
-
-// position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   background: #0009;
-//   color: #fff;
-//   z-index: 10;
