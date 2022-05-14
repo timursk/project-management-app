@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 const StyledModal = styled.main(
   () => `
+  position: relative;
   padding: 20px;
 
   display: flex;
@@ -10,7 +11,7 @@ const StyledModal = styled.main(
   align-items: flex-start;
 
   width: 80%;
-  max-width: 300px;
+  max-width: 400px;
 
   background-color: #ffffff;
   border: 2px solid #1769aa;
