@@ -1,3 +1,4 @@
+import { userAPI } from './../services/userService';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import boardsApi from '../services/boardsService';
 import columnsApi from '../services/columnsService';
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   [boardsApi.reducerPath]: boardsApi.reducer,
   [columnsApi.reducerPath]: columnsApi.reducer,
   [tasksApi.reducerPath]: tasksApi.reducer,
+  [userAPI.reducerPath]: userAPI.reducer,
 });
 
 export const store = configureStore({

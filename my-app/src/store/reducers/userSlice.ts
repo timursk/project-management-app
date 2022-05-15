@@ -1,3 +1,4 @@
+import { userAPI } from './../../services/userService';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SignupUser, Token, UserInfo } from '../../types/api/authTypes';
 import { initUser, loginUser, logoutUser, signupUser } from './actionCreators';
@@ -8,14 +9,17 @@ interface User {
   token: string;
   isLoading: boolean;
   error: string;
+  userId?: string;
 }
 
 const initialState: User = {
   name: '',
   login: '',
-  token: '',
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiOWRmZmVkZi1jMjY2LTRiMGItODA3Yi05ZGM0MTEzZGJiYTkiLCJsb2dpbiI6ImRtaXRyaXkiLCJpYXQiOjE2NTI2MDk3NjR9.TIYdZxYQDZxb1-CbdHmqz6JsgofRRyNrrzD5UU5c-ys',
   isLoading: false,
   error: '',
+  userId: '',
 };
 
 const userReducer = createSlice({

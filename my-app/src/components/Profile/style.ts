@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 export const StyledForm = styled.form(() => ({
@@ -10,7 +11,10 @@ export const StyledForm = styled.form(() => ({
   borderRadius: '10px',
   margin: '20px auto',
 }));
-export const StyledField = styled(TextField)(() => ({
+export const StyledField = styled(TextField)({
   margin: '0 10px',
   marginTop: '10px',
-}));
+});
+export const StyledButton = styled(Button)({
+  marginTop: '10px',
+});
