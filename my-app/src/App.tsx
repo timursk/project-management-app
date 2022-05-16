@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
 
 import Profile from './components/Profile/Profile';
+import DeleteUser from './components/DeleteUser/DeleteUser';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -42,6 +43,7 @@ function App() {
             <Route path="/registration" element={<RegistrationForm />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/delete" element={<DeleteUser />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </StyledContainer>

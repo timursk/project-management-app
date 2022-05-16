@@ -5,3 +5,7 @@ export interface UserChange {
   token: string;
   password: string;
 }
+export interface UserDelete {
+  userId: string;
+  token: string;
+}

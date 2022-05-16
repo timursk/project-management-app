@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ListItemIcon } from '@mui/material';
 import { logoutUser } from '../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
+import DeleteUser from '../DeleteUser/DeleteUser';
 
 const UserMenu = () => {
   const { t } = useTranslation();
@@ -40,7 +41,9 @@ const UserMenu = () => {
     dispatch(logoutUser());
   };
 
-  const handleDelete = () => alert('Delete user');
+  const handleDelete = () => {
+    navigator('/delete', { state: { open: true } });
+  };
 
   return (
     <div>
