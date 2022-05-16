@@ -6,11 +6,11 @@ interface PortalProps {
   children: React.ReactNode;
 }
 
-// Это два соседних контейнера в DOM
+//Portal is the neighbour element for app.
 const Portal: FC<PortalProps> = ({ children }) => {
-  // Create div to contain everything
+  // Create div to contain any content of modal
   const el = React.useMemo(() => document.createElement('div'), []);
-  // On mount function
+  // On mount function appends modal wrapper (el), on unmount removes it
   React.useEffect(() => {
     const target: HTMLElement = document.body;
 
@@ -18,7 +18,7 @@ const Portal: FC<PortalProps> = ({ children }) => {
     return () => {
       target.removeChild(el);
     };
-  }, [el]);
+  }, []);
   return ReactDOM.createPortal(children, el);
 };
 

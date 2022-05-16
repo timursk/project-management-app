@@ -22,12 +22,9 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText })
     }
   }, []);
 
-  const handleEsc = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    },
-    [onClose]
-  );
+  const handleEsc = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') onClose();
+  };
 
   useEffect(() => {
     document.addEventListener('keydown', handleEsc);
