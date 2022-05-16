@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SignupUser, Token } from '../../types/api/authTypes';
-import { loginUser, signupUser } from './actionCreators';
+import { SignupUser, Token, UserInfo } from '../../types/api/authTypes';
+import { initUser, loginUser, logoutUser, signupUser } from './actionCreators';
 
 interface User {
   name: string;
@@ -22,9 +22,16 @@ const userReducer = createSlice({
   name: 'userReducer',
   initialState,
   reducers: {
-    saveInfo: (state, action: PayloadAction<User>) => {
+    saveInfo: (state: User, action: PayloadAction<Pick<User, 'name' | 'login'>>) => {
       state.login = action.payload.login;
       state.name = action.payload.name;
+    },
+    resetInfo: (state: User) => {
+      state.login = '';
+      state.name = '';
+      state.error = '';
+      state.token = '';
+      state.isLoading = false;
     },
   },
   extraReducers: {
@@ -40,6 +47,7 @@ const userReducer = createSlice({
 
     [loginUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.isLoading = false;
     },
 
     [signupUser.fulfilled.type]: (state, action: PayloadAction<SignupUser>) => {
@@ -53,10 +61,41 @@ const userReducer = createSlice({
 
     [signupUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.isLoading = false;
+    },
+
+    [initUser.fulfilled.type]: (state, action: PayloadAction<UserInfo>) => {
+      state.name = action.payload.name;
+      state.login = action.payload.login;
+      state.token = action.payload.token;
+    },
+
+    [initUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+
+    [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+
+    [logoutUser.fulfilled.type]: (state) => {
+      state.name = '';
+      state.login = '';
+      state.token = '';
+    },
+
+    [logoutUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+
+    [logoutUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      state.isLoading = false;
     },
   },
 });
 
-export const { saveInfo } = userReducer.actions;
+export const { saveInfo, resetInfo } = userReducer.actions;
 
 export default userReducer.reducer;

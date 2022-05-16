@@ -11,6 +11,7 @@ export const loginService: LoginService = async (user) => {
     },
     body: JSON.stringify(user),
   });
-
+  if (response.status === 403) throw new Error('Invalid user or password');
+  if (response.status !== 201) throw new Error('Unknown error');
   return response.json();
 };
