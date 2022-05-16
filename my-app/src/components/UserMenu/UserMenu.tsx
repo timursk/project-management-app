@@ -10,10 +10,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ListItemIcon } from '@mui/material';
 import { logoutUser } from '../../store/reducers/actionCreators';
+import { useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const navigator = useNavigate();
 
   const login = useAppSelector((state) => state.userReducer.login);
 
@@ -29,7 +31,9 @@ const UserMenu = () => {
   };
 
   // TODO add delete and settings options
-  const goToEdit = () => alert('Edit user profile');
+  const goToEdit = () => {
+    navigator('/profile');
+  };
 
   const handleLogout = () => {
     // TODO add modal confirmation

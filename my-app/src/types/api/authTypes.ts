@@ -18,4 +18,5 @@ export interface UserInfo {
   login: string;
   token: string;
   id: string;
+  password?: string;
 }

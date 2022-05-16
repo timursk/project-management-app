@@ -15,8 +15,7 @@ interface User {
 const initialState: User = {
   name: '',
   login: '',
-  token:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiOWRmZmVkZi1jMjY2LTRiMGItODA3Yi05ZGM0MTEzZGJiYTkiLCJsb2dpbiI6ImRtaXRyaXkiLCJpYXQiOjE2NTI2MDk3NjR9.TIYdZxYQDZxb1-CbdHmqz6JsgofRRyNrrzD5UU5c-ys',
+  token: '',
   isLoading: false,
   error: '',
   userId: '',
