@@ -51,6 +51,7 @@ export default {
     matchPasswords: 'Passwords must match',
     reset: 'Reset',
     submit: 'Submit',
+    delete: 'Delete user',
     enter: 'login',
     showPassword: 'Show password',
     unknownError: 'Unknown error. Please try later',
