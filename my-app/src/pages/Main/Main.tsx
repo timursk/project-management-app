@@ -3,10 +3,10 @@ import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import boardsApi from '../../services/boardsService';
-import BoardCard from '../BoardCard/BoardCard';
-import Loader from '../Loader/Loader';
+import BoardCard from '../../components/BoardCard/BoardCard';
+import Loader from '../../components/Loader/Loader';
 import { StyledGridItem, StyledGrid, StyledAddCircleIcon } from './styles';
-import MainControls from '../MainControls/MainControls';
+import MainControls from '../../components/MainControls/MainControls';
 import { filterByTitle, getToken, sleep } from '../../utils/utils';
 
 const Main: FC = () => {

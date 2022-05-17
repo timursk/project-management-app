@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Grid, Typography, useMediaQuery } from '@mui/material';
-import CardDevelop from '../CardDevelop/CardDevelop';
+import CardDevelop from '../../components/CardDevelop/CardDevelop';
 import { StyledForm, StyledGridItem, StyledImg, StyledTextField } from './style';
 import welcomeHero from '../../assets/images/welcomeHero.png';
 
