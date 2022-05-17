@@ -63,9 +63,7 @@ const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
         >
           <CardActionArea onClick={handleOpen}>
             <CardContent>
-              <StyledTypography sx={{ color: 'primary' }} variant="body2">
-                {title}
-              </StyledTypography>
+              <StyledTypography variant="body2">{title}</StyledTypography>
             </CardContent>
           </CardActionArea>
 
