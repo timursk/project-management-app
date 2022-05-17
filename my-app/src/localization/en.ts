@@ -62,4 +62,10 @@ export default {
     edit: 'Edit',
     delete: 'Delete user',
   },
+  modal: {
+    closeModal: 'Close modal dialog',
+    confirmHeader: 'Confirm this action?',
+    confirm: 'Confirm',
+    deny: 'Deny',
+  },
 };

@@ -62,4 +62,10 @@ export default {
     edit: 'Настроить',
     delete: 'Удалить пользователя',
   },
+  modal: {
+    closeModal: 'Закрыть диалог',
+    confirmHeader: 'Подтвердить следующее действие?',
+    confirm: 'Подтвердить',
+    deny: 'Отменить',
+  },
 };
