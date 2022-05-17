@@ -1,3 +1,4 @@
+import { Board } from '../types/store/storeTypes';
 import { ENDPOINTS } from './constants';
 
 export const getColumnUrl = (boardId: string, columnId?: string) =>
@@ -19,4 +20,16 @@ export const setToken = (token: string) => {
 
 export const removeToken = () => {
   window.localStorage.removeItem('token');
+};
+
+export const sleep = async (ms: number) => {
+  await new Promise((r) => setTimeout(r, ms));
+};
+
+export const filterByTitle = (data: Board[], value: string) => {
+  const result = data.filter(({ title }) => {
+    return title.toLowerCase().includes(value.toLowerCase());
+  });
+
+  return result;
 };
