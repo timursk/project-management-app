@@ -57,6 +57,9 @@ export default {
     unknownError: 'Неизвестная ошибка. Попробуйте, пожалуйста, позже',
     invalidLoginOrPassword: 'Неверная пара логин и пароль.',
     duplicateUser: 'Пользователь создан ранее!',
+    userNotFound: 'Пользователь не найден!',
+    create: 'Создать пользователя',
+    deleteConfirmation: 'Удалить пользователя "{{login}}"',
   },
   userMenu: {
     logout: 'Выйти',

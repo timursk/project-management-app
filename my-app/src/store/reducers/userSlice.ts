@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SignupUser, Token, UserInfo } from '../../types/api/authTypes';
-import { initUser, loginUser, logoutUser, signupUser } from './actionCreators';
+import { deleteUser, initUser, loginUser, logoutUser, signupUser } from './actionCreators';
 
 interface User {
   name: string;
@@ -33,6 +33,10 @@ const userReducer = createSlice({
       state.token = '';
       state.isLoading = false;
     },
+    resetLoading: (state: User) => {
+      state.error = '';
+      state.isLoading = false;
+    },
   },
   extraReducers: {
     [loginUser.fulfilled.type]: (state, action: PayloadAction<Token>) => {
@@ -43,6 +47,7 @@ const userReducer = createSlice({
 
     [loginUser.pending.type]: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
 
     [loginUser.rejected.type]: (state, action: PayloadAction<string>) => {
@@ -53,10 +58,12 @@ const userReducer = createSlice({
     [signupUser.fulfilled.type]: (state, action: PayloadAction<SignupUser>) => {
       state.name = action.payload.name;
       state.login = action.payload.login;
+      state.isLoading = false;
     },
 
     [signupUser.pending.type]: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
 
     [signupUser.rejected.type]: (state, action: PayloadAction<string>) => {
@@ -68,14 +75,19 @@ const userReducer = createSlice({
       state.name = action.payload.name;
       state.login = action.payload.login;
       state.token = action.payload.token;
+      state.isLoading = false;
+      state.error = '';
     },
 
     [initUser.pending.type]: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
 
     [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
+      state.name = '';
+      state.login = '';
+      state.token = '';
       state.isLoading = false;
     },
 
@@ -83,19 +95,39 @@ const userReducer = createSlice({
       state.name = '';
       state.login = '';
       state.token = '';
+      state.error = '';
+      state.isLoading = false;
     },
 
     [logoutUser.pending.type]: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
 
     [logoutUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.isLoading = false;
     },
+    [deleteUser.fulfilled.type]: (state) => {
+      state.name = '';
+      state.login = '';
+      state.token = '';
+      state.error = '';
+      state.isLoading = false;
+    },
+
+    [deleteUser.pending.type]: (state) => {
+      state.isLoading = true;
+      state.error = '';
+    },
+
+    [deleteUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
   },
 });
 
-export const { saveInfo, resetInfo } = userReducer.actions;
+export const { saveInfo, resetInfo, resetLoading } = userReducer.actions;
 
 export default userReducer.reducer;

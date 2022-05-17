@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { deleteUserService } from '../../services/deleteUserService';
 import { getUserService } from '../../services/getUserService';
 import { loginService } from '../../services/loginService';
 import { signupService } from '../../services/signupService';
@@ -58,6 +59,16 @@ export const logoutUser = createAsyncThunk('user/logout', async (_, thunkApi) =>
 export const updateUser = createAsyncThunk('user/update', async (user: UpdateUser, thunkApi) => {
   try {
     const response = await updateUserService(user);
+    return response;
+  } catch (e) {
+    const error = e as CustomError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export const deleteUser = createAsyncThunk('user/delete', async (token: string, thunkApi) => {
+  try {
+    const response = await deleteUserService(token);
     return response;
   } catch (e) {
     const error = e as CustomError;

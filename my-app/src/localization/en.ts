@@ -57,6 +57,9 @@ export default {
     unknownError: 'Unknown error. Please try later',
     invalidLoginOrPassword: 'Wrong login or password.',
     duplicateUser: 'User already exists!',
+    userNotFound: 'User not found!',
+    create: 'Create user',
+    deleteConfirmation: 'Delete user "{{login}}"',
   },
   userMenu: {
     logout: 'Logout',

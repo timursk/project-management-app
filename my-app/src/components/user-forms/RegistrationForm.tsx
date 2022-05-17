@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { signupUser } from '../../store/reducers/actionCreators';
+import { resetLoading } from '../../store/reducers/userSlice';
 import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
@@ -35,6 +36,7 @@ const RegistrationForm = () => {
       onSubmit: (values) => {
         const { login, name, password } = values;
         dispatch(signupUser({ login, name, password }));
+        navigate('/login');
       },
     });
 
@@ -47,6 +49,7 @@ const RegistrationForm = () => {
   const togglePasswordShown = () => setIsPasswordShown((prevState) => !prevState);
 
   useEffect(() => {
+    dispatch(resetLoading());
     if (token) navigate('/');
   }, [navigate, token]);
 

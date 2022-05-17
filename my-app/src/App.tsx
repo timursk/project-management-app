@@ -15,6 +15,8 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
 import EditProfileForm from './components/user-forms/EditProfileForm';
+import { API_URL } from './constants';
+import { ENDPOINTS } from './utils/constants';
 
 function App() {
   const dispatch = useAppDispatch();
