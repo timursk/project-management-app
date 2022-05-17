@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import { StyledLink } from './styles';
 
@@ -23,7 +23,7 @@ const Authors = () => {
       {authors.map((author, id) => (
         <Grid item xs key={id}>
           <StyledLink href={author.href} target="_blank">
-            {author.name}
+            <Typography variant="body1">{author.name}</Typography>
           </StyledLink>
         </Grid>
       ))}

@@ -14,6 +14,8 @@ const boardsApi = createApi({
 
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
 
+  tagTypes: ['Board'],
+
   endpoints: (build) => ({
     getAllBoards: build.query<Board[], Token>({
       query: ({ token }) => ({
@@ -23,6 +25,7 @@ const boardsApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: () => ['Board'],
     }),
 
     getBoardById: build.query<Board, GetBoardArg>({
@@ -44,6 +47,7 @@ const boardsApi = createApi({
         },
         body: { title },
       }),
+      invalidatesTags: ['Board'],
     }),
 
     updateBoard: build.mutation<BoardResult, UpdateBoardArg>({
@@ -55,6 +59,7 @@ const boardsApi = createApi({
         },
         body: { title },
       }),
+      invalidatesTags: ['Board'],
     }),
 
     deleteBoard: build.mutation<null, GetBoardArg>({
@@ -65,6 +70,7 @@ const boardsApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['Board'],
     }),
   }),
 });

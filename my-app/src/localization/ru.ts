@@ -5,7 +5,10 @@ export default {
     login: 'Вход',
   },
   main: {
-    header: 'Главная',
+    header: 'Доски',
+    add: 'Добавить доску',
+    delete: 'Удалить',
+    edit: 'Редактировать',
   },
   loginForm: {
     header: 'Вход',
