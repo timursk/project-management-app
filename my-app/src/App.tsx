@@ -6,21 +6,24 @@ import Main from './components/Main/Main';
 import NotFound from './components/NotFound';
 import RegistrationForm from './components/user-forms/RegistrationForm';
 
-import RegisterForm from './components/RegisterForm';
 import Board from './components/Board';
 import Welcome from './components/Welcome/Welcome';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { StyledBox, StyledContainer } from './app-styles';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from './store/hooks';
+import { useAppDispatch } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
+<<<<<<< HEAD
 import EditProfileForm from './components/user-forms/EditProfileForm';
 import { API_URL } from './constants';
 import { ENDPOINTS } from './utils/constants';
+=======
+import { getToken } from './utils/utils';
+>>>>>>> 9e5c68e (move constants to utils, rewrite getToken func in some components)
 
 function App() {
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.userReducer.token);
+  const token = getToken();
 
   useEffect(() => {
     dispatch(initUser());

@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginUser } from '../../store/reducers/actionCreators';
+<<<<<<< HEAD
 import { resetInfo, resetLoading, saveInfo } from '../../store/reducers/userSlice';
+=======
+import { resetInfo, saveInfo } from '../../store/reducers/userSlice';
+import { getToken } from '../../utils/utils';
+>>>>>>> 9e5c68e (move constants to utils, rewrite getToken func in some components)
 import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
@@ -20,7 +25,7 @@ const LoginForm: FC = () => {
   const login = useAppSelector((state) => state.userReducer.login);
   const error = useAppSelector((state) => state.userReducer.error);
   const isLoading = useAppSelector((state) => state.userReducer.isLoading);
-  const token = useAppSelector((state) => state.userReducer.token);
+  const token = getToken();
 
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
 

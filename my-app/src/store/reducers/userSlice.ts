@@ -71,13 +71,8 @@ const userReducer = createSlice({
     [initUser.fulfilled.type]: (state, action: PayloadAction<UserInfo>) => {
       state.name = action.payload.name;
       state.login = action.payload.login;
-<<<<<<< HEAD
-      state.token = action.payload.token;
       state.isLoading = false;
       state.error = '';
-=======
-      state.isLoading = false;
->>>>>>> 51b18e3 (refactor: remove token from userSlice, upd extraReducers)
     },
 
     [initUser.pending.type]: (state) => {
@@ -88,18 +83,13 @@ const userReducer = createSlice({
     [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.name = '';
       state.login = '';
-      state.token = '';
       state.isLoading = false;
     },
 
     [logoutUser.fulfilled.type]: (state) => {
       state.name = '';
       state.login = '';
-<<<<<<< HEAD
-      state.token = '';
       state.error = '';
-=======
->>>>>>> 51b18e3 (refactor: remove token from userSlice, upd extraReducers)
       state.isLoading = false;
     },
 
@@ -115,7 +105,6 @@ const userReducer = createSlice({
     [deleteUser.fulfilled.type]: (state) => {
       state.name = '';
       state.login = '';
-      state.token = '';
       state.error = '';
       state.isLoading = false;
     },

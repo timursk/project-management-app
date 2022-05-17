@@ -11,6 +11,7 @@ import StyledField from './StyledField';
 import StyledForm from './StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
 import { registrationValidationSchema } from './validation-schemas';
+import { getToken } from '../../utils/utils';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ const RegistrationForm = () => {
   const login = useAppSelector((state) => state.userReducer.login);
   const error = useAppSelector((state) => state.userReducer.error);
   const isLoading = useAppSelector((state) => state.userReducer.isLoading);
-  const token = useAppSelector((state) => state.userReducer.token);
+  const token = getToken();
 
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
