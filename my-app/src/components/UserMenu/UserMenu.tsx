@@ -9,18 +9,26 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ListItemIcon } from '@mui/material';
-import { logoutUser } from '../../store/reducers/actionCreators';
+import { deleteUser, logoutUser } from '../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import ConfirmModal from '../modals/ConfirmModal';
 
 const UserMenu = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const login = useAppSelector((state) => state.userReducer.login);
+  const { login, token } = useAppSelector((state) => state.userReducer);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const openMenu = Boolean(anchorEl);
+
+  const [isModalDeleteShown, setIsModalDeleteShown] = useState<boolean>(false);
+  const toggleModalDelete = () => setIsModalDeleteShown((prevState) => !prevState);
+
+  const [isModalLogoutShown, setIsModalLogoutShown] = useState<boolean>(false);
+  const toggleLogoutModal = () => setIsModalLogoutShown((prevState) => !prevState);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,23 +38,34 @@ const UserMenu = () => {
     setAnchorEl(null);
   };
 
-  // TODO add delete and settings options
-  const goToEdit = () => navigate('/profile');
+  const goToEdit = () => {
+    handleClose();
+    navigate('/profile');
+  };
+
+  const handleClickLogout = () => {
+    handleClose();
+    toggleLogoutModal();
+  };
+
+  const handleClickDelete = () => {
+    handleClose();
+    toggleModalDelete();
+  };
 
   const handleLogout = () => {
-    // TODO add modal confirmation
     dispatch(logoutUser());
   };
 
-  const handleDelete = () => alert('Delete user');
+  const handleDeleteUser = () => dispatch(deleteUser(token));
 
   return (
     <div>
       <Button
         id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={openMenu ? 'basic-menu' : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={openMenu ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<PersonIcon />}
         variant="contained"
@@ -56,7 +75,7 @@ const UserMenu = () => {
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
-        open={open}
+        open={openMenu}
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
@@ -68,20 +87,39 @@ const UserMenu = () => {
           </ListItemIcon>
           {t('userMenu.edit')}
         </MenuItem>
-        <MenuItem onClick={handleLogout}>
+        <MenuItem onClick={handleClickLogout}>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
           {t('userMenu.logout')}
         </MenuItem>
-        <MenuItem onClick={handleDelete}>
+        <MenuItem onClick={handleClickDelete}>
           <ListItemIcon>
-            {' '}
             <DeleteIcon />
           </ListItemIcon>
           {t('userMenu.delete')}
         </MenuItem>
       </Menu>
+      {isModalDeleteShown && (
+        <ConfirmModal
+          onConfirm={() => {
+            handleDeleteUser();
+            toggleModalDelete();
+          }}
+          onClose={toggleModalDelete}
+          actionText={t('userForms.deleteConfirmation', { login })}
+        />
+      )}
+      {isModalLogoutShown && (
+        <ConfirmModal
+          onConfirm={() => {
+            handleLogout();
+            toggleLogoutModal();
+          }}
+          onClose={toggleLogoutModal}
+          actionText={t('userForms.logoutConfirmation', { login })}
+        />
+      )}
     </div>
   );
 };

@@ -60,6 +60,7 @@ export default {
     userNotFound: 'Пользователь не найден!',
     create: 'Создать пользователя',
     deleteConfirmation: 'Удалить пользователя "{{login}}"',
+    logoutConfirmation: 'Выйти из учетной записи "{{login}}"',
   },
   userMenu: {
     logout: 'Выйти',

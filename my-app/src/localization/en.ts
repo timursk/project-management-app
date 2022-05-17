@@ -60,6 +60,7 @@ export default {
     userNotFound: 'User not found!',
     create: 'Create user',
     deleteConfirmation: 'Delete user "{{login}}"',
+    logoutConfirmation: 'Logout user "{{login}}"',
   },
   userMenu: {
     logout: 'Logout',
