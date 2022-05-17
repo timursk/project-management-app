@@ -9,6 +9,7 @@ export default {
     add: 'Add board',
     delete: 'Delete',
     edit: 'Edit',
+    search: 'Search',
   },
   loginForm: {
     header: 'Sign in:',

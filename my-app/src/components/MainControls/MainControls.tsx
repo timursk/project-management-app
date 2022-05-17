@@ -36,7 +36,7 @@ const MainControls = ({ value, setValue }: Props) => {
         <StyledHeaderTypography variant="h6">{`${t('main.header')}`}</StyledHeaderTypography>
 
         <StyledDivRelative>
-          <StyledInputBase value={value} onChange={handleChange} placeholder="Search" />
+          <StyledInputBase value={value} onChange={handleChange} placeholder={t('main.search')} />
 
           <StyledSearchIcon />
 
