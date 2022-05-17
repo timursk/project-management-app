@@ -2,7 +2,6 @@ import { CardContent, CardActionArea, Grid } from '@mui/material';
 import { FC, useEffect, useRef, useState } from 'react';
 import { StyledCard, StyledDimmer, StyledTypography } from './styles';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import BoardCardControls from '../BoardCardControls/BoardCardControls';
 import BoardEdit from '../BoardEdit/BoardEdit';
 
@@ -12,7 +11,6 @@ interface BoardCardProps {
 }
 
 const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -34,6 +32,7 @@ const BoardCard: FC<BoardCardProps> = ({ id, title }) => {
     if (!isEdit) {
       return;
     }
+
     window.addEventListener('click', handleClick);
 
     return () => {
