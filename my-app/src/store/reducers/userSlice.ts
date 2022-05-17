@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SignupUser, Token, UserInfo } from '../../types/api/authTypes';
 import { deleteUser, initUser, loginUser, logoutUser, signupUser } from './actionCreators';
+import { SignupUser, UserInfo } from '../../types/api/authTypes';
 
 interface User {
   name: string;
   login: string;
-  token: string;
   isLoading: boolean;
   error: string;
 }
@@ -13,7 +12,6 @@ interface User {
 const initialState: User = {
   name: '',
   login: '',
-  token: '',
   isLoading: false,
   error: '',
 };
@@ -26,11 +24,11 @@ const userReducer = createSlice({
       state.login = action.payload.login;
       state.name = action.payload.name;
     },
+
     resetInfo: (state: User) => {
       state.login = '';
       state.name = '';
       state.error = '';
-      state.token = '';
       state.isLoading = false;
     },
     resetLoading: (state: User) => {
@@ -39,8 +37,7 @@ const userReducer = createSlice({
     },
   },
   extraReducers: {
-    [loginUser.fulfilled.type]: (state, action: PayloadAction<Token>) => {
-      state.token = action.payload.token;
+    [loginUser.fulfilled.type]: (state) => {
       state.isLoading = false;
       state.error = '';
     },
@@ -74,9 +71,13 @@ const userReducer = createSlice({
     [initUser.fulfilled.type]: (state, action: PayloadAction<UserInfo>) => {
       state.name = action.payload.name;
       state.login = action.payload.login;
+<<<<<<< HEAD
       state.token = action.payload.token;
       state.isLoading = false;
       state.error = '';
+=======
+      state.isLoading = false;
+>>>>>>> 51b18e3 (refactor: remove token from userSlice, upd extraReducers)
     },
 
     [initUser.pending.type]: (state) => {
@@ -94,8 +95,11 @@ const userReducer = createSlice({
     [logoutUser.fulfilled.type]: (state) => {
       state.name = '';
       state.login = '';
+<<<<<<< HEAD
       state.token = '';
       state.error = '';
+=======
+>>>>>>> 51b18e3 (refactor: remove token from userSlice, upd extraReducers)
       state.isLoading = false;
     },
 
