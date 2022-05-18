@@ -51,7 +51,7 @@ export default {
     matchPasswords: 'Пароли должны совпадать!',
     reset: 'Сброс',
     submit: 'Создать',
-    delete: 'Delete user',
+    delete: 'Удалить пользователя',
     enter: 'Вход',
     showPassword: 'Показать пароль',
     unknownError: 'Неизвестная ошибка. Попробуйте, пожалуйста, позже',
