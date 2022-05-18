@@ -6,6 +6,7 @@ export const StyledBox = styled(Box)`
   top: 100%;
   right: 0;
   padding: 10px;
+
   max-width: 140px;
   min-width: 130px;
   width: auto;
@@ -16,6 +17,7 @@ export const StyledBox = styled(Box)`
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+
   gap: 10px;
 
   z-index: 100;

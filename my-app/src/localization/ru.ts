@@ -9,9 +9,7 @@ export default {
     header: 'Доски',
     add: 'Добавить доску',
     search: 'Поиск',
-
     edit: 'Редактировать доску',
-
     deleteConfirmation: 'Удалить доску?',
     contributors: 'Участники',
   },
