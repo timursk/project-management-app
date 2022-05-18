@@ -15,7 +15,7 @@ const columnsApi = createApi({
   reducerPath: 'columnsApi',
 
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
-
+  tagTypes: ['Column'],
   endpoints: (build) => ({
     getAllColumns: build.query<ColumnResult[], GetAllColumnsArg>({
       query: ({ boardId, token }) => ({
@@ -25,6 +25,7 @@ const columnsApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: () => ['Column'],
     }),
 
     getColumnById: build.query<Column, GetColumnByIdArg>({
@@ -38,14 +39,15 @@ const columnsApi = createApi({
     }),
 
     createColumn: build.mutation<CreateColumnRes, CreateColumnArg>({
-      query: ({ title, order, boardId, token }) => ({
+      query: ({ title, boardId, token }) => ({
         url: getColumnUrl(boardId),
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: { title, order },
+        body: { title },
       }),
+      invalidatesTags: ['Column'],
     }),
 
     updateColumn: build.mutation<ColumnResult, UpdateColumnArg>({
@@ -57,6 +59,7 @@ const columnsApi = createApi({
         },
         body: { title, order },
       }),
+      invalidatesTags: ['Column'],
     }),
 
     deleteColumn: build.mutation<null, GetColumnByIdArg>({
@@ -67,6 +70,7 @@ const columnsApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['Column'],
     }),
   }),
 });

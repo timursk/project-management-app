@@ -10,9 +10,10 @@ import { useTranslation } from 'react-i18next';
 interface ConfirmModalProps {
   onConfirm: () => void;
   onClose: () => void;
-  actionText: string;
+  actionText?: string;
+  children?: React.ReactElement | React.ReactElement[];
 }
-const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText }) => {
+const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText, children }) => {
   const { t } = useTranslation();
 
   const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -41,8 +42,19 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText })
           <StyledModalCloseButton onClick={onClose}>
             <CloseIcon color="primary" aria-label={t('modal.closeModal')} />
           </StyledModalCloseButton>
-          <h3>{t<string>('modal.confirmHeader')}</h3>
-          <span>{actionText}</span>
+          {children ? (
+            <>
+              <h3>{t<string>('modal.confirmHeader')}</h3>
+              <span>{actionText}</span>
+              {children}
+            </>
+          ) : (
+            <>
+              <h3>{t<string>('modal.confirmHeader')}</h3>
+              <span>{actionText}</span>
+            </>
+          )}
+
           <ModalButtons onConfirm={onConfirm} onDeny={onClose} />
         </StyledModal>
       </StyledOverlay>

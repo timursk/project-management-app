@@ -39,25 +39,25 @@ const boardsApi = createApi({
     }),
 
     createBoard: build.mutation<BoardResult, CreateBoardArg>({
-      query: ({ title, token }) => ({
+      query: ({ title, token, description }) => ({
         url: ENDPOINTS.BOARDS,
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: { title },
+        body: { title, description },
       }),
       invalidatesTags: ['Board'],
     }),
 
     updateBoard: build.mutation<BoardResult, UpdateBoardArg>({
-      query: ({ id, title, token }) => ({
+      query: ({ id, title, token, description }) => ({
         url: `${ENDPOINTS.BOARDS}/${id}`,
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: { title },
+        body: { title, description },
       }),
       invalidatesTags: ['Board'],
     }),

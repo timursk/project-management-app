@@ -5,7 +5,6 @@ import Login from './components/user-forms/LoginForm';
 import Main from './pages/Main/Main';
 import NotFound from './pages/NotFound/NotFound';
 import RegistrationForm from './components/user-forms/RegistrationForm';
-
 import Board from './pages/Board/Board';
 import Welcome from './pages/Welcome/Welcome';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';

@@ -3,9 +3,11 @@ import boardsApi from '../services/boardsService';
 import columnsApi from '../services/columnsService';
 import tasksApi from '../services/tasksService';
 import userReducer from './reducers/userSlice';
+import columnReducer from './reducers/columnSlice';
 
 const rootReducer = combineReducers({
   userReducer,
+  columnReducer,
   [boardsApi.reducerPath]: boardsApi.reducer,
   [columnsApi.reducerPath]: columnsApi.reducer,
   [tasksApi.reducerPath]: tasksApi.reducer,

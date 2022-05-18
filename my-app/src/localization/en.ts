@@ -74,4 +74,9 @@ export default {
     confirm: 'Confirm',
     deny: 'Deny',
   },
+  column: {
+    button: '+ Add another column',
+    delete: 'Delete column',
+    add: 'Add?',
+  },
 };

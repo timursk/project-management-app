@@ -2,6 +2,7 @@ export interface Board {
   id: string;
   title: string;
   columns: Column[];
+  description: string;
 }
 
 export interface Column {

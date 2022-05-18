@@ -18,7 +18,7 @@ export interface GetColumnByIdArg {
 export interface CreateColumnArg {
   boardId: string;
   title: string;
-  order: number;
+
   token: string;
 }
 
@@ -32,6 +32,6 @@ export interface UpdateColumnArg {
   boardId: string;
   columnId: string;
   title: string;
-  order: number;
+  order?: number;
   token: string;
 }

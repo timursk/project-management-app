@@ -1,4 +1,4 @@
-export const API_URL = 'https://whispering-bayou-88052.herokuapp.com';
+export const API_URL = 'https://infinite-citadel-87423.herokuapp.com';
 
 export const ENDPOINTS = {
   USERS: '/users',
