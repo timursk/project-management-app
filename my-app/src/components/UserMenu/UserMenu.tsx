@@ -54,10 +54,14 @@ const UserMenu = () => {
   };
 
   const handleLogout = () => {
+    toggleLogoutModal();
     dispatch(logoutUser());
   };
 
-  const handleDeleteUser = () => dispatch(deleteUser(token));
+  const handleDeleteUser = () => {
+    toggleModalDelete();
+    dispatch(deleteUser(token));
+  };
 
   return (
     <div>
@@ -102,20 +106,14 @@ const UserMenu = () => {
       </Menu>
       {isModalDeleteShown && (
         <ConfirmModal
-          onConfirm={() => {
-            handleDeleteUser();
-            toggleModalDelete();
-          }}
+          onConfirm={handleDeleteUser}
           onClose={toggleModalDelete}
           actionText={t('userForms.deleteConfirmation', { login })}
         />
       )}
       {isModalLogoutShown && (
         <ConfirmModal
-          onConfirm={() => {
-            handleLogout();
-            toggleLogoutModal();
-          }}
+          onConfirm={handleLogout}
           onClose={toggleLogoutModal}
           actionText={t('userForms.logoutConfirmation', { login })}
         />
