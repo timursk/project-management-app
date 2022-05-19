@@ -5,15 +5,15 @@ export interface BoardResult {
 
 export interface CreateBoardArg {
   title: string;
-  token: string;
   description: string;
+  token: string;
 }
 
 export interface UpdateBoardArg {
   id: string;
   title: string;
-  token: string;
   description: string;
+  token: string;
 }
 
 export interface GetBoardArg {

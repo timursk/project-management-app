@@ -1,7 +1,6 @@
 import { Button, Stack } from '@mui/material';
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import columnsApi from '../../services/columnsService';
-import { useAppSelector } from '../../store/hooks';
 import { Column } from '../../types/store/storeTypes';
 import { StyledField } from '../ColumnCard/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
@@ -26,6 +25,7 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
   textValue,
 }) => {
   const token = getToken();
+
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
 
   const handleUpdate = () => {

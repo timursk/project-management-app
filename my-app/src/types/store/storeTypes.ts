@@ -1,8 +1,8 @@
 export interface Board {
   id: string;
   title: string;
-  columns: Column[];
   description: string;
+  columns: Column[];
 }
 
 export interface Column {

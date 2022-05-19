@@ -18,14 +18,13 @@ export interface GetColumnByIdArg {
 export interface CreateColumnArg {
   boardId: string;
   title: string;
-
   token: string;
 }
 
 export interface CreateColumnRes {
   boardId: string;
   title: string;
-  order: number;
+  order?: number;
 }
 
 export interface UpdateColumnArg {

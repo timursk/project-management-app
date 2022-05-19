@@ -15,7 +15,9 @@ interface ColumnAddProps {
 
 const ColumnAdd: FC<ColumnAddProps> = ({ boardId, order }) => {
   const { t } = useTranslation();
+
   const token = getToken();
+
   const [addColumn, { data }] = columnsApi.useCreateColumnMutation();
   const [title, setTitle] = useState('');
   const dispatch = useAppDispatch();

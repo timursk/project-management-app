@@ -12,8 +12,10 @@ interface ColumnCardProps {
   id: string;
   isLoading: boolean;
 }
+
 const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
   const token = getToken();
+
   const [isEdit, setEdit] = useState(false);
   const [columnId, setId] = useState('');
   const { data } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });

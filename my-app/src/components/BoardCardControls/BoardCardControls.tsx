@@ -30,6 +30,7 @@ const BoardCardControls = ({ id, setIsEdit }: Props) => {
     e.stopPropagation();
     setIsEdit(true);
   };
+
   const handleClose = () => {
     setShow(false);
   };

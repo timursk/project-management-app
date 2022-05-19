@@ -51,7 +51,7 @@ const columnsApi = createApi({
     }),
 
     updateColumn: build.mutation<ColumnResult, UpdateColumnArg>({
-      query: ({ title, order, columnId, boardId, token }) => ({
+      query: ({ title, columnId, boardId, order, token }) => ({
         url: getColumnUrl(boardId, columnId),
         method: 'PUT',
         headers: {
@@ -66,6 +66,7 @@ const columnsApi = createApi({
       query: ({ columnId, boardId, token }) => ({
         url: getColumnUrl(boardId, columnId),
         method: 'DELETE',
+
         headers: {
           Authorization: `Bearer ${token}`,
         },
