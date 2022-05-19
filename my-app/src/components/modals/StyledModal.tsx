@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import theme from '../../theme';
 
 const StyledModal = styled.main(
   () => `
@@ -14,7 +15,7 @@ const StyledModal = styled.main(
   max-width: 400px;
 
   background-color: #ffffff;
-  border: 2px solid #1769aa;
+  border: 2px solid ${theme.palette.primary.main};
   border-radius: 10px;
 
 `

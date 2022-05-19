@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { deleteUserService } from '../../services/deleteUserService';
 import { getUserService } from '../../services/getUserService';
 import { loginService } from '../../services/loginService';
 import { signupService } from '../../services/signupService';
-import { LoginUser, SignupUser } from '../../types/api/authTypes';
+import { updateUserService } from '../../services/updateUserService';
+import { LoginUser, SignupUser, UpdateUser } from '../../types/api/authTypes';
 
 type CustomError = {
   message: string;
@@ -48,6 +50,26 @@ export const logoutUser = createAsyncThunk('user/logout', async (_, thunkApi) =>
     // TODO add logout request?
     window.localStorage.removeItem('PMA-token');
     return {};
+  } catch (e) {
+    const error = e as CustomError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export const updateUser = createAsyncThunk('user/update', async (user: UpdateUser, thunkApi) => {
+  try {
+    const response = await updateUserService(user);
+    return response;
+  } catch (e) {
+    const error = e as CustomError;
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export const deleteUser = createAsyncThunk('user/delete', async (token: string, thunkApi) => {
+  try {
+    const response = await deleteUserService(token);
+    return response;
   } catch (e) {
     const error = e as CustomError;
     return thunkApi.rejectWithValue(error.message);

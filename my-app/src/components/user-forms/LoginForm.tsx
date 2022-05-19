@@ -2,10 +2,10 @@ import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
 import { FC, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginUser } from '../../store/reducers/actionCreators';
-import { resetInfo, saveInfo } from '../../store/reducers/userSlice';
+import { resetInfo, resetLoading, saveInfo } from '../../store/reducers/userSlice';
 import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';
@@ -45,10 +45,18 @@ const LoginForm: FC = () => {
   const errorMessage = useMemo(() => {
     if (isLoading || !error) return '';
     if (error === 'Invalid user or password') return t('userForms.invalidLoginOrPassword');
+    if (error === 'User not found')
+      return (
+        <>
+          <span>{t('userForms.userNotFound')}</span>
+          <Link to={'/registration'}>{t('userForms.createUser')}</Link>
+        </>
+      );
     return t('userForms.unknownError');
   }, [error, isLoading, t]);
 
   useEffect(() => {
+    dispatch(resetLoading());
     if (token) navigate('/');
   }, [navigate, token]);
 

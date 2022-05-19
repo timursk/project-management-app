@@ -12,6 +12,6 @@ export const signupService: SignupService = async (user) => {
     body: JSON.stringify(user),
   });
   if (response.status === 409) throw new Error('Duplicate user');
-  if (response.status !== 201) throw new Error('Unknown error');
+  if (!response.ok) throw new Error('Unknown error');
   return response.json();
 };

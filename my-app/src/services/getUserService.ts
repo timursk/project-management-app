@@ -1,12 +1,8 @@
-import { UserInfo } from '../types/api/authTypes';
+import { DecodedToken, UserInfo } from '../types/api/authTypes';
 import { API_URL, ENDPOINTS } from '../utils/constants';
 import jwt_decode from 'jwt-decode';
 
 type GetUserService = (token: string) => Promise<UserInfo>;
-
-interface DecodedToken {
-  userId: string;
-}
 
 export const getUserService: GetUserService = async (token: string) => {
   const { userId }: DecodedToken = jwt_decode(token);
@@ -19,6 +15,7 @@ export const getUserService: GetUserService = async (token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
+  console.log(response);
   if (response.status === 404) throw new Error('User not found');
   if (response.status !== 200) throw new Error('Unknown error');
   return response.json();

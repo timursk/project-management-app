@@ -15,7 +15,7 @@ root.render(
   <React.StrictMode>
     <Suspense fallback={<Loader />}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Provider store={store}>
             <App />
           </Provider>

@@ -14,6 +14,9 @@ import { StyledBox, StyledContainer } from './app-styles';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
+import EditProfileForm from './components/user-forms/EditProfileForm';
+import { API_URL } from './constants';
+import { ENDPOINTS } from './utils/constants';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -38,6 +41,7 @@ function App() {
             <Route path="/registration" element={<RegistrationForm />} />
             <Route path="/login" element={<Login />} />
             <Route path="/board/:id" element={<Board />} />
+            <Route path="/profile" element={<EditProfileForm />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </StyledContainer>
