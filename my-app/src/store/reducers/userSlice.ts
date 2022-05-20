@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SignupUser, Token, UserInfo } from '../../types/api/authTypes';
 import { deleteUser, initUser, loginUser, logoutUser, signupUser } from './actionCreators';
+import { SignupUser, UserInfo } from '../../types/api/authTypes';
 
 interface User {
   name: string;
   login: string;
-  token: string;
   isLoading: boolean;
   error: string;
 }
@@ -13,7 +12,6 @@ interface User {
 const initialState: User = {
   name: '',
   login: '',
-  token: '',
   isLoading: false,
   error: '',
 };
@@ -26,11 +24,11 @@ const userReducer = createSlice({
       state.login = action.payload.login;
       state.name = action.payload.name;
     },
+
     resetInfo: (state: User) => {
       state.login = '';
       state.name = '';
       state.error = '';
-      state.token = '';
       state.isLoading = false;
     },
     resetLoading: (state: User) => {
@@ -39,8 +37,7 @@ const userReducer = createSlice({
     },
   },
   extraReducers: {
-    [loginUser.fulfilled.type]: (state, action: PayloadAction<Token>) => {
-      state.token = action.payload.token;
+    [loginUser.fulfilled.type]: (state) => {
       state.isLoading = false;
       state.error = '';
     },
@@ -74,7 +71,6 @@ const userReducer = createSlice({
     [initUser.fulfilled.type]: (state, action: PayloadAction<UserInfo>) => {
       state.name = action.payload.name;
       state.login = action.payload.login;
-      state.token = action.payload.token;
       state.isLoading = false;
       state.error = '';
     },
@@ -87,14 +83,12 @@ const userReducer = createSlice({
     [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.name = '';
       state.login = '';
-      state.token = '';
       state.isLoading = false;
     },
 
     [logoutUser.fulfilled.type]: (state) => {
       state.name = '';
       state.login = '';
-      state.token = '';
       state.error = '';
       state.isLoading = false;
     },
@@ -111,7 +105,6 @@ const userReducer = createSlice({
     [deleteUser.fulfilled.type]: (state) => {
       state.name = '';
       state.login = '';
-      state.token = '';
       state.error = '';
       state.isLoading = false;
     },

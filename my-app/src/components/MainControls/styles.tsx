@@ -18,27 +18,15 @@ export const StyledDivContainer = styled.div`
   }
 `;
 
-export const StyledLeftItem = styled.div`
-  display: flex;
-  flex: 7 1;
-`;
-
-export const StyledRightItem = styled.div`
-  display: flex;
-  flex: 3 1;
-  flex-direction: row-reverse;
-`;
-
 export const StyledHeaderTypography = styled(Typography)`
   margin-right: 40px;
-  @media (max-width: 460px) {
-    margin-right: 0;
-  }
+  flex: 2 1;
 `;
 
 export const StyledDivRelative = styled.div`
   position: relative;
   width: 100%;
+  flex: 7 1;
 `;
 
 export const StyledInputBase = styled(InputBase)`

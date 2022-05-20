@@ -1,15 +1,11 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { IconButton } from '@mui/material';
 import { t } from 'i18next';
 import {
-  StyledAccountCircle,
   StyledDivContainer,
   StyledHeaderTypography,
   StyledIconButton,
   StyledInputBase,
-  StyledLeftItem,
   StyledDivRelative,
-  StyledRightItem,
   StyledSearchIcon,
 } from './styles';
 
@@ -32,27 +28,19 @@ const MainControls = ({ value, setValue }: Props) => {
 
   return (
     <StyledDivContainer>
-      <StyledLeftItem>
-        <StyledHeaderTypography variant="h6">{`${t('main.header')}`}</StyledHeaderTypography>
+      <StyledHeaderTypography variant="h6">{`${t('main.header')}`}</StyledHeaderTypography>
 
-        <StyledDivRelative>
-          <StyledInputBase value={value} onChange={handleChange} placeholder="Search" />
+      <StyledDivRelative>
+        <StyledInputBase value={value} onChange={handleChange} placeholder={t('main.search')} />
 
-          <StyledSearchIcon />
+        <StyledSearchIcon />
 
-          {value && (
-            <StyledIconButton onClick={handleDelete} disableRipple={true}>
-              <ClearIcon />
-            </StyledIconButton>
-          )}
-        </StyledDivRelative>
-      </StyledLeftItem>
-
-      <StyledRightItem>
-        <IconButton size="large" onClick={() => {}}>
-          <StyledAccountCircle />
-        </IconButton>
-      </StyledRightItem>
+        {value && (
+          <StyledIconButton onClick={handleDelete} disableRipple={true}>
+            <ClearIcon />
+          </StyledIconButton>
+        )}
+      </StyledDivRelative>
     </StyledDivContainer>
   );
 };

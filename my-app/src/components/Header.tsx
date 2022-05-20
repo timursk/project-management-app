@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { AppBar, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
-import { useAppSelector } from '../store/hooks';
+import { getToken } from '../utils/utils';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -14,7 +14,7 @@ const StyledNavLink = styled(NavLink)`
 
 const Header: FC = () => {
   const { t } = useTranslation();
-  const token = useAppSelector((state) => state.userReducer.token);
+  const token = getToken();
 
   return (
     <Box>

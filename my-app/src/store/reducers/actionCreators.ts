@@ -5,6 +5,7 @@ import { loginService } from '../../services/loginService';
 import { signupService } from '../../services/signupService';
 import { updateUserService } from '../../services/updateUserService';
 import { LoginUser, SignupUser, UpdateUser } from '../../types/api/authTypes';
+import { getToken, removeToken, setToken } from '../../utils/utils';
 
 type CustomError = {
   message: string;
@@ -13,7 +14,7 @@ type CustomError = {
 export const loginUser = createAsyncThunk('user/login', async (user: LoginUser, thunkApi) => {
   try {
     const response = await loginService(user);
-    window.localStorage.setItem('PMA-token', response.token);
+    setToken(response.token);
     return response;
   } catch (e) {
     const error = e as CustomError;
@@ -33,7 +34,7 @@ export const signupUser = createAsyncThunk('user/signup', async (user: SignupUse
 
 export const initUser = createAsyncThunk('user/init', async (_, thunkApi) => {
   try {
-    const token: string = window.localStorage.getItem('PMA-token');
+    const token = getToken();
     if (token) {
       const response = await getUserService(token);
       return { ...response, token };
@@ -48,7 +49,7 @@ export const initUser = createAsyncThunk('user/init', async (_, thunkApi) => {
 export const logoutUser = createAsyncThunk('user/logout', async (_, thunkApi) => {
   try {
     // TODO add logout request?
-    window.localStorage.removeItem('PMA-token');
+    removeToken();
     return {};
   } catch (e) {
     const error = e as CustomError;

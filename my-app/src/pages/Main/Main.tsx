@@ -3,45 +3,46 @@ import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import boardsApi from '../../services/boardsService';
-import BoardCard from '../BoardCard/BoardCard';
-import Loader from '../Loader/Loader';
+import BoardCard from '../../components/BoardCard/BoardCard';
+import Loader from '../../components/Loader/Loader';
 import { StyledGridItem, StyledGrid, StyledAddCircleIcon } from './styles';
-import MainControls from '../MainControls/MainControls';
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTNiNjY4NS00OTA0LTRlNGMtYWM5MS00MGRjNjBhN2JlZTkiLCJsb2dpbiI6InRlc3QiLCJpYXQiOjE2NTIyNjg3NzF9.z3z283PgbUDkcblzNR-SZO01qW68dRPGWQxLy-X_ydQ';
+import MainControls from '../../components/MainControls/MainControls';
+import { filterByTitle, getToken, sleep } from '../../utils/utils';
 
 const Main: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const token = getToken();
   const { data: boardsData, isError, isLoading, error } = boardsApi.useGetAllBoardsQuery({ token });
   const [createBoard, {}] = boardsApi.useCreateBoardMutation();
 
-  const [data, setData] = useState(boardsData);
+  const [boards, setBoards] = useState(boardsData);
   const [value, setValue] = useState('');
 
   useEffect(() => {
     if (isError && 'status' in error && error.status === 401) {
       alert('Token has expired! Redirecting...');
-      navigate('/Welcome');
+
+      sleep(3000).then(() => {
+        navigate('/welcome');
+      });
     }
   }, [error, isError, navigate]);
 
   useEffect(() => {
-    setData(boardsData);
+    setBoards(boardsData);
   }, [boardsData]);
 
   useEffect(() => {
     if (!value) {
-      setData(boardsData);
+      setBoards(boardsData);
       return;
     }
 
-    const filtered = boardsData.filter(({ title }) =>
-      title.toLowerCase().includes(value.toLowerCase())
-    );
-    setData(filtered);
+    const filteredBoards = filterByTitle(boardsData, value);
+
+    setBoards(filteredBoards);
   }, [value, setValue, boardsData]);
 
   const handleAdd = () => {
@@ -62,8 +63,8 @@ const Main: FC = () => {
       <MainControls value={value} setValue={setValue} />
 
       <StyledGrid container spacing={4}>
-        {data &&
-          data.map(({ id, title }) => {
+        {boards &&
+          boards.map(({ id, title }) => {
             return <BoardCard key={id} id={id} title={title} />;
           })}
 

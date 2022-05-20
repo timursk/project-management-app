@@ -13,13 +13,15 @@ import { deleteUser, logoutUser } from '../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ConfirmModal from '../modals/ConfirmModal';
+import { getToken } from '../../utils/utils';
 
 const UserMenu = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { login, token } = useAppSelector((state) => state.userReducer);
+  const { login } = useAppSelector((state) => state.userReducer);
+  const token = getToken();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);

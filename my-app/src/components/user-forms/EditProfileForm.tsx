@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteUser, updateUser } from '../../store/reducers/actionCreators';
+import { getToken } from '../../utils/utils';
 import ConfirmModal from '../modals/ConfirmModal';
 import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
@@ -21,7 +22,8 @@ const RegistrationForm = () => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const toggleModal = () => setIsModalShown((prevState) => !prevState);
 
-  const { login, error, isLoading, token, name } = useAppSelector((state) => state.userReducer);
+  const { login, error, isLoading, name } = useAppSelector((state) => state.userReducer);
+  const token = getToken();
 
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({

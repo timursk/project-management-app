@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 
 export const StyledBox = styled(Box)`
   position: absolute;
@@ -11,4 +11,8 @@ export const StyledBox = styled(Box)`
 export const StyledColumn = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const StyledTooltip = styled(Tooltip)`
+  marign-top: -10px;
 `;
