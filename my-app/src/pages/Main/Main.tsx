@@ -8,6 +8,7 @@ import Loader from '../../components/Loader/Loader';
 import { StyledGridItem, StyledGrid, StyledAddCircleIcon } from './styles';
 import MainControls from '../../components/MainControls/MainControls';
 import { filterByTitle, getToken, sleep } from '../../utils/utils';
+import TaskCard from '../../components/TaskCard/TaskCard';
 
 const Main: FC = () => {
   const { t } = useTranslation();
@@ -76,6 +77,8 @@ const Main: FC = () => {
           </Tooltip>
         </StyledGridItem>
       </StyledGrid>
+
+      <TaskCard taskId={''} />
     </>
   );
 };

@@ -74,4 +74,7 @@ export default {
     confirm: 'Подтвердить',
     deny: 'Отменить',
   },
+  task: {
+    deleteTask: 'Удалить задачу "{{title}}"',
+  },
 };

@@ -74,4 +74,7 @@ export default {
     confirm: 'Confirm',
     deny: 'Deny',
   },
+  task: {
+    deleteTask: 'Delete task "{{title}}"',
+  },
 };
