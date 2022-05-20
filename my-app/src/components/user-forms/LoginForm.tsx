@@ -5,12 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginUser } from '../../store/reducers/actionCreators';
-<<<<<<< HEAD
 import { resetInfo, resetLoading, saveInfo } from '../../store/reducers/userSlice';
-=======
-import { resetInfo, saveInfo } from '../../store/reducers/userSlice';
 import { getToken } from '../../utils/utils';
->>>>>>> 9e5c68e (move constants to utils, rewrite getToken func in some components)
 import FormErrorMessage from './FormErrorMessage';
 import StyledField from './StyledField';
 import StyledForm from './StyledForm';

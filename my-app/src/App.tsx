@@ -13,13 +13,8 @@ import { StyledBox, StyledContainer } from './app-styles';
 import { useEffect } from 'react';
 import { useAppDispatch } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
-<<<<<<< HEAD
 import EditProfileForm from './components/user-forms/EditProfileForm';
-import { API_URL } from './constants';
-import { ENDPOINTS } from './utils/constants';
-=======
 import { getToken } from './utils/utils';
->>>>>>> 9e5c68e (move constants to utils, rewrite getToken func in some components)
 
 function App() {
   const dispatch = useAppDispatch();
