@@ -57,7 +57,7 @@ const tasksApi = createApi({
       }),
     }),
 
-    deleteTask: build.query<null, GetTaskByIdArg>({
+    deleteTask: build.mutation<null, GetTaskByIdArg>({
       query: ({ boardId, columnId, taskId, token }) => ({
         url: getTaskUrl(boardId, columnId, taskId),
         method: 'DELETE',

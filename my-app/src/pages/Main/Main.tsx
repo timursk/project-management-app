@@ -10,9 +10,7 @@ import MainControls from '../../components/MainControls/MainControls';
 import { filterByTitle, getToken, sleep } from '../../utils/utils';
 import TaskCard from '../../components/task-components/TaskCard/TaskCard';
 import AddTaskForm from '../../components/task-components/TaskCard/AddTaskForm/AddTaskForm';
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTNiNjY4NS00OTA0LTRlNGMtYWM5MS00MGRjNjBhN2JlZTkiLCJsb2dpbiI6InRlc3QiLCJpYXQiOjE2NTIyNjg3NzF9.z3z283PgbUDkcblzNR-SZO01qW68dRPGWQxLy-X_ydQ';
+import tasksApi from '../../services/tasksService';
 
 const Main: FC = () => {
   const { t } = useTranslation();
@@ -24,6 +22,15 @@ const Main: FC = () => {
 
   const [boards, setBoards] = useState(boardsData);
   const [value, setValue] = useState('');
+
+  //TMP
+  const { data: tasksData } = tasksApi.useGetAllTasksQuery({
+    token,
+    boardId: '9b63e927-77bc-48d1-b0e7-58ddc062fbe1',
+    columnId: '63be5fa5-d490-4fe2-9caf-9becd7d79e66',
+  });
+
+  console.log(tasksData);
 
   useEffect(() => {
     if (isError && 'status' in error && error.status === 401) {
@@ -82,7 +89,8 @@ const Main: FC = () => {
         </StyledGridItem>
       </StyledGrid>
 
-      <TaskCard taskId={''} />
+      {/* <TaskCard taskId={''} /> */}
+      {tasksData && tasksData.map((task) => <TaskCard key={`task-${task.id}`} task={task} />)}
       <AddTaskForm
         boardId={'9b63e927-77bc-48d1-b0e7-58ddc062fbe1'}
         columnId={'63be5fa5-d490-4fe2-9caf-9becd7d79e66'}

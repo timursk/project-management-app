@@ -7,27 +7,23 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UserButton from './UserButton';
 import ConfirmModal from '../../modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
+import { Task } from '../../../types/store/storeTypes';
+import tasksApi from '../../../services/tasksService';
+import { getToken } from '../../../utils/utils';
 
 interface TaskCardProps {
-  taskId: string;
+  task: Task;
 }
 
-const TaskCard: FC<TaskCardProps> = ({ taskId }) => {
+const TaskCard: FC<TaskCardProps> = ({ task }) => {
   const { t } = useTranslation();
   const [isHover, setIsHover] = useState<boolean>(false);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [isModalDeleteShown, setIsModalDeleteShown] = useState<boolean>(false);
   const toggleModalDelete = () => setIsModalDeleteShown((prevState) => !prevState);
+  const token = getToken();
 
-  const task = {
-    id: '40af606c-c0bb-47d1-bc20-a2857242cde3',
-    title: 'Task: pet the cat',
-    order: 1,
-    description:
-      'Domestic cat needs to be stroked gently Domestic cat needs to be stroked gently Domestic cat needs to be stroked gently Domestic cat needs to be stroked gently',
-    userId: '62166f67-90a5-4f26-b5c4-2d2fa99e5465', //user123
-    boardId: '9b63e927-77bc-48d1-b0e7-58ddc062fbe1',
-    columnId: '63be5fa5-d490-4fe2-9caf-9becd7d79e66',
-  };
+  const [deleteTask, {}] = tasksApi.useDeleteTaskMutation();
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -37,10 +33,11 @@ const TaskCard: FC<TaskCardProps> = ({ taskId }) => {
   };
 
   const handleDelete = () => {
-    alert('Delete card');
+    deleteTask({ boardId: task.boardId, columnId: task.columnId, taskId: task.id, token });
     toggleModalDelete();
   };
 
+  if (isDeleted) return null;
   return (
     <>
       <StyledTaskWrapper
