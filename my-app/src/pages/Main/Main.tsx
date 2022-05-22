@@ -30,8 +30,6 @@ const Main: FC = () => {
     columnId: '63be5fa5-d490-4fe2-9caf-9becd7d79e66',
   });
 
-  console.log(tasksData);
-
   useEffect(() => {
     if (isError && 'status' in error && error.status === 401) {
       alert('Token has expired! Redirecting...');
@@ -89,7 +87,7 @@ const Main: FC = () => {
         </StyledGridItem>
       </StyledGrid>
 
-      {/* <TaskCard taskId={''} /> */}
+      {/* TMP */}
       {tasksData && tasksData.map((task) => <TaskCard key={`task-${task.id}`} task={task} />)}
       <AddTaskForm
         boardId={'9b63e927-77bc-48d1-b0e7-58ddc062fbe1'}

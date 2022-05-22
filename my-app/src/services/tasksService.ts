@@ -14,6 +14,7 @@ const tasksApi = createApi({
 
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
 
+  tagTypes: ['TaskList'],
   endpoints: (build) => ({
     getAllTasks: build.query<Task[], GetAllTasksArg>({
       query: ({ boardId, columnId, token }) => ({
@@ -23,6 +24,7 @@ const tasksApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ['TaskList'],
     }),
 
     getTaskById: build.query<Task, GetTaskByIdArg>({
@@ -44,9 +46,11 @@ const tasksApi = createApi({
         },
         body: { ...rest },
       }),
+
+      invalidatesTags: ['TaskList'],
     }),
 
-    updateTask: build.query<Task, UpdateTaskArg>({
+    updateTask: build.mutation<Task, UpdateTaskArg>({
       query: ({ boardId, columnId, id, token, ...rest }) => ({
         url: getTaskUrl(boardId, columnId, id),
         method: 'PUT',
@@ -55,6 +59,7 @@ const tasksApi = createApi({
         },
         body: { ...rest, boardId, columnId },
       }),
+      invalidatesTags: ['TaskList'],
     }),
 
     deleteTask: build.mutation<null, GetTaskByIdArg>({
@@ -65,6 +70,7 @@ const tasksApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['TaskList'],
     }),
   }),
 });

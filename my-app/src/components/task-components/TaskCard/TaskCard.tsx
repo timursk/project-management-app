@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import StyledTaskWrapper from './StyledTaskWrapper';
-import { Button, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -19,7 +19,6 @@ interface TaskCardProps {
 const TaskCard: FC<TaskCardProps> = ({ task }) => {
   const { t } = useTranslation();
   const [isHover, setIsHover] = useState<boolean>(false);
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [isModalDeleteShown, setIsModalDeleteShown] = useState<boolean>(false);
   const toggleModalDelete = () => setIsModalDeleteShown((prevState) => !prevState);
   const token = getToken();
@@ -38,7 +37,6 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
     toggleModalDelete();
   };
 
-  if (isDeleted) return null;
   return (
     <>
       <StyledTaskWrapper

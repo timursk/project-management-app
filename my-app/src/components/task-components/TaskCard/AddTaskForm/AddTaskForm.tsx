@@ -41,6 +41,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
     handleChange,
     touched,
     setFieldValue,
+    resetForm,
   } = useFormik({
     initialValues: {
       title: '',
@@ -49,7 +50,6 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
     },
     validationSchema: taskValidationSchema,
     onSubmit: (values) => {
-      console.log(values, boardId, columnId);
       createTask({
         boardId,
         columnId,
@@ -58,6 +58,8 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
         description: values.description,
         userId: values.userId,
       });
+      resetForm();
+      toggleModal();
     },
   });
 
