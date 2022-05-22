@@ -10,6 +10,7 @@ export default {
     delete: 'Удалить',
     edit: 'Редактировать',
     search: 'Поиск',
+    deleteConfirmation: 'Удалить доску?',
   },
   loginForm: {
     header: 'Вход',

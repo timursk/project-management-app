@@ -10,6 +10,7 @@ export default {
     delete: 'Delete',
     edit: 'Edit',
     search: 'Search',
+    deleteConfirmation: 'Delete board?',
   },
   loginForm: {
     header: 'Sign in:',
