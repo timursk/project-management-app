@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslation } from 'react-i18next';
 import PersonIcon from '@mui/icons-material/Person';
 import { ListItemIcon } from '@mui/material';
-import usersApi from '../../services/usersService';
-import Loader from '../Loader/Loader';
+import usersApi from '../../../services/usersService';
+import Loader from '../../Loader/Loader';
 
 interface UserButtonProps {
   userId: string;

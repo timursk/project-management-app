@@ -8,8 +8,8 @@ import { deleteUser, updateUser } from '../../store/reducers/actionCreators';
 import { getToken } from '../../utils/utils';
 import ConfirmModal from '../modals/ConfirmModal';
 import FormErrorMessage from './FormErrorMessage';
-import StyledField from './StyledField';
-import StyledForm from './StyledForm';
+import StyledField from '../common/StyledField';
+import StyledForm from '../common/StyledForm';
 import StyledPasswordSwitch from './StyledPasswordSwitch';
 import { registrationValidationSchema } from './validation-schemas';
 

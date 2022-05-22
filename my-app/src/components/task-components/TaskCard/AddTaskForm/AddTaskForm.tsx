@@ -1,0 +1,119 @@
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Button, Switch } from '@mui/material';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../../store/hooks';
+import StyledField from '../../../common/StyledField';
+import StyledForm from '../../../common/StyledForm';
+import Portal from '../../../modals/Portal';
+import StyledModal from '../../../modals/StyledModal';
+import StyledModalCloseButton from '../../../modals/StyledModalCloseButton';
+import StyledOverlay from '../../../modals/StyledOverlay';
+import { taskValidationSchema } from './validation-schema';
+import CloseIcon from '@mui/icons-material/Close';
+import tasksApi from '../../../../services/tasksService';
+interface AddTaskFormProps {
+  boardId: string;
+  columnId: string;
+}
+const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const token = window.localStorage.getItem('PMA-token'); // TODO replace with getToken
+  const createTask = (values = { title: '', description: '', userId: '' }) =>
+    tasksApi.useCreateTaskQuery({ boardId, columnId, token, ...values });
+  const [isModalShown, setIsModalShown] = useState<boolean>(false);
+  const toggleModal = () => setIsModalShown((prevState) => !prevState);
+
+  const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
+    useFormik({
+      initialValues: {
+        title: '',
+        description: '',
+        userId: '',
+      },
+      validationSchema: taskValidationSchema,
+      onSubmit: (values) => {
+        console.log(values, boardId, columnId);
+        createTask(values);
+      },
+    });
+
+  const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const dataValue = (e.target as HTMLElement).getAttribute('data-role');
+    if (dataValue === 'modal-overlay') {
+      toggleModal();
+    }
+  }, []);
+
+  const handleEsc = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isModalShown) toggleModal();
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEsc);
+
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
+  // const errorMessage = useMemo(() => {
+  //   if (isLoading || !error) return '';
+  //   if (error === 'Duplicate user') return t('userForms.duplicateUser');
+  //   return t('userForms.unknownError');
+  // }, [error, isLoading, t]);
+
+  return (
+    <>
+      <Button variant="text" type="button" onClick={toggleModal}>
+        {t('task.addTask')}
+      </Button>
+      {isModalShown && (
+        <Portal>
+          <StyledOverlay data-role="modal-overlay" onClick={handleClickOverlay}>
+            <StyledModal>
+              <StyledModalCloseButton onClick={toggleModal}>
+                <CloseIcon color="primary" aria-label={t('modal.closeModal')} />
+              </StyledModalCloseButton>
+              <StyledForm onSubmit={handleSubmit} onReset={handleReset}>
+                <StyledField
+                  error={errors.title && touched.title}
+                  id="title"
+                  name="title"
+                  type="text"
+                  onChange={handleChange}
+                  value={values.title}
+                  label={t('task.title')}
+                  helperText={errors.title && touched.title ? errors.title : ''}
+                  onBlur={handleBlur}
+                />
+                <StyledField
+                  error={errors.description && touched.description}
+                  id="description"
+                  name="description"
+                  type="text"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.description}
+                  label={t('task.description')}
+                  helperText={errors.description && touched.description ? errors.description : ''}
+                />
+                <Button variant="text" type="reset">
+                  {t('userForms.reset')}
+                </Button>
+                <Button variant="contained" type="submit" disabled={!isValid}>
+                  {t('userForms.submit')}
+                </Button>
+              </StyledForm>
+            </StyledModal>
+          </StyledOverlay>
+        </Portal>
+      )}
+    </>
+  );
+};
+
+export default AddTaskForm;

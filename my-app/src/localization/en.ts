@@ -59,7 +59,7 @@ export default {
     invalidLoginOrPassword: 'Wrong login or password.',
     duplicateUser: 'User already exists!',
     userNotFound: 'User not found!',
-    create: 'Create user',
+    createUser: 'Create user',
     deleteConfirmation: 'Delete user "{{login}}"',
     logoutConfirmation: 'Logout user "{{login}}"',
   },
@@ -76,5 +76,12 @@ export default {
   },
   task: {
     deleteTask: 'Delete task "{{title}}"',
+    title: 'Title',
+    description: 'Description',
+    fieldIsRequired: 'Information is required',
+    titleIsShort: 'Title is too short',
+    titleIsLong: 'Title is too long. Use description for details',
+    descriptionIsLong: 'Description is too long.',
+    addTask: 'Add new task',
   },
 };

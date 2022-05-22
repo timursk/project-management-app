@@ -59,7 +59,7 @@ export default {
     invalidLoginOrPassword: 'Неверная пара логин и пароль.',
     duplicateUser: 'Пользователь создан ранее!',
     userNotFound: 'Пользователь не найден!',
-    create: 'Создать пользователя',
+    createUser: 'Создать пользователя',
     deleteConfirmation: 'Удалить пользователя "{{login}}"',
     logoutConfirmation: 'Выйти из учетной записи "{{login}}"',
   },
@@ -76,5 +76,12 @@ export default {
   },
   task: {
     deleteTask: 'Удалить задачу "{{title}}"',
+    title: 'Название',
+    description: 'Описание',
+    fieldIsRequired: 'Информация необходима',
+    titleIsShort: 'Название слишком короткое',
+    titleIsLong: 'Название слишком длинное. Переместите подробности в описание',
+    descriptionIsLong: 'Описание слишком длинное.',
+    addTask: 'Добавить задачу',
   },
 };

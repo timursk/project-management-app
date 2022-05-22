@@ -8,7 +8,11 @@ import Loader from '../../components/Loader/Loader';
 import { StyledGridItem, StyledGrid, StyledAddCircleIcon } from './styles';
 import MainControls from '../../components/MainControls/MainControls';
 import { filterByTitle, getToken, sleep } from '../../utils/utils';
-import TaskCard from '../../components/TaskCard/TaskCard';
+import TaskCard from '../../components/task-components/TaskCard/TaskCard';
+import AddTaskForm from '../../components/task-components/TaskCard/AddTaskForm/AddTaskForm';
+
+const token =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTNiNjY4NS00OTA0LTRlNGMtYWM5MS00MGRjNjBhN2JlZTkiLCJsb2dpbiI6InRlc3QiLCJpYXQiOjE2NTIyNjg3NzF9.z3z283PgbUDkcblzNR-SZO01qW68dRPGWQxLy-X_ydQ';
 
 const Main: FC = () => {
   const { t } = useTranslation();
@@ -79,6 +83,7 @@ const Main: FC = () => {
       </StyledGrid>
 
       <TaskCard taskId={''} />
+      <AddTaskForm boardId={''} columnId={''} />
     </>
   );
 };

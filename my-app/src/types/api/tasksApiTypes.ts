@@ -13,7 +13,7 @@ export interface GetTaskByIdArg {
 
 export interface CreateTaskArg {
   title: string;
-  order: number;
+  // order: number;
   description: string;
   userId: string;
   boardId: string;

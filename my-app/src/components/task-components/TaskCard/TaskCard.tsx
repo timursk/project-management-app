@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import UserButton from './UserButton';
-import ConfirmModal from '../modals/ConfirmModal';
+import ConfirmModal from '../../modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 
 interface TaskCardProps {
@@ -24,9 +24,9 @@ const TaskCard: FC<TaskCardProps> = ({ taskId }) => {
     order: 1,
     description:
       'Domestic cat needs to be stroked gently Domestic cat needs to be stroked gently Domestic cat needs to be stroked gently Domestic cat needs to be stroked gently',
-    userId: 'e8c2db80-f0df-4823-a422-ea29c253ac82', //user123
-    boardId: '8d3bad56-ad8a-495d-9500-18ae4d1de8dc',
-    columnId: '41344d09-b995-451f-93dc-2f17ae13a4a9',
+    userId: '62166f67-90a5-4f26-b5c4-2d2fa99e5465', //user123
+    boardId: '9b63e927-77bc-48d1-b0e7-58ddc062fbe1',
+    columnId: '63be5fa5-d490-4fe2-9caf-9becd7d79e66',
   };
 
   const handleMouseEnter = () => {
