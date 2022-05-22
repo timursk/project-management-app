@@ -8,9 +8,6 @@ const StyledTaskWrapper = styled(Card)(() => ({
   maxHeight: '150px',
   padding: '10px',
   backgroundColor: '#f5f5f5',
-  // ':hover': {
-  //   maxHeight: 'initial',
-  // },
 }));
 
 export default StyledTaskWrapper;

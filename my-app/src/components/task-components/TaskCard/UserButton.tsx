@@ -8,6 +8,7 @@ import { ListItemIcon } from '@mui/material';
 import usersApi from '../../../services/usersService';
 import Loader from '../../Loader/Loader';
 import { getToken } from '../../../utils/utils';
+import StyledCentredButton from './StyledCentredButton';
 
 interface UserButtonProps {
   userId: string;
@@ -44,8 +45,8 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   );
 
   return (
-    <div>
-      <Button
+    <>
+      <StyledCentredButton
         id="basic-button"
         aria-controls={open ? 'change-user-menu' : undefined}
         aria-haspopup="true"
@@ -55,7 +56,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
         variant="outlined"
       >
         {user && user.currentData && user.currentData.login}
-      </Button>
+      </StyledCentredButton>
 
       <Menu
         id="change-user-menu"
@@ -79,7 +80,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
           <Loader />
         )}
       </Menu>
-    </div>
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Task } from '../../../types/store/storeTypes';
 import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
+import StyledTaskCardControlsWrapper from './StyledTaskCardControlsWrapper';
 
 interface TaskCardProps {
   task: Task;
@@ -45,12 +46,14 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <IconButton aria-label="edit" color="primary">
-          <EditIcon />
-        </IconButton>
-        <IconButton aria-label="delete" color="primary" onClick={toggleModalDelete}>
-          <DeleteIcon />
-        </IconButton>
+        <StyledTaskCardControlsWrapper>
+          <IconButton aria-label="edit" color="primary" size="small">
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="delete" color="primary" onClick={toggleModalDelete} size="small">
+            <DeleteIcon />
+          </IconButton>
+        </StyledTaskCardControlsWrapper>
         <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} noWrap>
           {task.title}
         </Typography>
