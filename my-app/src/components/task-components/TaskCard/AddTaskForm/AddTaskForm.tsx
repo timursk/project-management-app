@@ -3,7 +3,7 @@ import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import StyledField from '../../../common/StyledField';
 import StyledForm from '../../../common/StyledForm';
 import Portal from '../../../modals/Portal';
@@ -13,6 +13,8 @@ import StyledOverlay from '../../../modals/StyledOverlay';
 import { taskValidationSchema } from './validation-schema';
 import CloseIcon from '@mui/icons-material/Close';
 import tasksApi from '../../../../services/tasksService';
+import { getToken } from '../../../../utils/utils';
+import UserButton from '../UserButton';
 interface AddTaskFormProps {
   boardId: string;
   columnId: string;
@@ -21,25 +23,43 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const token = window.localStorage.getItem('PMA-token'); // TODO replace with getToken
-  const createTask = (values = { title: '', description: '', userId: '' }) =>
-    tasksApi.useCreateTaskQuery({ boardId, columnId, token, ...values });
+  const token = getToken();
+
+  const curUserId = useAppSelector((state) => state.userReducer.id);
+  const [createTask, {}] = tasksApi.useCreateTaskMutation();
+
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const toggleModal = () => setIsModalShown((prevState) => !prevState);
 
-  const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
-    useFormik({
-      initialValues: {
-        title: '',
-        description: '',
-        userId: '',
-      },
-      validationSchema: taskValidationSchema,
-      onSubmit: (values) => {
-        console.log(values, boardId, columnId);
-        createTask(values);
-      },
-    });
+  const {
+    errors,
+    values,
+    isValid,
+    handleSubmit,
+    handleReset,
+    handleBlur,
+    handleChange,
+    touched,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      title: '',
+      description: '',
+      userId: curUserId,
+    },
+    validationSchema: taskValidationSchema,
+    onSubmit: (values) => {
+      console.log(values, boardId, columnId);
+      createTask({
+        boardId,
+        columnId,
+        token,
+        title: values.title,
+        description: values.description,
+        userId: values.userId,
+      });
+    },
+  });
 
   const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const dataValue = (e.target as HTMLElement).getAttribute('data-role');
@@ -101,6 +121,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
                   label={t('task.description')}
                   helperText={errors.description && touched.description ? errors.description : ''}
                 />
+                <UserButton userId={curUserId} onSetUser={(id) => setFieldValue('userId', id)} />
                 <Button variant="text" type="reset">
                   {t('userForms.reset')}
                 </Button>

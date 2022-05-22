@@ -15,7 +15,6 @@ export const getUserService: GetUserService = async (token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(response);
   if (response.status === 404) throw new Error('User not found');
   if (response.status !== 200) throw new Error('Unknown error');
   return response.json();

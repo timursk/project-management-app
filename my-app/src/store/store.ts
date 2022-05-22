@@ -19,7 +19,8 @@ export const store = configureStore({
     getDefaultMiddleware()
       .concat(boardsApi.middleware)
       .concat(columnsApi.middleware)
-      .concat(tasksApi.middleware),
+      .concat(tasksApi.middleware)
+      .concat(usersApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

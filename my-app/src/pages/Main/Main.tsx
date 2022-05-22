@@ -83,7 +83,10 @@ const Main: FC = () => {
       </StyledGrid>
 
       <TaskCard taskId={''} />
-      <AddTaskForm boardId={''} columnId={''} />
+      <AddTaskForm
+        boardId={'9b63e927-77bc-48d1-b0e7-58ddc062fbe1'}
+        columnId={'63be5fa5-d490-4fe2-9caf-9becd7d79e66'}
+      />
     </>
   );
 };

@@ -35,7 +35,7 @@ const tasksApi = createApi({
       }),
     }),
 
-    createTask: build.query<Task, CreateTaskArg>({
+    createTask: build.mutation<Task, CreateTaskArg>({
       query: ({ boardId, columnId, token, ...rest }) => ({
         url: getTaskUrl(boardId, columnId),
         method: 'POST',

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { ListItemIcon } from '@mui/material';
 import usersApi from '../../../services/usersService';
 import Loader from '../../Loader/Loader';
+import { getToken } from '../../../utils/utils';
 
 interface UserButtonProps {
   userId: string;
@@ -16,8 +17,9 @@ interface UserButtonProps {
 const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const { t } = useTranslation();
 
-  const token = window.localStorage.getItem('PMA-token'); // TODO replace with getToken
-  const user = usersApi.useGetUserByIdQuery({ token, userId });
+  const [selectedId, setSelectedId] = useState(userId);
+  const token = getToken();
+  const user = usersApi.useGetUserByIdQuery({ token, userId: selectedId || userId });
 
   const allUsers = usersApi.useGetAllUsersQuery({ token });
 
@@ -31,6 +33,15 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSelectId = useCallback(
+    (id: string) => {
+      setSelectedId(id);
+      onSetUser(id);
+      handleClose();
+    },
+    [onSetUser]
+  );
 
   return (
     <div>
@@ -57,7 +68,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
       >
         {allUsers && allUsers.currentData ? (
           allUsers.currentData.map(({ login, id }) => (
-            <MenuItem key={id} onClick={() => onSetUser(id)}>
+            <MenuItem key={id} onClick={() => handleSelectId(id)}>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
