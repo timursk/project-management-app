@@ -6,14 +6,14 @@ export const StyledBox = styled(Box)`
   top: 100%;
   right: 0;
   padding: 10px;
-  max-width: 460px;
-  min-width: 300px;
+  max-width: 140px;
+  min-width: 130px;
   width: auto;
   max-height: 150px;
 
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
