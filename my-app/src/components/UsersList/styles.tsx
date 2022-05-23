@@ -6,23 +6,25 @@ export const StyledBox = styled(Box)`
   top: 100%;
   right: 0;
   padding: 10px;
-  min-width: 150px;
+  max-width: 460px;
+  min-width: 300px;
   width: auto;
-  max-width: 200px;
   max-height: 150px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
 
   z-index: 100;
   overflow: auto;
   background: #2c2c2c;
-  border-radius: 2px;
-  box-shadow: 0px 30px 60px rgb(32 56 85 / 15%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 12px 0 rgb(0 0 0 / 16%);
+  transition: 0.4s;
 
   &::-webkit-scrollbar {
     width: 10px;
