@@ -1,5 +1,5 @@
-import { FC, useCallback, useEffect, useState } from 'react';
-import { Button, IconButton } from '@mui/material';
+import { FC, useCallback } from 'react';
+import { Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import StyledField from '../../common/StyledField';
@@ -14,7 +14,6 @@ import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import UserButton from './UserButton';
 
-import EditIcon from '@mui/icons-material/Edit';
 import { Task } from '../../../types/store/storeTypes';
 
 interface EditTaskFormProps {
