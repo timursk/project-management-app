@@ -9,6 +9,6 @@ export const taskValidationSchema = yup.object().shape({
     .required(i18n.t('task.fieldIsRequired', { field: i18n.t('task.title') })),
   description: yup
     .string()
-    .max(500, i18n.t('task.descriptionIsLong'))
+    .max(1000, i18n.t('task.descriptionIsLong'))
     .required(i18n.t('task.fieldIsRequired', { field: i18n.t('task.description') })),
 });

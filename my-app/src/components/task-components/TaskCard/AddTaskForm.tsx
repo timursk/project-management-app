@@ -82,12 +82,6 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
     };
   }, []);
 
-  // const errorMessage = useMemo(() => {
-  //   if (isLoading || !error) return '';
-  //   if (error === 'Duplicate user') return t('userForms.duplicateUser');
-  //   return t('userForms.unknownError');
-  // }, [error, isLoading, t]);
-
   return (
     <>
       <Button variant="text" type="button" onClick={toggleModal}>
@@ -122,7 +116,6 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
                   value={values.description}
                   label={t('task.description')}
                   helperText={errors.description && touched.description ? errors.description : ''}
-                  // multiline
                 />
                 <UserButton userId={curUserId} onSetUser={(id) => setFieldValue('userId', id)} />
                 <Button variant="text" type="reset">

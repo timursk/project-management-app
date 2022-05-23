@@ -3,6 +3,8 @@ import StyledTaskWrapper from './StyledTaskWrapper';
 import { IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ShowIcon from '@mui/icons-material/Visibility';
+import HideIcon from '@mui/icons-material/VisibilityOff';
 
 import UserButton from './UserButton';
 import ConfirmModal from '../../modals/ConfirmModal';
@@ -19,6 +21,10 @@ interface TaskCardProps {
 
 const TaskCard: FC<TaskCardProps> = ({ task }) => {
   const { t } = useTranslation();
+
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
+  const toggleCollapsed = () => setIsCollapsed((prevState) => !prevState);
+
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isModalDeleteShown, setIsModalDeleteShown] = useState<boolean>(false);
   const toggleModalDelete = () => setIsModalDeleteShown((prevState) => !prevState);
@@ -67,6 +73,9 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
         onMouseLeave={handleMouseLeave}
       >
         <StyledTaskCardControlsWrapper>
+          <IconButton aria-label="edit" color="primary" size="small" onClick={toggleCollapsed}>
+            {isCollapsed ? <ShowIcon /> : <HideIcon />}
+          </IconButton>
           <IconButton aria-label="edit" color="primary" size="small" onClick={toggleModal}>
             <EditIcon />
           </IconButton>
@@ -75,10 +84,10 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
             <DeleteIcon />
           </IconButton>
         </StyledTaskCardControlsWrapper>
-        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} noWrap>
+        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} noWrap={isCollapsed}>
           {task.title}
         </Typography>
-        <Typography variant="body2" component="div" sx={{ flexGrow: 1 }} noWrap>
+        <Typography variant="body2" component="div" sx={{ flexGrow: 1 }} noWrap={isCollapsed}>
           {task.description}
         </Typography>
         <UserButton userId={task.userId} onSetUser={handleChangeUser} />
