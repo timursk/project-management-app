@@ -9,7 +9,7 @@ import { StyledGridItem, StyledGrid, StyledAddCircleIcon } from './styles';
 import MainControls from '../../components/MainControls/MainControls';
 import { filterByTitle, getToken, sleep } from '../../utils/utils';
 import TaskCard from '../../components/task-components/TaskCard/TaskCard';
-import AddTaskForm from '../../components/task-components/TaskCard/AddTaskForm/AddTaskForm';
+import AddTaskForm from '../../components/task-components/TaskCard/AddTaskForm';
 import tasksApi from '../../services/tasksService';
 
 const Main: FC = () => {

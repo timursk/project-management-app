@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import StyledTaskWrapper from './StyledTaskWrapper';
 import { IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,6 +11,7 @@ import { Task } from '../../../types/store/storeTypes';
 import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import StyledTaskCardControlsWrapper from './StyledTaskCardControlsWrapper';
+import EditTaskForm from './EditTaskForm';
 
 interface TaskCardProps {
   task: Task;
@@ -23,7 +24,11 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
   const toggleModalDelete = () => setIsModalDeleteShown((prevState) => !prevState);
   const token = getToken();
 
+  const [isModalShown, setIsModalShown] = useState<boolean>(false);
+  const toggleModal = () => setIsModalShown((prevState) => !prevState);
+
   const [deleteTask, {}] = tasksApi.useDeleteTaskMutation();
+  const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -37,6 +42,23 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
     toggleModalDelete();
   };
 
+  const handleChangeUser = (userId: string) => {
+    const { title, description, order, id, boardId, columnId } = task;
+    updateTask({ title, description, order, id, userId, token, boardId, columnId });
+  };
+
+  const handleEsc = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && isModalShown) toggleModal();
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEsc);
+
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
   return (
     <>
       <StyledTaskWrapper
@@ -45,9 +67,10 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
         onMouseLeave={handleMouseLeave}
       >
         <StyledTaskCardControlsWrapper>
-          <IconButton aria-label="edit" color="primary" size="small">
+          <IconButton aria-label="edit" color="primary" size="small" onClick={toggleModal}>
             <EditIcon />
           </IconButton>
+          {isModalShown && <EditTaskForm task={task} onClose={toggleModal} />}
           <IconButton aria-label="delete" color="primary" onClick={toggleModalDelete} size="small">
             <DeleteIcon />
           </IconButton>
@@ -58,7 +81,7 @@ const TaskCard: FC<TaskCardProps> = ({ task }) => {
         <Typography variant="body2" component="div" sx={{ flexGrow: 1 }} noWrap>
           {task.description}
         </Typography>
-        <UserButton userId={task.userId} onSetUser={(id) => console.log(id)} />
+        <UserButton userId={task.userId} onSetUser={handleChangeUser} />
       </StyledTaskWrapper>
       {isModalDeleteShown && (
         <ConfirmModal

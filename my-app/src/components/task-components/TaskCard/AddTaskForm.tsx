@@ -3,18 +3,18 @@ import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import StyledField from '../../../common/StyledField';
-import StyledForm from '../../../common/StyledForm';
-import Portal from '../../../modals/Portal';
-import StyledModal from '../../../modals/StyledModal';
-import StyledModalCloseButton from '../../../modals/StyledModalCloseButton';
-import StyledOverlay from '../../../modals/StyledOverlay';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import StyledField from '../../common/StyledField';
+import StyledForm from '../../common/StyledForm';
+import Portal from '../../modals/Portal';
+import StyledModal from '../../modals/StyledModal';
+import StyledModalCloseButton from '../../modals/StyledModalCloseButton';
+import StyledOverlay from '../../modals/StyledOverlay';
 import { taskValidationSchema } from './validation-schema';
 import CloseIcon from '@mui/icons-material/Close';
-import tasksApi from '../../../../services/tasksService';
-import { getToken } from '../../../../utils/utils';
-import UserButton from '../UserButton';
+import tasksApi from '../../../services/tasksService';
+import { getToken } from '../../../utils/utils';
+import UserButton from './UserButton';
 interface AddTaskFormProps {
   boardId: string;
   columnId: string;
@@ -122,6 +122,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
                   value={values.description}
                   label={t('task.description')}
                   helperText={errors.description && touched.description ? errors.description : ''}
+                  // multiline
                 />
                 <UserButton userId={curUserId} onSetUser={(id) => setFieldValue('userId', id)} />
                 <Button variant="text" type="reset">

@@ -1,4 +1,4 @@
-import { FC, useState, useMemo, useCallback } from 'react';
+import { FC, useState, useMemo, useCallback, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -34,6 +34,10 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    setSelectedId(userId);
+  }, [userId]);
 
   const handleSelectId = useCallback(
     (id: string) => {

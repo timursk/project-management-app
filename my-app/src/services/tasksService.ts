@@ -35,6 +35,7 @@ const tasksApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ['TaskList'],
     }),
 
     createTask: build.mutation<Task, CreateTaskArg>({
