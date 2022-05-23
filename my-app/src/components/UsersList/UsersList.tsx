@@ -1,14 +1,17 @@
 import { Tooltip, Zoom, IconButton, Badge, Chip, Avatar } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Wrapper, StyledBox } from './styles';
+import { Wrapper, StyledBox, StyledChip } from './styles';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getToken } from '../../utils/utils';
 import { getUsersService } from '../../services/getUsersService';
+import { useTranslation } from 'react-i18next';
 
 const UsersList = () => {
+  const { t } = useTranslation();
+  const token = getToken();
+
   const [users, setUsers] = useState<string[]>([]);
   const [isListShown, setIsListShown] = useState<boolean>(false);
-  const token = getToken();
 
   useEffect(() => {
     getUsersService(token).then((result) => {
@@ -23,7 +26,7 @@ const UsersList = () => {
 
   return (
     <Wrapper>
-      <Tooltip title="Users" TransitionComponent={Zoom}>
+      <Tooltip title={t('main.contributors')} TransitionComponent={Zoom} placement="top">
         <IconButton onClick={handleClick}>
           <Badge badgeContent={users.length} color="primary">
             <AccountCircleIcon />
@@ -34,7 +37,7 @@ const UsersList = () => {
       {isListShown && (
         <StyledBox>
           {users.map((name, idx) => (
-            <Chip key={idx} avatar={<Avatar>{name[0]}</Avatar>} label={name} />
+            <StyledChip key={idx} avatar={<Avatar>{name[0].toUpperCase()}</Avatar>} label={name} />
           ))}
         </StyledBox>
       )}
