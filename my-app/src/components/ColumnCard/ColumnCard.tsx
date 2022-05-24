@@ -1,8 +1,11 @@
 import React, { FC, useState } from 'react';
 import columnsApi from '../../services/columnsService';
+import tasksApi from '../../services/tasksService';
 import { getToken } from '../../utils/utils';
 import ColumnDelete from '../ColumnDelete/ColumnDelete';
 import UpdateColumn from '../ColumnUpdate/UpdateColumn';
+import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
+import TaskCard from '../task-components/TaskCard/TaskCard';
 import { StyledColumnCard, StyledBox, StyledTitle, StyledStack } from './style';
 
 interface ColumnCardProps {
@@ -19,6 +22,7 @@ const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
   const [isEdit, setEdit] = useState(false);
   const [columnId, setId] = useState('');
   const { data } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
+  const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, boardId, columnId });
   const [textValue, setText] = useState(title);
 
   return (
@@ -54,11 +58,9 @@ const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
           <ColumnDelete id={columnId} token={token} boardId={boardId} />
         </StyledBox>
         <StyledStack spacing={2}>
-          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
-          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
-          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
-          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
+          {tasks && tasks.map((task, id) => <TaskCard key={id} task={task} />)}
         </StyledStack>
+        <AddTaskForm boardId={boardId} columnId={columnId} />
       </StyledColumnCard>
     </>
   );
