@@ -55,6 +55,9 @@ const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
         </StyledBox>
         <StyledStack spacing={2}>
           <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
+          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
+          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
+          <div style={{ width: '100%', backgroundColor: 'white', minHeight: '300px' }}>Task</div>
         </StyledStack>
       </StyledColumnCard>
     </>

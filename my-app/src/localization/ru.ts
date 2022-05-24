@@ -3,6 +3,7 @@ export default {
     title: 'Заголовок',
     registration: 'Регистрация',
     login: 'Вход',
+    goBack: 'Назад',
   },
   main: {
     header: 'Доски',

@@ -1,16 +1,17 @@
-import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import { Grid, TextField, Typography, Stack } from '@mui/material';
-import { shadows, Box } from '@mui/system';
+import { Box } from '@mui/system';
 
 export const StyledColumnCard = styled(Grid)({
-  // width: '300px',
   minWidth: '300px',
   padding: 15,
   backgroundColor: '#f5f5f5',
   borderRadius: '15px',
   margin: '0 10px',
   height: '100%',
+  ':hover': {
+    boxShadow: '0px 0px 10px 8px rgba(34, 60, 80, 0.17)',
+  },
 });
 
 export const StyledField = styled(TextField)({
@@ -30,6 +31,7 @@ export const StyledBox = styled(Box)({
 });
 
 export const StyledStack = styled(Stack)({
-  height: '1000px',
+  height: 'min-content',
+  maxHeight: '1000px',
   overflowY: 'auto',
 });

@@ -3,6 +3,7 @@ export default {
     title: 'Header',
     registration: 'Sign up',
     login: 'Sign in',
+    goBack: 'Back',
   },
   main: {
     header: 'Boards',

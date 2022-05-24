@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
 import { getToken } from '../utils/utils';
+import { useParams } from 'react-router-dom';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -15,6 +16,9 @@ const StyledNavLink = styled(NavLink)`
 const Header: FC = () => {
   const { t } = useTranslation();
   const token = getToken();
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   return (
     <Box>
@@ -30,7 +34,17 @@ const Header: FC = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <StyledNavLink to={'/'}>{t('header.title')}</StyledNavLink>
           </Typography>
-
+          {pathname.includes('/board/') && (
+            <Button
+              onClick={() => {
+                navigate(-1);
+              }}
+              color="inherit"
+              variant="outlined"
+            >
+              {t('header.goBack')}
+            </Button>
+          )}
           {token ? (
             <UserMenu />
           ) : (
