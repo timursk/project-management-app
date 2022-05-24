@@ -15,6 +15,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import UserButton from './UserButton';
+
+const OVERLAY_NAME = 'modal-overlay';
+
 interface AddTaskFormProps {
   boardId: string;
   columnId: string;
@@ -65,7 +68,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
 
   const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const dataValue = (e.target as HTMLElement).getAttribute('data-role');
-    if (dataValue === 'modal-overlay') {
+    if (dataValue === OVERLAY_NAME) {
       toggleModal();
     }
   }, []);
@@ -89,7 +92,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
       </Button>
       {isModalShown && (
         <Portal>
-          <StyledOverlay data-role="modal-overlay" onClick={handleClickOverlay}>
+          <StyledOverlay data-role={OVERLAY_NAME} onClick={handleClickOverlay}>
             <StyledModal>
               <StyledModalCloseButton onClick={toggleModal}>
                 <CloseIcon color="primary" aria-label={t('modal.closeModal')} />

@@ -16,6 +16,8 @@ import UserButton from './UserButton';
 
 import { Task } from '../../../types/store/storeTypes';
 
+const OVERLAY_NAME = 'modal-overlay';
+
 interface EditTaskFormProps {
   task: Task;
   onClose: () => void;
@@ -62,7 +64,7 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
 
   const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const dataValue = (e.target as HTMLElement).getAttribute('data-role');
-    if (dataValue === 'modal-overlay') {
+    if (dataValue === OVERLAY_NAME) {
       onClose();
     }
   }, []);
@@ -70,7 +72,7 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
   return (
     <>
       <Portal>
-        <StyledOverlay data-role="modal-overlay" onClick={handleClickOverlay}>
+        <StyledOverlay data-role={OVERLAY_NAME} onClick={handleClickOverlay}>
           <StyledModal>
             <StyledModalCloseButton onClick={onClose}>
               <CloseIcon color="primary" aria-label={t('modal.closeModal')} />
