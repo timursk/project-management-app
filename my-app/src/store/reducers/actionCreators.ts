@@ -41,6 +41,7 @@ export const initUser = createAsyncThunk('user/init', async (_, thunkApi) => {
     }
     return { name: '', login: '', id: '', token: '' };
   } catch (e) {
+    removeToken();
     const error = e as CustomError;
     return thunkApi.rejectWithValue(error.message);
   }

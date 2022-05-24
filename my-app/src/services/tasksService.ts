@@ -14,6 +14,7 @@ const tasksApi = createApi({
 
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
 
+  tagTypes: ['TaskList'],
   endpoints: (build) => ({
     getAllTasks: build.query<Task[], GetAllTasksArg>({
       query: ({ boardId, columnId, token }) => ({
@@ -23,6 +24,7 @@ const tasksApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ['TaskList'],
     }),
 
     getTaskById: build.query<Task, GetTaskByIdArg>({
@@ -33,9 +35,10 @@ const tasksApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ['TaskList'],
     }),
 
-    createTask: build.query<Task, CreateTaskArg>({
+    createTask: build.mutation<Task, CreateTaskArg>({
       query: ({ boardId, columnId, token, ...rest }) => ({
         url: getTaskUrl(boardId, columnId),
         method: 'POST',
@@ -44,9 +47,11 @@ const tasksApi = createApi({
         },
         body: { ...rest },
       }),
+
+      invalidatesTags: ['TaskList'],
     }),
 
-    updateTask: build.query<Task, UpdateTaskArg>({
+    updateTask: build.mutation<Task, UpdateTaskArg>({
       query: ({ boardId, columnId, id, token, ...rest }) => ({
         url: getTaskUrl(boardId, columnId, id),
         method: 'PUT',
@@ -55,9 +60,10 @@ const tasksApi = createApi({
         },
         body: { ...rest, boardId, columnId },
       }),
+      invalidatesTags: ['TaskList'],
     }),
 
-    deleteTask: build.query<null, GetTaskByIdArg>({
+    deleteTask: build.mutation<null, GetTaskByIdArg>({
       query: ({ boardId, columnId, taskId, token }) => ({
         url: getTaskUrl(boardId, columnId, taskId),
         method: 'DELETE',
@@ -65,6 +71,7 @@ const tasksApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['TaskList'],
     }),
   }),
 });

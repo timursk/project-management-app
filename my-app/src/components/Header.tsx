@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import React, { FC } from 'react';
-import { NavLink, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import React, { FC, useMemo } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
 import { getToken } from '../utils/utils';
-import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../store/hooks';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -15,7 +15,8 @@ const StyledNavLink = styled(NavLink)`
 
 const Header: FC = () => {
   const { t } = useTranslation();
-  const token = getToken();
+  const { login } = useAppSelector((store) => store.userReducer);
+  const token = useMemo(() => getToken(), [login]);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
