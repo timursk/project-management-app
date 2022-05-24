@@ -1,5 +1,5 @@
 import { Tooltip, Zoom, IconButton, Badge, Avatar } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Wrapper, StyledBox, StyledChip } from './styles';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getToken } from '../../utils/utils';
@@ -13,7 +13,7 @@ const UsersList = () => {
   const [users, setUsers] = useState<string[]>([]);
   const [isListShown, setIsListShown] = useState<boolean>(false);
   const [activeId, setActiveId] = useState(0);
-  const activeChip = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getUsersService(token).then((result) => {
@@ -33,18 +33,26 @@ const UsersList = () => {
       }
     };
 
-    if (isListShown) {
-      window.addEventListener('keydown', onKeydown);
+    const handleClickOutside = (e: Event) => {
+      if (listRef.current && !listRef.current.contains(e.target as HTMLElement)) {
+        setIsListShown(false);
+      }
+    };
 
-      return () => {
-        window.removeEventListener('keydown', onKeydown);
-      };
+    if (isListShown) {
+      document.addEventListener('keydown', onKeydown);
+      document.addEventListener('mousedown', handleClickOutside);
     }
+
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [isListShown, users]);
 
   useEffect(() => {
     //scroll to active elem on arrowUp/arrowDown
-    activeChip?.current?.scrollIntoView({ block: 'center', inline: 'center' });
+    listRef?.current?.children[activeId].scrollIntoView({ block: 'center', inline: 'center' });
   }, [activeId]);
 
   const handleClick = () => {
@@ -62,11 +70,10 @@ const UsersList = () => {
       </Tooltip>
 
       {isListShown && (
-        <StyledBox>
+        <StyledBox ref={listRef}>
           {users.map((name, idx) => (
             <StyledChip
               key={idx}
-              ref={idx === activeId ? activeChip : null}
               variant={idx === activeId ? 'outlined' : null}
               onClick={() => setActiveId(idx)}
               avatar={<Avatar>{name[0].toUpperCase()}</Avatar>}
