@@ -12,6 +12,7 @@ import { StyledBox, StyledGrid } from './style';
 
 const Board = () => {
   const { id } = useParams();
+
   const token = getToken();
   const { data, isLoading, isSuccess } = columnsApi.useGetAllColumnsQuery({ boardId: id, token });
   const [sortData, setData] = useState<ColumnResult[]>(data);

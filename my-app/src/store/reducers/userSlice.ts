@@ -7,6 +7,7 @@ interface User {
   login: string;
   isLoading: boolean;
   error: string;
+  id: string;
 }
 
 const initialState: User = {
@@ -14,6 +15,7 @@ const initialState: User = {
   login: '',
   isLoading: false,
   error: '',
+  id: '',
 };
 
 const userReducer = createSlice({
@@ -29,6 +31,7 @@ const userReducer = createSlice({
       state.login = '';
       state.name = '';
       state.error = '';
+      state.id = '';
       state.isLoading = false;
     },
     resetLoading: (state: User) => {
@@ -71,6 +74,7 @@ const userReducer = createSlice({
     [initUser.fulfilled.type]: (state, action: PayloadAction<UserInfo>) => {
       state.name = action.payload.name;
       state.login = action.payload.login;
+      state.id = action.payload.id;
       state.isLoading = false;
       state.error = '';
     },
@@ -83,6 +87,7 @@ const userReducer = createSlice({
     [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.name = '';
       state.login = '';
+      state.id = '';
       state.isLoading = false;
     },
 
