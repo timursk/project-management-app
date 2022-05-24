@@ -13,7 +13,9 @@ const UsersList = () => {
   const [users, setUsers] = useState<string[]>([]);
   const [isListShown, setIsListShown] = useState<boolean>(false);
   const [activeId, setActiveId] = useState(0);
+
   const listRef = useRef<HTMLDivElement>(null);
+  const iconBtnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getUsersService(token).then((result) => {
@@ -24,10 +26,11 @@ const UsersList = () => {
 
   useEffect(() => {
     const onKeydown = (e: KeyboardEvent) => {
-      e.preventDefault();
       if (e.key === 'ArrowDown') {
+        e.preventDefault();
         setActiveId((prev) => (prev === users.length - 1 ? prev : ++prev));
       } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
         setActiveId((prev) => (prev === 0 ? prev : --prev));
       } else if (e.key === 'Escape') {
         setIsListShown(false);
@@ -35,6 +38,10 @@ const UsersList = () => {
     };
 
     const handleClickOutside = (e: Event) => {
+      if (iconBtnRef.current.contains(e.target as HTMLElement)) {
+        return;
+      }
+
       if (listRef.current && !listRef.current.contains(e.target as HTMLElement)) {
         setIsListShown(false);
       }
@@ -62,7 +69,12 @@ const UsersList = () => {
 
   return (
     <Wrapper>
-      <Tooltip title={t('main.contributors')} TransitionComponent={Zoom} placement="top">
+      <Tooltip
+        ref={iconBtnRef}
+        title={t('main.contributors')}
+        TransitionComponent={Zoom}
+        placement="top"
+      >
         <IconButton onClick={handleClick}>
           <Badge badgeContent={users.length} color="primary">
             <AccountCircleIcon />
