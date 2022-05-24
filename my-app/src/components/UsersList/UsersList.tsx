@@ -1,5 +1,5 @@
 import { Tooltip, Zoom, IconButton, Badge, Avatar } from '@mui/material';
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Wrapper, StyledBox, StyledChip } from './styles';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getToken } from '../../utils/utils';
@@ -24,6 +24,7 @@ const UsersList = () => {
 
   useEffect(() => {
     const onKeydown = (e: KeyboardEvent) => {
+      e.preventDefault();
       if (e.key === 'ArrowDown') {
         setActiveId((prev) => (prev === users.length - 1 ? prev : ++prev));
       } else if (e.key === 'ArrowUp') {
