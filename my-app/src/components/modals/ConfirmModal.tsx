@@ -7,6 +7,8 @@ import StyledOverlay from './StyledOverlay';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 
+const OVERLAY_NAME = 'modal-overlay';
+
 interface ConfirmModalProps {
   onConfirm: () => void;
   onClose: () => void;
@@ -17,7 +19,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText })
 
   const handleClickOverlay = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const dataValue = (e.target as HTMLElement).getAttribute('data-role');
-    if (dataValue === 'modal-overlay') {
+    if (dataValue === OVERLAY_NAME) {
       onClose();
     }
   }, []);
@@ -36,7 +38,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText })
 
   return (
     <Portal>
-      <StyledOverlay data-role="modal-overlay" onClick={handleClickOverlay}>
+      <StyledOverlay data-role={OVERLAY_NAME} onClick={handleClickOverlay}>
         <StyledModal>
           <StyledModalCloseButton onClick={onClose}>
             <CloseIcon color="primary" aria-label={t('modal.closeModal')} />

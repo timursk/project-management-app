@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, useState } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,11 +11,10 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ListItemIcon } from '@mui/material';
 import { deleteUser, logoutUser } from '../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import ConfirmModal from '../modals/ConfirmModal';
 import { getToken } from '../../utils/utils';
 
-const UserMenu = () => {
+const UserMenu: FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ const UserMenu = () => {
   const { login } = useAppSelector((state) => state.userReducer);
   const token = getToken();
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
 
   const [isModalDeleteShown, setIsModalDeleteShown] = useState<boolean>(false);
