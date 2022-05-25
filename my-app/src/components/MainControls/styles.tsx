@@ -21,6 +21,9 @@ export const StyledDivContainer = styled.div`
 export const StyledHeaderTypography = styled(Typography)`
   margin-right: 40px;
   flex: 2 1;
+  @media (max-width: 600px) {
+    margin-right: 10px;
+  }
 `;
 
 export const StyledDivRelative = styled.div`

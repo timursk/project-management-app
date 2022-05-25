@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect } from 'react';
 import { t } from 'i18next';
 import {
   StyledDivContainer,
@@ -10,6 +10,7 @@ import {
 } from './styles';
 
 import ClearIcon from '@mui/icons-material/Clear';
+import UsersList from '../UsersList/UsersList';
 
 type Props = {
   value: string;
@@ -17,14 +18,33 @@ type Props = {
 };
 
 const MainControls = ({ value, setValue }: Props) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setValue(value);
-  };
-
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     setValue('');
-  };
+  }, [setValue]);
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setValue(value);
+    },
+    [setValue]
+  );
+
+  useEffect(() => {
+    const onKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleDelete();
+      }
+    };
+
+    if (value) {
+      document.addEventListener('keydown', onKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', onKeyPress);
+    };
+  }, [handleDelete, value]);
 
   return (
     <StyledDivContainer>
@@ -41,6 +61,8 @@ const MainControls = ({ value, setValue }: Props) => {
           </StyledIconButton>
         )}
       </StyledDivRelative>
+
+      <UsersList />
     </StyledDivContainer>
   );
 };
