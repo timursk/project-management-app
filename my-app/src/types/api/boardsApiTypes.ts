@@ -5,12 +5,14 @@ export interface BoardResult {
 
 export interface CreateBoardArg {
   title: string;
+  description: string;
   token: string;
 }
 
 export interface UpdateBoardArg {
   id: string;
   title: string;
+  description: string;
   token: string;
 }
 

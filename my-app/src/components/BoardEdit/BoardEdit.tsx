@@ -1,47 +1,84 @@
+import { Alert } from '@mui/material';
+import { useFormik } from 'formik';
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import boardsApi from '../../services/boardsService';
-import BoardEditControls from '../BoardEditControls/BoardEditControls';
+import ConfirmModal from '../modals/ConfirmModal';
 import { StyledEditBox, StyledInput, StyledInputBox } from './styles';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import { getToken } from '../../utils/utils';
 
 type Props = {
-  id: string;
-  title: string;
+  id?: string;
+  title?: string;
+  description?: string;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
+  type: string;
 };
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxOTNiNjY4NS00OTA0LTRlNGMtYWM5MS00MGRjNjBhN2JlZTkiLCJsb2dpbiI6InRlc3QiLCJpYXQiOjE2NTIyNjg3NzF9.z3z283PgbUDkcblzNR-SZO01qW68dRPGWQxLy-X_ydQ';
-
-const BoardEdit = ({ id, title, setIsEdit }: Props) => {
-  const [value, setValue] = useState<string>('');
-
+const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
   const [updateBoard, {}] = boardsApi.useUpdateBoardMutation();
+  const [createBoard, {}] = boardsApi.useCreateBoardMutation();
 
-  const handleUpdate = (e: FormEvent) => {
-    e.preventDefault();
+  const token = getToken();
 
-    if (value.length > 40) {
-      alert('TOO BIG');
-      return;
-    }
+  const { t } = useTranslation();
 
-    updateBoard({ id, token, title: value });
+  const validation = yup.object().shape({
+    title: yup.string().min(2, 'Min 2').max(40, 'Max 40').required('This field necessarily'),
+    description: yup.string().min(2, 'Min 2').max(40, 'Max 40').required('This field necessarily'),
+  });
+
+  const { handleBlur, handleChange, handleSubmit, errors, values } = useFormik({
+    initialValues: {
+      title: title || '',
+      description: description || '',
+    },
+    validationSchema: validation,
+    onSubmit: ({ title, description }) => {
+      if (type === 'create') {
+        createBoard({ token, title, description });
+        setIsEdit(false);
+      }
+      if (type === 'update') {
+        updateBoard({ id, token, title, description });
+        setIsEdit(false);
+      }
+    },
+  });
+
+  const handleClose = () => {
     setIsEdit(false);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setValue(value);
-  };
-
   return (
-    <StyledEditBox>
-      <StyledInputBox component="form" onSubmit={handleUpdate}>
-        <StyledInput autoFocus onChange={handleChange} placeholder={title} />
-      </StyledInputBox>
-
-      <BoardEditControls value={value} setIsEdit={setIsEdit} handleUpdate={handleUpdate} />
-    </StyledEditBox>
+    <>
+      <ConfirmModal
+        onClose={handleClose}
+        onConfirm={handleSubmit}
+        actionText={(type === 'create' && t('main.add')) || (type === 'update' && t('main.edit'))}
+      >
+        <StyledInput
+          name="title"
+          autoFocus
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={title || 'title'}
+          type="text"
+          value={values.title}
+        />
+        {errors.title && <Alert severity="error">{errors.title}</Alert>}
+        <StyledInput
+          name="description"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={description || 'description'}
+          type="text"
+          value={values.description}
+        />
+        {errors.description && <Alert severity="error">{errors.description}</Alert>}
+      </ConfirmModal>
+    </>
   );
 };
 

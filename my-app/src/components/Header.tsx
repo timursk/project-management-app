@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { FC, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
@@ -18,6 +18,9 @@ const Header: FC = () => {
   const { login } = useAppSelector((store) => store.userReducer);
   const token = useMemo(() => getToken(), [login]);
 
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <Box>
       <AppBar position="static">
@@ -32,7 +35,17 @@ const Header: FC = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <StyledNavLink to={'/'}>{t('header.title')}</StyledNavLink>
           </Typography>
-
+          {pathname.includes('/board/') && (
+            <Button
+              onClick={() => {
+                navigate(-1);
+              }}
+              color="inherit"
+              variant="outlined"
+            >
+              {t('header.goBack')}
+            </Button>
+          )}
           {token ? (
             <UserMenu />
           ) : (

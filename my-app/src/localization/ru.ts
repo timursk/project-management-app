@@ -3,13 +3,15 @@ export default {
     title: 'Заголовок',
     registration: 'Регистрация',
     login: 'Вход',
+    goBack: 'Назад',
   },
   main: {
     header: 'Доски',
     add: 'Добавить доску',
-    delete: 'Удалить',
-    edit: 'Редактировать',
     search: 'Поиск',
+
+    edit: 'Редактировать доску',
+
     deleteConfirmation: 'Удалить доску?',
     contributors: 'Участники',
   },
@@ -75,6 +77,12 @@ export default {
     confirmHeader: 'Подтвердить следующее действие?',
     confirm: 'Подтвердить',
     deny: 'Отменить',
+  },
+
+  column: {
+    button: '+ Добавьте еще одну колонку',
+    delete: 'Удалить колонку',
+    add: 'Добавить?',
   },
   task: {
     deleteTask: 'Удалить задачу "{{title}}"',

@@ -5,8 +5,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import boardsApi from '../../services/boardsService';
 import EditIcon from '@mui/icons-material/Edit';
 import { StyledBox, StyledColumn, StyledTooltip } from './styles';
-import { getToken } from '../../utils/utils';
 import ConfirmModal from '../modals/ConfirmModal';
+import { getToken } from '../../utils/utils';
 
 type Props = {
   id: string;
@@ -15,9 +15,11 @@ type Props = {
 
 const BoardCardControls = ({ id, setIsEdit }: Props) => {
   const { t } = useTranslation();
+
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
   const token = getToken();
+
   const [deleteBoard, {}] = boardsApi.useDeleteBoardMutation();
 
   const handleDelete = () => {

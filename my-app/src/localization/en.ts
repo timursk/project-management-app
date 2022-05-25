@@ -3,6 +3,7 @@ export default {
     title: 'Header',
     registration: 'Sign up',
     login: 'Sign in',
+    goBack: 'Back',
   },
   main: {
     header: 'Boards',
@@ -75,6 +76,12 @@ export default {
     confirmHeader: 'Confirm this action?',
     confirm: 'Confirm',
     deny: 'Deny',
+  },
+
+  column: {
+    button: '+ Add another column',
+    delete: 'Delete column',
+    add: 'Add?',
   },
   task: {
     deleteTask: 'Delete task "{{title}}"',
