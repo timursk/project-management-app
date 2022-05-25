@@ -9,8 +9,13 @@ export default {
     header: 'Доски',
     add: 'Добавить доску',
     search: 'Поиск',
-    delete: 'Удалить эту доску',
+
+  
     edit: 'Редактировать доску',
+
+    deleteConfirmation: 'Удалить доску?',
+    contributors: 'Участники',
+
   },
   loginForm: {
     header: 'Вход',

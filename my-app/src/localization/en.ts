@@ -11,6 +11,8 @@ export default {
     delete: 'Delete',
     edit: 'Edit',
     search: 'Search',
+    deleteConfirmation: 'Delete board?',
+    contributors: 'Contributors',
   },
   loginForm: {
     header: 'Sign in:',
