@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Input } from '@mui/material';
+import { Alert, Box, Input, TextField } from '@mui/material';
 
 export const StyledEditBox = styled(Box)`
   position: absolute;
@@ -21,3 +21,11 @@ export const StyledInput = styled(Input)`
   height: 100%;
   padding: 20px;
 `;
+export const StyledField = styled(TextField)({
+  margin: '10px 0 0 0',
+});
+
+export const StyledAlert = styled(Alert)({
+  margin: '5px 0 0 0',
+  width: '92%',
+});
