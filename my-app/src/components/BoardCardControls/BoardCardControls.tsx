@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import ClearIcon from '@mui/icons-material/Clear';
 import boardsApi from '../../services/boardsService';
 import EditIcon from '@mui/icons-material/Edit';
-import { StyledBox, StyledColumn } from './styles';
+import { StyledBox, StyledColumn, StyledTooltip } from './styles';
 import ConfirmModal from '../modals/ConfirmModal';
 import { getToken } from '../../utils/utils';
 
@@ -16,23 +16,22 @@ type Props = {
 const BoardCardControls = ({ id, setIsEdit }: Props) => {
   const { t } = useTranslation();
 
-  const [show, setShow] = useState(false);
+  const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
   const token = getToken();
 
   const [deleteBoard, {}] = boardsApi.useDeleteBoardMutation();
 
-  const handleDelete = (id: string) => {
+  const handleDelete = () => {
     deleteBoard({ id, token });
   };
 
+  const toggleLogoutModal = () => {
+    setIsModalShown((prev) => !prev);
+  };
   const handleUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     setIsEdit(true);
-  };
-
-  const handleClose = () => {
-    setShow(false);
   };
 
   return (
@@ -40,29 +39,26 @@ const BoardCardControls = ({ id, setIsEdit }: Props) => {
       <StyledBox>
         <StyledColumn>
           <Tooltip title={t('main.delete')} placement="top" TransitionComponent={Zoom}>
-            <IconButton onClick={(e) => setShow(true)}>
+            <IconButton onClick={toggleLogoutModal}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
-          {show && (
-            <ConfirmModal
-              onClose={handleClose}
-              actionText={t('main.delete')}
-              onConfirm={() => handleDelete(id)}
-            ></ConfirmModal>
-          )}
-          <Tooltip
-            sx={{ marginTop: '-10px' }}
-            title={t('main.edit')}
-            placement="top"
-            TransitionComponent={Zoom}
-          >
+
+          <StyledTooltip title={t('main.edit')} placement="top" TransitionComponent={Zoom}>
             <IconButton onClick={handleUpdate}>
               <EditIcon />
             </IconButton>
-          </Tooltip>
+          </StyledTooltip>
         </StyledColumn>
       </StyledBox>
+
+      {isModalShown && (
+        <ConfirmModal
+          onConfirm={handleDelete}
+          onClose={toggleLogoutModal}
+          actionText={t('main.deleteConfirmation')}
+        />
+      )}
     </>
   );
 };
