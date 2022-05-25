@@ -3,7 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmModal from '../modals/ConfirmModal';
 import columnsApi from '../../services/columnsService';
 import { useTranslation } from 'react-i18next';
-import { StyledDelButton } from './style';
+import { IconButton } from '@mui/material';
 
 interface ColumnDeleteProps {
   id: string;
@@ -28,13 +28,9 @@ const ColumnDelete: FC<ColumnDeleteProps> = ({ id, token, boardId }) => {
 
   return (
     <>
-      <StyledDelButton
-        variant="outlined"
-        onClick={() => {
-          setShow(true);
-        }}
-        startIcon={<DeleteIcon />}
-      ></StyledDelButton>
+      <IconButton aria-label="delete" color="primary" onClick={() => setShow(true)}>
+        <DeleteIcon />
+      </IconButton>
 
       {show ? (
         <ConfirmModal

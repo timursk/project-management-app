@@ -2,7 +2,7 @@ import { Button, Stack } from '@mui/material';
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import columnsApi from '../../services/columnsService';
 import { Column } from '../../types/store/storeTypes';
-import { StyledField } from '../ColumnCard/style';
+import { StyledField } from '../Column/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { getToken } from '../../utils/utils';

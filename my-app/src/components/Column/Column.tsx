@@ -8,27 +8,24 @@ import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
 import TaskCard from '../task-components/TaskCard/TaskCard';
 import { StyledColumnCard, StyledBox, StyledTitle, StyledStack } from './style';
 
-interface ColumnCardProps {
+interface ColumnProps {
   title: string;
-  task?: object;
   boardId: string;
-  id: string;
-  isLoading: boolean;
+  columnId: string;
 }
 
-const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
+const Column: FC<ColumnProps> = ({ title, boardId, columnId }) => {
   const token = getToken();
-
   const [isEdit, setEdit] = useState(false);
-  const [columnId, setId] = useState('');
+  const [columnIdd, setId] = useState('');
   const { data } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
-  const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, boardId, columnId });
+  const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
   const [textValue, setText] = useState(title);
 
   return (
     <>
       <StyledColumnCard
-        id={id}
+        id={columnId}
         item
         onClick={(e) => {
           e.currentTarget === e.target && setEdit(false);
@@ -58,7 +55,7 @@ const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
           <ColumnDelete id={columnId} token={token} boardId={boardId} />
         </StyledBox>
         <StyledStack spacing={2}>
-          {tasks && tasks.map((task, id) => <TaskCard key={id} task={task} />)}
+          {tasks && tasks.map((task) => <TaskCard task={task} key={task.id} />)}
         </StyledStack>
         <AddTaskForm boardId={boardId} columnId={columnId} />
       </StyledColumnCard>
@@ -66,4 +63,4 @@ const ColumnCard: FC<ColumnCardProps> = ({ title, boardId, isLoading, id }) => {
   );
 };
 
-export default ColumnCard;
+export default Column;
