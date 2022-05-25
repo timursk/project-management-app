@@ -12,7 +12,7 @@ interface UpdateColumnProps {
   currentId: string;
   handlerSetEdit: Dispatch<SetStateAction<boolean>>;
   handlerSetText: Dispatch<SetStateAction<string>>;
-  data: Column;
+  column: Column;
   textValue: string;
 }
 
@@ -21,7 +21,7 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
   currentId,
   handlerSetEdit,
   handlerSetText,
-  data,
+  column,
   textValue,
 }) => {
   const token = getToken();
@@ -29,7 +29,7 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
 
   const handleUpdate = () => {
-    updateColumn({ token, boardId, columnId: currentId, title: textValue, order: data.order });
+    updateColumn({ token, boardId, columnId: currentId, title: textValue, order: column.order });
     handlerSetEdit(false);
   };
 

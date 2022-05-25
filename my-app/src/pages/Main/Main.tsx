@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import boardsApi from '../../services/boardsService';
 import { StyledGridItem, StyledGrid, StyledAddCircleIcon } from './styles';
-import { getToken } from '../../utils/utils';
+import { filterByTitle, getToken } from '../../utils/utils';
 import BoardCard from '../../components/BoardCard/BoardCard';
 import BoardEdit from '../../components/BoardEdit/BoardEdit';
 import Loader from '../../components/Loader/Loader';
@@ -17,7 +17,7 @@ const Main: FC = () => {
   const { data: boardsData, isError, isLoading, error } = boardsApi.useGetAllBoardsQuery({ token });
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [data, setData] = useState(boardsData);
+  const [boards, setBoards] = useState(boardsData);
   const [value, setValue] = useState('');
 
   useEffect(() => {
@@ -28,19 +28,16 @@ const Main: FC = () => {
   }, [error, isError, navigate]);
 
   useEffect(() => {
-    setData(boardsData);
+    setBoards(boardsData);
   }, [boardsData]);
 
   useEffect(() => {
     if (!value) {
-      setData(boardsData);
+      setBoards(boardsData);
       return;
     }
 
-    const filtered = boardsData.filter(({ title }) =>
-      title.toLowerCase().includes(value.toLowerCase())
-    );
-    setData(filtered);
+    setBoards(filterByTitle(boards, value));
   }, [value, setValue, boardsData]);
 
   const handleAdd = () => {
@@ -56,8 +53,8 @@ const Main: FC = () => {
       <MainControls value={value} setValue={setValue} />
 
       <StyledGrid container spacing={4}>
-        {data &&
-          data.map(({ id, title, description }) => {
+        {boards &&
+          boards.map(({ id, title, description }) => {
             return <BoardCard key={id} id={id} title={title} description={description} />;
           })}
 

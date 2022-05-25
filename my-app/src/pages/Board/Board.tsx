@@ -18,21 +18,12 @@ const Board = () => {
   const [idColumns, setId] = useState<string[]>([]);
   const dispatch = useAppDispatch();
 
-  const handleSort = (a: ColumnResult, b: ColumnResult) => {
-    if (a.order > b.order) {
-      return 1;
-    }
-    if (a.order < b.order) {
-      return -1;
-    }
-  };
-
   useEffect(() => {
     isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
 
     if (data) {
       const sData = [...data];
-      sData.sort((a, b) => handleSort(a, b));
+      sData.sort((a, b) => a.order - b.order);
       setData(sData);
     }
   }, [data]);

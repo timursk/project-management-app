@@ -28,7 +28,6 @@ const ColumnAdd: FC<ColumnAddProps> = ({ boardId, order }) => {
     dispatch(setOrder(+1));
     setTitle('');
     setShow(false);
-    console.log(data);
   };
 
   const handleClose = () => {
@@ -55,7 +54,7 @@ const ColumnAdd: FC<ColumnAddProps> = ({ boardId, order }) => {
             value={title}
             sx={{ margin: '0 auto' }}
             label={'Name column'}
-            onChange={(eve) => setTitle(eve.currentTarget.value)}
+            onChange={(e) => setTitle(e.currentTarget.value)}
           ></TextField>
         </ConfirmModal>
       )}

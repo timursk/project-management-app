@@ -17,8 +17,7 @@ interface ColumnProps {
 const Column: FC<ColumnProps> = ({ title, boardId, columnId }) => {
   const token = getToken();
   const [isEdit, setEdit] = useState(false);
-  const [columnIdd, setId] = useState('');
-  const { data } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
+  const { data: column } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
   const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
   const [textValue, setText] = useState(title);
 
@@ -29,7 +28,6 @@ const Column: FC<ColumnProps> = ({ title, boardId, columnId }) => {
         item
         onClick={(e) => {
           e.currentTarget === e.target && setEdit(false);
-          setId(e.currentTarget.id);
         }}
       >
         <StyledBox>
@@ -37,7 +35,7 @@ const Column: FC<ColumnProps> = ({ title, boardId, columnId }) => {
             <UpdateColumn
               boardId={boardId}
               currentId={columnId}
-              data={data}
+              column={column}
               handlerSetEdit={setEdit}
               handlerSetText={setText}
               textValue={textValue}
