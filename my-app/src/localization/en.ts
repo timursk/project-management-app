@@ -4,6 +4,7 @@ export default {
     registration: 'Sign up',
     login: 'Sign in',
     goBack: 'Back',
+    create: 'Add board',
   },
   main: {
     header: 'Boards',

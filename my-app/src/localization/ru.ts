@@ -4,6 +4,7 @@ export default {
     registration: 'Регистрация',
     login: 'Вход',
     goBack: 'Назад',
+    create: 'Добавить доску',
   },
   main: {
     header: 'Доски',
