@@ -29,6 +29,7 @@ const BoardCardControls = ({ id, setIsEdit }: Props) => {
   const toggleLogoutModal = () => {
     setIsModalShown((prev) => !prev);
   };
+
   const handleUpdate: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     setIsEdit(true);
