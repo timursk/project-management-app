@@ -5,6 +5,7 @@ export default {
     login: 'Вход',
     goBack: 'Назад',
     create: 'Добавить доску',
+    goMain: 'Перейти на главную страницу',
   },
   main: {
     header: 'Доски',

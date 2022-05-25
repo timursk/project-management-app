@@ -5,6 +5,7 @@ export default {
     login: 'Sign in',
     goBack: 'Back',
     create: 'Add board',
+    goMain: 'Go to Main Page',
   },
   main: {
     header: 'Boards',

@@ -22,7 +22,6 @@ const Header: FC = () => {
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(pathname);
 
   return (
     <Box>
@@ -55,6 +54,11 @@ const Header: FC = () => {
             </Button>
           )}
           {show && <BoardEdit setIsEdit={setShow} type={'create'} />}
+          {pathname === '/Welcome' && token && (
+            <Button color="inherit" onClick={() => navigate('/')} variant={'outlined'}>
+              {t('header.goMain')}
+            </Button>
+          )}
           {token ? (
             <UserMenu />
           ) : (
