@@ -95,4 +95,11 @@ export default {
     descriptionIsLong: 'Description is too long.',
     addTask: 'Add new task',
   },
+  errors: {
+    noColumn: 'Wrong target collumn',
+    noBoard: 'Wrong target board',
+    wrongPath: 'Path not found',
+    tokenExpired: 'Unauthorized access denied',
+    unknownError: 'Unknown server error',
+  },
 };

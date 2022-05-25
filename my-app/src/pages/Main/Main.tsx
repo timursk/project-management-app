@@ -9,11 +9,15 @@ import BoardCard from '../../components/BoardCard/BoardCard';
 import BoardEdit from '../../components/BoardEdit/BoardEdit';
 import Loader from '../../components/Loader/Loader';
 import MainControls from '../../components/MainControls/MainControls';
+import { logoutUser } from '../../store/reducers/actionCreators';
+import { useAppDispatch } from '../../store/hooks';
 
 const Main: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const token = getToken();
+
   const { data: boardsData, isError, isLoading, error } = boardsApi.useGetAllBoardsQuery({ token });
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -22,8 +26,8 @@ const Main: FC = () => {
 
   useEffect(() => {
     if (isError && 'status' in error && error.status === 401) {
-      alert('Token has expired! Redirecting...');
-      navigate('/Welcome');
+      dispatch(logoutUser());
+      navigate('/welcome');
     }
   }, [error, isError, navigate]);
 

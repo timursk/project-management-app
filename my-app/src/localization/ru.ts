@@ -94,4 +94,11 @@ export default {
     descriptionIsLong: 'Описание слишком длинное.',
     addTask: 'Добавить задачу',
   },
+  errors: {
+    noColumn: 'Неверная целевая колонка',
+    noBoard: 'Неверная целевая доска',
+    wrongPath: 'Путь не найден',
+    tokenExpired: 'Ошибка авторизации',
+    unknownError: 'Неизвестная ошибка',
+  },
 };

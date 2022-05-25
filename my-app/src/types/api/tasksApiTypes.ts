@@ -31,3 +31,8 @@ export interface UpdateTaskArg {
   token: string;
   newColumnId?: string;
 }
+
+export interface ErrorObject {
+  status: number;
+  data: { message: string };
+}
