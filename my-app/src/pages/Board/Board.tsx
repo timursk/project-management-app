@@ -22,16 +22,10 @@ export interface ITask {
   tasks: Task[];
 }
 
-export interface IColumn extends ColumnResult {
-  tasks: Task[];
-}
-
 const Board = () => {
   const { id: boardId } = useParams();
   const token = getToken();
 
-  // const { order } = useAppSelector((state) => state.columnReducer);
-  // const dispatch = useAppDispatch();
   const {
     data: allColumns,
     isSuccess,
@@ -41,71 +35,19 @@ const Board = () => {
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
   const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
-  const [columns, setColumns] = useState<IColumn[]>([]);
-  const [allTasks, setAllTasks] = useState<ITask[]>([]);
-  // const [idColumns, setId] = useState<string[]>([]);
-
-  const onTaskDragEnd = (taskId: string) => {};
+  const [columns, setColumns] = useState<ColumnResult[]>([]);
 
   useEffect(() => {
     // isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
-    const getAllTasks = (columns: ColumnResult[]) => {
-      const requestsList: Promise<Task[]>[] = [];
-
-      columns.forEach((column) => {
-        const columnId = column.id;
-        requestsList.push(GetTasksService({ boardId, columnId, token }));
-      });
-
-      return requestsList;
-    };
-
     if (!allColumns || allColumns.length === 0) {
       return;
     }
 
     const sortedColumns = [...allColumns];
     sortedColumns.sort((a, b) => a.order - b.order);
-    const tasksPromiseList = getAllTasks(sortedColumns);
 
-    Promise.allSettled(tasksPromiseList).then((tasksList) => {
-      const newColumns: IColumn[] = [];
-
-      tasksList.forEach((result, idx) => {
-        if (result.status === 'rejected') {
-          return;
-        }
-
-        const column = {
-          ...sortedColumns[idx],
-          tasks: result.value,
-        };
-
-        newColumns.push(column);
-      });
-
-      setColumns(newColumns);
-    });
-  }, [allColumns, boardId, token]);
-
-  useEffect(() => {
-    if (!columns || columns.length === 0) {
-      return;
-    }
-
-    const newTasks: ITask[] = [];
-
-    columns.forEach((column) => {
-      const taskItem = {
-        columnId: column.id,
-        tasks: column.tasks,
-      };
-
-      newTasks.push(taskItem);
-    });
-
-    setAllTasks(newTasks);
-  }, [columns]);
+    setColumns(sortedColumns);
+  }, [allColumns]);
 
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -132,25 +74,24 @@ const Board = () => {
       });
 
       setColumns(newColumns);
-
       return;
     }
 
     if (type === 'task') {
+      const { userId }: DecodedToken = jwt_decode(token);
+      const order = destination.index + 1;
+
       GetTaskService({
         token,
         boardId,
         columnId: source.droppableId,
         taskId: draggableId,
-      }).then((task) => {
-        const { userId }: DecodedToken = jwt_decode(token);
-        const order = destination.index + 1;
-
+      }).then(({ title, description }) => {
         updateTask({
           id: draggableId,
-          title: task.title,
+          title,
           order,
-          description: task.description,
+          description,
           userId,
           boardId,
           columnId: source.droppableId,
@@ -158,24 +99,24 @@ const Board = () => {
           token,
         });
 
-        const newColumns = [...columns];
+        // const newColumns = [...columns];
 
-        const sourceColumnId = newColumns.findIndex((column) => column.id === source.droppableId);
-        const destColumnId = newColumns.findIndex(
-          (column) => column.id === destination.droppableId
-        );
+        // const sourceColumnId = newColumns.findIndex((column) => column.id === source.droppableId);
+        // const destColumnId = newColumns.findIndex(
+        //   (column) => column.id === destination.droppableId
+        // );
 
-        const sourceTaskId = newColumns[sourceColumnId].tasks.findIndex(
-          (task) => task.order === source.index + 1
-        );
-        const destinationTaskId = newColumns[destColumnId].tasks.findIndex(
-          (task) => task.order === destination.index + 1
-        );
+        // const sourceTaskId = newColumns[sourceColumnId].tasks.findIndex(
+        //   (task) => task.order === source.index + 1
+        // );
+        // const destinationTaskId = newColumns[destColumnId].tasks.findIndex(
+        //   (task) => task.order === destination.index + 1
+        // );
 
-        newColumns[sourceColumnId].tasks[sourceTaskId].order = destination.index + 1;
-        newColumns[destColumnId].tasks[destinationTaskId].order = source.index + 1;
+        // newColumns[sourceColumnId].tasks[sourceTaskId].order = destination.index + 1;
+        // newColumns[destColumnId].tasks[destinationTaskId].order = source.index + 1;
 
-        setColumns(newColumns);
+        // setColumns(newColumns);
       });
 
       return;
@@ -196,15 +137,7 @@ const Board = () => {
             >
               {columns &&
                 columns.map((column, index) => (
-                  <Column
-                    key={column.id}
-                    boardId={boardId}
-                    column={column}
-                    index={index}
-                    allTasks={allTasks}
-                    // columnId={column.id}
-                    // title={column.title}
-                  />
+                  <Column key={column.id} boardId={boardId} column={column} index={index} />
                 ))}
               {/* <ColumnAdd boardId={id} order={order} /> */}
               <ColumnAdd boardId={boardId} />
