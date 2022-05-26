@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { IColumn } from '../../pages/Board/Board';
+import { IColumn, ITask } from '../../pages/Board/Board';
 import columnsApi from '../../services/columnsService';
 import tasksApi from '../../services/tasksService';
 import { getToken } from '../../utils/utils';
@@ -17,13 +17,18 @@ interface ColumnProps {
   // title: string;
   // columnId: string;
   index: number;
+  allTasks: ITask[];
 }
 
-const Column: FC<ColumnProps> = ({ boardId, column, index }) => {
+const Column: FC<ColumnProps> = ({ boardId, column, index, allTasks }) => {
   const token = getToken();
   const [isEdit, setEdit] = useState(false);
 
-  const { tasks, id: columnId, title } = column;
+  const { id: columnId, title } = column;
+  const tasksItem = allTasks.find((tasks) => tasks.columnId === column.id);
+
+  // if (tasksItem || )
+
   // const { data: column } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
   // const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
 

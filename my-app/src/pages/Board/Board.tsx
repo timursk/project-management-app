@@ -17,6 +17,11 @@ import { DecodedToken } from '../../types/api/authTypes';
 import { Task } from '../../types/store/storeTypes';
 import { GetTasksService } from '../../services/getTasksService';
 
+export interface ITask {
+  columnId: string;
+  tasks: Task[];
+}
+
 export interface IColumn extends ColumnResult {
   tasks: Task[];
 }
@@ -37,6 +42,7 @@ const Board = () => {
   const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
   const [columns, setColumns] = useState<IColumn[]>([]);
+  const [allTasks, setAllTasks] = useState<ITask[]>([]);
   // const [idColumns, setId] = useState<string[]>([]);
   useEffect(() => {
     // isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
@@ -78,6 +84,25 @@ const Board = () => {
       setColumns(newColumns);
     });
   }, [allColumns, boardId, token]);
+
+  useEffect(() => {
+    if (!columns || columns.length === 0) {
+      return;
+    }
+
+    const newTasks: ITask[] = [];
+
+    columns.forEach((column) => {
+      const taskItem = {
+        columnId: column.id,
+        tasks: column.tasks,
+      };
+
+      newTasks.push(taskItem);
+    });
+
+    setAllTasks(newTasks);
+  }, [columns]);
 
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -173,6 +198,7 @@ const Board = () => {
                     boardId={boardId}
                     column={column}
                     index={index}
+                    allTasks={allTasks}
                     // columnId={column.id}
                     // title={column.title}
                   />
