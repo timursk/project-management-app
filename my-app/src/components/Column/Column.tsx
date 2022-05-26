@@ -8,7 +8,8 @@ import ColumnDelete from '../ColumnDelete/ColumnDelete';
 import UpdateColumn from '../ColumnUpdate/UpdateColumn';
 import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
 import TaskCard from '../task-components/TaskCard/TaskCard';
-import { StyledColumnCard, StyledBox, StyledTitle, StyledStack } from './style';
+import { StyledColumnCard, StyledBox, StyledTitle } from './style';
+import TaskList from '../TasksList/TaskList';
 
 interface ColumnProps {
   boardId: string;
@@ -75,18 +76,8 @@ const Column: FC<ColumnProps> = ({ boardId, column, index }) => {
             <ColumnDelete id={columnId} token={token} boardId={boardId} />
           </StyledBox>
 
-          <Droppable droppableId={columnId} type="task">
-            {(provided) => (
-              <StyledStack {...provided.droppableProps} ref={provided.innerRef} spacing={2}>
-                {sortedTasks &&
-                  sortedTasks.map((task, index) => (
-                    <TaskCard task={task} key={task.id} index={index} />
-                  ))}
+          <TaskList columnId={columnId} sortedTasks={sortedTasks} />
 
-                {provided.placeholder}
-              </StyledStack>
-            )}
-          </Droppable>
           <AddTaskForm boardId={boardId} columnId={columnId} />
         </StyledColumnCard>
       )}
@@ -94,4 +85,4 @@ const Column: FC<ColumnProps> = ({ boardId, column, index }) => {
   );
 };
 
-export default Column;
+export default React.memo(Column);

@@ -29,9 +29,3 @@ export const StyledBox = styled(Box)({
   justifyContent: 'space-between',
   alignItems: 'flex-start',
 });
-
-export const StyledStack = styled(Stack)({
-  height: 'min-content',
-  maxHeight: '1000px',
-  overflowY: 'auto',
-});
