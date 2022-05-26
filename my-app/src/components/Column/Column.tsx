@@ -1,13 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { ITask } from '../../pages/Board/Board';
-import columnsApi from '../../services/columnsService';
+import { Draggable } from 'react-beautiful-dnd';
 import tasksApi from '../../services/tasksService';
 import { getToken } from '../../utils/utils';
 import ColumnDelete from '../ColumnDelete/ColumnDelete';
 import UpdateColumn from '../ColumnUpdate/UpdateColumn';
 import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
-import TaskCard from '../task-components/TaskCard/TaskCard';
 import { StyledColumnCard, StyledBox, StyledTitle } from './style';
 import TaskList from '../TasksList/TaskList';
 import { ColumnResult } from '../../types/api/columnsApiTypes';

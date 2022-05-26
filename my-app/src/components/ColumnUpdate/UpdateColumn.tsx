@@ -1,7 +1,6 @@
 import { Button, Stack } from '@mui/material';
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import columnsApi from '../../services/columnsService';
-import { Column } from '../../types/store/storeTypes';
 import { StyledField } from '../Column/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
@@ -13,7 +12,6 @@ interface UpdateColumnProps {
   currentId: string;
   handlerSetEdit: Dispatch<SetStateAction<boolean>>;
   handlerSetText: Dispatch<SetStateAction<string>>;
-  // column: Column;
   column: ColumnResult;
   textValue: string;
 }

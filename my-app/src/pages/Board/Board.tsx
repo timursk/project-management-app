@@ -2,7 +2,6 @@ import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { StyledBox, StyledGrid } from './style';
 import columnsApi from '../../services/columnsService';
 import { getToken } from '../../utils/utils';
@@ -14,13 +13,6 @@ import tasksApi from '../../services/tasksService';
 import { GetTaskService } from '../../services/getTaskService';
 import jwt_decode from 'jwt-decode';
 import { DecodedToken } from '../../types/api/authTypes';
-import { Task } from '../../types/store/storeTypes';
-import { GetTasksService } from '../../services/getTasksService';
-
-export interface ITask {
-  columnId: string;
-  tasks: Task[];
-}
 
 const Board = () => {
   const { id: boardId } = useParams();
@@ -38,7 +30,6 @@ const Board = () => {
   const [columns, setColumns] = useState<ColumnResult[]>([]);
 
   useEffect(() => {
-    // isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
     if (!allColumns || allColumns.length === 0) {
       return;
     }
@@ -98,25 +89,6 @@ const Board = () => {
           newColumnId: destination.droppableId,
           token,
         });
-
-        // const newColumns = [...columns];
-
-        // const sourceColumnId = newColumns.findIndex((column) => column.id === source.droppableId);
-        // const destColumnId = newColumns.findIndex(
-        //   (column) => column.id === destination.droppableId
-        // );
-
-        // const sourceTaskId = newColumns[sourceColumnId].tasks.findIndex(
-        //   (task) => task.order === source.index + 1
-        // );
-        // const destinationTaskId = newColumns[destColumnId].tasks.findIndex(
-        //   (task) => task.order === destination.index + 1
-        // );
-
-        // newColumns[sourceColumnId].tasks[sourceTaskId].order = destination.index + 1;
-        // newColumns[destColumnId].tasks[destinationTaskId].order = source.index + 1;
-
-        // setColumns(newColumns);
       });
 
       return;
