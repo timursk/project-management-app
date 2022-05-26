@@ -107,7 +107,7 @@ const Board = () => {
 
       return;
     }
-    console.log(result);
+
     if (type === 'task') {
       GetTaskService({
         token,
@@ -116,11 +116,12 @@ const Board = () => {
         taskId: draggableId,
       }).then((task) => {
         const { userId }: DecodedToken = jwt_decode(token);
+        const order = destination.index + 1;
 
         updateTask({
           id: draggableId,
           title: task.title,
-          order: ++destination.index,
+          order,
           description: task.description,
           userId,
           boardId,
@@ -128,16 +129,26 @@ const Board = () => {
           newColumnId: destination.droppableId,
           token,
         });
+
+        const newColumns = [...columns];
+
+        const sourceColumnId = newColumns.findIndex((column) => column.id === source.droppableId);
+        const destColumnId = newColumns.findIndex(
+          (column) => column.id === destination.droppableId
+        );
+
+        const sourceTaskId = newColumns[sourceColumnId].tasks.findIndex(
+          (task) => task.order === source.index + 1
+        );
+        const destinationTaskId = newColumns[destColumnId].tasks.findIndex(
+          (task) => task.order === destination.index + 1
+        );
+
+        newColumns[sourceColumnId].tasks[sourceTaskId].order = destination.index + 1;
+        newColumns[destColumnId].tasks[destinationTaskId].order = source.index + 1;
+
+        setColumns(newColumns);
       });
-
-      // const [removed] = sourceColumn.tasks.splice(source.index, 1);
-      // destColumn.tasks.splice(destination.index, 0, removed);
-
-      // const newColumns = [...columns];
-      // newColumns[sourceIdx] = sourceColumn;
-      // newColumns[destIdx] = destColumn;
-
-      // setColumns(newColumns);
 
       return;
     }
