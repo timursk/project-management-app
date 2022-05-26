@@ -44,6 +44,9 @@ const Board = () => {
   const [columns, setColumns] = useState<IColumn[]>([]);
   const [allTasks, setAllTasks] = useState<ITask[]>([]);
   // const [idColumns, setId] = useState<string[]>([]);
+
+  const onTaskDragEnd = (taskId: string) => {};
+
   useEffect(() => {
     // isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
     const getAllTasks = (columns: ColumnResult[]) => {

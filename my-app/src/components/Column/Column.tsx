@@ -27,11 +27,10 @@ const Column: FC<ColumnProps> = ({ boardId, column, index, allTasks }) => {
   const { id: columnId, title } = column;
   const tasksItem = allTasks.find((tasks) => tasks.columnId === column.id);
 
-  // if (tasksItem || )
-
+  // const tasks = tasksItem?.tasks || [];
   // const { data: column } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
-  // const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
-
+  const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
+  console.log(tasks);
   const [sortedTasks, setSortedTasks] = useState(tasks);
   const [textValue, setText] = useState(title);
 
