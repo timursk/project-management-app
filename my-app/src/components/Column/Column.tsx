@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import columnsApi from '../../services/columnsService';
 import tasksApi from '../../services/tasksService';
 import { getToken } from '../../utils/utils';
@@ -58,9 +58,15 @@ const Column: FC<ColumnProps> = ({ title, boardId, columnId, index }) => {
             )}
             <ColumnDelete id={columnId} token={token} boardId={boardId} />
           </StyledBox>
-          <StyledStack spacing={2}>
-            {tasks && tasks.map((task) => <TaskCard task={task} key={task.id} />)}
-          </StyledStack>
+
+          <Droppable droppableId={columnId} type="task">
+            {(provided) => (
+              <StyledStack {...provided.droppableProps} ref={provided.innerRef} spacing={2}>
+                {tasks &&
+                  tasks.map((task, index) => <TaskCard task={task} key={task.id} index={index} />)}
+              </StyledStack>
+            )}
+          </Droppable>
           <AddTaskForm boardId={boardId} columnId={columnId} />
         </StyledColumnCard>
       )}
