@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import columnsApi from '../../services/columnsService';
 import tasksApi from '../../services/tasksService';
@@ -21,7 +21,19 @@ const Column: FC<ColumnProps> = ({ title, boardId, columnId, index }) => {
   const [isEdit, setEdit] = useState(false);
   const { data: column } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
   const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
+
+  const [sortedTasks, setSortedTasks] = useState(tasks);
   const [textValue, setText] = useState(title);
+
+  useEffect(() => {
+    if (!tasks || tasks.length === 0) {
+      return;
+    }
+
+    const newSortedTasks = [...tasks];
+    newSortedTasks.sort((a, b) => a.order - b.order);
+    setSortedTasks(newSortedTasks);
+  }, [tasks]);
 
   return (
     <Draggable draggableId={columnId} index={index}>
@@ -62,8 +74,12 @@ const Column: FC<ColumnProps> = ({ title, boardId, columnId, index }) => {
           <Droppable droppableId={columnId} type="task">
             {(provided) => (
               <StyledStack {...provided.droppableProps} ref={provided.innerRef} spacing={2}>
-                {tasks &&
-                  tasks.map((task, index) => <TaskCard task={task} key={task.id} index={index} />)}
+                {sortedTasks &&
+                  sortedTasks.map((task, index) => (
+                    <TaskCard task={task} key={task.id} index={index} />
+                  ))}
+
+                {provided.placeholder}
               </StyledStack>
             )}
           </Droppable>

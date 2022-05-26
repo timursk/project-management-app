@@ -29,4 +29,5 @@ export interface UpdateTaskArg {
   boardId: string;
   columnId: string;
   token: string;
+  newColumnId?: string;
 }

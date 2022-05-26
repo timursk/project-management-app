@@ -10,6 +10,10 @@ import { initOrder } from '../../store/reducers/columnSlice';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
 import Column from '../../components/Column/Column';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import tasksApi from '../../services/tasksService';
+import { GetTaskService } from '../../services/getTaskService';
+import jwt_decode from 'jwt-decode';
+import { DecodedToken } from '../../types/api/authTypes';
 
 const Board = () => {
   const { id } = useParams();
@@ -19,7 +23,9 @@ const Board = () => {
   const dispatch = useAppDispatch();
 
   const { data, isSuccess, isLoading } = columnsApi.useGetAllColumnsQuery({ token, boardId: id });
+
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
+  const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
   const [sortData, setData] = useState<ColumnResult[]>(data);
   const [idColumns, setId] = useState<string[]>([]);
@@ -35,8 +41,9 @@ const Board = () => {
     }
   }, [data]);
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
+
     if (
       !destination ||
       (destination.droppableId === source.droppableId && destination.index === source.index)
@@ -62,16 +69,28 @@ const Board = () => {
 
       return;
     }
-
+    console.log(result);
     if (type === 'task') {
-      console.log('task');
-      // const sourceColumn = columns.find((column) => column.id === source.droppableId);
-      // const destColumn = columns.find((column) => column.id === destination.droppableId);
+      GetTaskService({
+        token,
+        boardId: id,
+        columnId: source.droppableId,
+        taskId: draggableId,
+      }).then((task) => {
+        const { userId }: DecodedToken = jwt_decode(token);
 
-      // if (!sourceColumn || !destColumn) return;
-
-      // const sourceIdx = columns.indexOf(sourceColumn);
-      // const destIdx = columns.indexOf(destColumn);
+        updateTask({
+          id: draggableId,
+          title: task.title,
+          order: ++destination.index,
+          description: task.description,
+          userId,
+          boardId: id,
+          columnId: source.droppableId,
+          newColumnId: destination.droppableId,
+          token,
+        });
+      });
 
       // const [removed] = sourceColumn.tasks.splice(source.index, 1);
       // destColumn.tasks.splice(destination.index, 0, removed);
@@ -81,6 +100,7 @@ const Board = () => {
       // newColumns[destIdx] = destColumn;
 
       // setColumns(newColumns);
+
       return;
     }
   };
