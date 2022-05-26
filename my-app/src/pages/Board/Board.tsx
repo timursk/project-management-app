@@ -14,32 +14,70 @@ import tasksApi from '../../services/tasksService';
 import { GetTaskService } from '../../services/getTaskService';
 import jwt_decode from 'jwt-decode';
 import { DecodedToken } from '../../types/api/authTypes';
+import { Task } from '../../types/store/storeTypes';
+import { GetTasksService } from '../../services/getTasksService';
+
+export interface IColumn extends ColumnResult {
+  tasks: Task[];
+}
 
 const Board = () => {
-  const { id } = useParams();
+  const { id: boardId } = useParams();
   const token = getToken();
 
-  const { order } = useAppSelector((state) => state.columnReducer);
-  const dispatch = useAppDispatch();
-
-  const { data, isSuccess, isLoading } = columnsApi.useGetAllColumnsQuery({ token, boardId: id });
+  // const { order } = useAppSelector((state) => state.columnReducer);
+  // const dispatch = useAppDispatch();
+  const {
+    data: allColumns,
+    isSuccess,
+    isLoading,
+  } = columnsApi.useGetAllColumnsQuery({ token, boardId });
 
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
   const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
-  const [sortData, setData] = useState<ColumnResult[]>(data);
-  const [idColumns, setId] = useState<string[]>([]);
-
+  const [columns, setColumns] = useState<IColumn[]>([]);
+  // const [idColumns, setId] = useState<string[]>([]);
   useEffect(() => {
-    isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
+    // isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
+    const getAllTasks = (columns: ColumnResult[]) => {
+      const requestsList: Promise<Task[]>[] = [];
 
-    if (data) {
-      const sData = [...data];
-      sData.sort((a, b) => a.order - b.order);
+      columns.forEach((column) => {
+        const columnId = column.id;
+        requestsList.push(GetTasksService({ boardId, columnId, token }));
+      });
 
-      setData(sData);
+      return requestsList;
+    };
+
+    if (!allColumns || allColumns.length === 0) {
+      return;
     }
-  }, [data]);
+
+    const sortedColumns = [...allColumns];
+    sortedColumns.sort((a, b) => a.order - b.order);
+    const tasksPromiseList = getAllTasks(sortedColumns);
+
+    Promise.allSettled(tasksPromiseList).then((tasksList) => {
+      const newColumns: IColumn[] = [];
+
+      tasksList.forEach((result, idx) => {
+        if (result.status === 'rejected') {
+          return;
+        }
+
+        const column = {
+          ...sortedColumns[idx],
+          tasks: result.value,
+        };
+
+        newColumns.push(column);
+      });
+
+      setColumns(newColumns);
+    });
+  }, [allColumns, boardId, token]);
 
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -52,20 +90,20 @@ const Board = () => {
     }
 
     if (type === 'column') {
-      const newColumns = [...sortData];
+      const newColumns = [...columns];
 
       const [removed] = newColumns.splice(source.index, 1);
       newColumns.splice(destination.index, 0, removed);
 
       updateColumn({
-        boardId: id,
+        boardId,
         columnId: draggableId,
-        title: sortData[source.index].title,
+        title: columns[source.index].title,
         order: ++destination.index,
         token,
       });
 
-      setData(newColumns);
+      setColumns(newColumns);
 
       return;
     }
@@ -73,7 +111,7 @@ const Board = () => {
     if (type === 'task') {
       GetTaskService({
         token,
-        boardId: id,
+        boardId,
         columnId: source.droppableId,
         taskId: draggableId,
       }).then((task) => {
@@ -85,7 +123,7 @@ const Board = () => {
           order: ++destination.index,
           description: task.description,
           userId,
-          boardId: id,
+          boardId,
           columnId: source.droppableId,
           newColumnId: destination.droppableId,
           token,
@@ -117,17 +155,19 @@ const Board = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {sortData &&
-                sortData.map((column, index) => (
+              {columns &&
+                columns.map((column, index) => (
                   <Column
                     key={column.id}
-                    boardId={id}
-                    columnId={column.id}
-                    title={column.title}
+                    boardId={boardId}
+                    column={column}
                     index={index}
+                    // columnId={column.id}
+                    // title={column.title}
                   />
                 ))}
-              <ColumnAdd boardId={id} order={order} />
+              {/* <ColumnAdd boardId={id} order={order} /> */}
+              <ColumnAdd boardId={boardId} />
 
               {provided.placeholder}
             </StyledGrid>

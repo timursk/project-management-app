@@ -10,10 +10,11 @@ import { setOrder } from '../../store/reducers/columnSlice';
 
 interface ColumnAddProps {
   boardId: string;
-  order: number;
+  // order: number;
 }
 
-const ColumnAdd: FC<ColumnAddProps> = ({ boardId, order }) => {
+// const ColumnAdd: FC<ColumnAddProps> = ({ boardId, order }) => {
+const ColumnAdd: FC<ColumnAddProps> = ({ boardId }) => {
   const { t } = useTranslation();
 
   const token = getToken();

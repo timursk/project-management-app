@@ -6,13 +6,15 @@ import { StyledField } from '../Column/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { getToken } from '../../utils/utils';
+import { IColumn } from '../../pages/Board/Board';
 
 interface UpdateColumnProps {
   boardId: string;
   currentId: string;
   handlerSetEdit: Dispatch<SetStateAction<boolean>>;
   handlerSetText: Dispatch<SetStateAction<string>>;
-  column: Column;
+  // column: Column;
+  column: IColumn;
   textValue: string;
 }
 

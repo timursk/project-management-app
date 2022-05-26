@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { IColumn } from '../../pages/Board/Board';
 import columnsApi from '../../services/columnsService';
 import tasksApi from '../../services/tasksService';
 import { getToken } from '../../utils/utils';
@@ -10,17 +11,20 @@ import TaskCard from '../task-components/TaskCard/TaskCard';
 import { StyledColumnCard, StyledBox, StyledTitle, StyledStack } from './style';
 
 interface ColumnProps {
-  title: string;
   boardId: string;
-  columnId: string;
+  column: IColumn;
+  // title: string;
+  // columnId: string;
   index: number;
 }
 
-const Column: FC<ColumnProps> = ({ title, boardId, columnId, index }) => {
+const Column: FC<ColumnProps> = ({ boardId, column, index }) => {
   const token = getToken();
   const [isEdit, setEdit] = useState(false);
-  const { data: column } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
-  const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
+
+  const { tasks, id: columnId, title } = column;
+  // const { data: column } = columnsApi.useGetColumnByIdQuery({ token, boardId, columnId });
+  // const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
 
   const [sortedTasks, setSortedTasks] = useState(tasks);
   const [textValue, setText] = useState(title);
