@@ -8,10 +8,11 @@ import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
 import { StyledColumnCard, StyledBox, StyledTitle } from './style';
 import TaskList from '../TasksList/TaskList';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
+import { Column } from '../../types/store/storeTypes';
 
 interface ColumnProps {
   boardId: string;
-  column: ColumnResult;
+  column: Column;
   index: number;
 }
 

@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
 import { StyledBox, StyledGrid } from './style';
 import columnsApi from '../../services/columnsService';
-import { getToken } from '../../utils/utils';
 import { initOrder } from '../../store/reducers/columnSlice';
+import { getToken, reorderTasks } from '../../utils/utils';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
 import ColumnComponent from '../../components/ColumnComponent/ColumnComponent';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -94,13 +94,42 @@ const Board = () => {
       });
 
       const newColumns = [...columns];
+
       const sourceIdx = newColumns.findIndex((column) => column.id === source.droppableId);
       const destIdx = newColumns.findIndex((column) => column.id === destination.droppableId);
 
-      newColumns[sourceIdx].tasks;
-      // const sourceTaskIdx = newColumns[sourceIdx].tasks.findIndex((task) => task.order === source.index + 1);
-      // const destTaskIdx = newColumns[sourceIdx].tasks.findIndex((task) => task.order === destination.index + 1);
+      const sourceTaskIdx = newColumns[sourceIdx].tasks.findIndex(
+        (task) => task.order === source.index + 1
+      );
+      const destTaskIdx = newColumns[sourceIdx].tasks.findIndex(
+        (task) => task.order === destination.index + 1
+      );
 
+      console.log(source.index, destination.index);
+      console.log(source.droppableId === destination.droppableId);
+      const toAddTask = newColumns[sourceIdx].tasks[sourceTaskIdx];
+      const sourceColumn = { ...newColumns[sourceIdx] };
+      const destColumn = { ...newColumns[destIdx] };
+
+      sourceColumn.tasks = reorderTasks(
+        sourceColumn.tasks,
+        source.index + 1,
+        destination.index + 1,
+        source.droppableId === destination.droppableId
+      );
+      destColumn.tasks = reorderTasks(
+        destColumn.tasks,
+        source.index + 1,
+        destination.index + 1,
+        source.droppableId === destination.droppableId,
+        toAddTask
+      );
+
+      newColumns[sourceIdx] = sourceColumn;
+      newColumns[destIdx] = destColumn;
+
+      console.log('result', newColumns);
+      setColumns(newColumns);
       // newColumns[sourceIdx].tasks[sourceTaskIdx].order =
       // const [removed] = newColumns.splice(source.index, 1);
       // newColumns.splice(destination.index, 0, removed);
