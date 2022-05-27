@@ -15,7 +15,7 @@ interface ColumnProps {
   index: number;
 }
 
-const Column: FC<ColumnProps> = ({ boardId, column, index }) => {
+const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index }) => {
   const token = getToken();
   const { id: columnId, title } = column;
 
@@ -80,4 +80,4 @@ const Column: FC<ColumnProps> = ({ boardId, column, index }) => {
   );
 };
 
-export default React.memo(Column);
+export default React.memo(ColumnComponent);

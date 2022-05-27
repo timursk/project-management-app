@@ -1,7 +1,7 @@
 import { Button, Stack } from '@mui/material';
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import columnsApi from '../../services/columnsService';
-import { StyledField } from '../Column/style';
+import { StyledField } from '../ColumnComponent/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { getToken } from '../../utils/utils';

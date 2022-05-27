@@ -1,4 +1,4 @@
-import { Board } from '../types/store/storeTypes';
+import { Board, ColumnTask } from '../types/store/storeTypes';
 import { ENDPOINTS } from './constants';
 
 export const getColumnUrl = (boardId: string, columnId?: string) =>
@@ -32,4 +32,23 @@ export const filterByTitle = (data: Board[], value: string) => {
   });
 
   return result;
+};
+
+const reorderTasks = (tasks: ColumnTask[], start: number, end: number) => {
+  const tasksArr = [...tasks];
+
+  return tasksArr.map((task) => {
+    let order = task.order;
+
+    if (task.order === start + 1) {
+      order = end;
+    } else if (task.order >= end) {
+      order++;
+    }
+
+    return {
+      ...task,
+      order,
+    };
+  });
 };

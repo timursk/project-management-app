@@ -7,38 +7,40 @@ import columnsApi from '../../services/columnsService';
 import { getToken } from '../../utils/utils';
 import { initOrder } from '../../store/reducers/columnSlice';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
-import Column from '../../components/Column/Column';
+import ColumnComponent from '../../components/ColumnComponent/ColumnComponent';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import tasksApi from '../../services/tasksService';
 import { GetTaskService } from '../../services/getTaskService';
 import jwt_decode from 'jwt-decode';
 import { DecodedToken } from '../../types/api/authTypes';
+import boardsApi from '../../services/boardsService';
+import { Column } from '../../types/store/storeTypes';
 
 const Board = () => {
   const { id: boardId } = useParams();
   const token = getToken();
 
-  const {
-    data: allColumns,
-    isSuccess,
-    isLoading,
-  } = columnsApi.useGetAllColumnsQuery({ token, boardId });
+  // const {
+  //   data: allColumns,
+  //   isSuccess,
+  //   isLoading,
+  // } = columnsApi.useGetAllColumnsQuery({ token, boardId });
+  const { data: board } = boardsApi.useGetBoardByIdQuery({ token, id: boardId });
 
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
   const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
-  const [columns, setColumns] = useState<ColumnResult[]>([]);
+  const [columns, setColumns] = useState<Column[]>([]);
 
   useEffect(() => {
-    if (!allColumns || allColumns.length === 0) {
+    if (!board || board.columns.length === 0) {
       return;
     }
 
-    const sortedColumns = [...allColumns];
+    const sortedColumns = [...board.columns];
     sortedColumns.sort((a, b) => a.order - b.order);
-
     setColumns(sortedColumns);
-  }, [allColumns]);
+  }, [board]);
 
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -91,6 +93,18 @@ const Board = () => {
         });
       });
 
+      const newColumns = [...columns];
+      const sourceIdx = newColumns.findIndex((column) => column.id === source.droppableId);
+      const destIdx = newColumns.findIndex((column) => column.id === destination.droppableId);
+
+      newColumns[sourceIdx].tasks;
+      // const sourceTaskIdx = newColumns[sourceIdx].tasks.findIndex((task) => task.order === source.index + 1);
+      // const destTaskIdx = newColumns[sourceIdx].tasks.findIndex((task) => task.order === destination.index + 1);
+
+      // newColumns[sourceIdx].tasks[sourceTaskIdx].order =
+      // const [removed] = newColumns.splice(source.index, 1);
+      // newColumns.splice(destination.index, 0, removed);
+
       return;
     }
   };
@@ -109,9 +123,14 @@ const Board = () => {
             >
               {columns &&
                 columns.map((column, index) => (
-                  <Column key={column.id} boardId={boardId} column={column} index={index} />
+                  <ColumnComponent
+                    key={column.id}
+                    boardId={boardId}
+                    column={column}
+                    index={index}
+                  />
                 ))}
-              {/* <ColumnAdd boardId={id} order={order} /> */}
+
               <ColumnAdd boardId={boardId} />
 
               {provided.placeholder}
