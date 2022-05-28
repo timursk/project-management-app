@@ -6,17 +6,12 @@ import columnsApi from '../../services/columnsService';
 import { initOrder } from '../../store/reducers/columnSlice';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
 import { getToken } from '../../utils/utils';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import ColumnComponent from '../../components/ColumnComponent/ColumnComponent';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import tasksApi from '../../services/tasksService';
+import { Droppable } from 'react-beautiful-dnd';
 import boardsApi from '../../services/boardsService';
 import { Column, ColumnTask } from '../../types/store/storeTypes';
-
-export type TasksDnd = {
-  columnId: string;
-  tasks: ColumnTask[];
-};
+import DndWrapper from '../../components/DndWrapper/DndWrapper';
 
 export type BoardTasks = {
   [key: string]: ColumnTask[];
@@ -26,10 +21,7 @@ const Board = () => {
   const { id: boardId } = useParams();
   const token = getToken();
 
-  const { data: board } = boardsApi.useGetBoardByIdQuery({ token, id: boardId });
-  const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
-  const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
-
+  const { data: board, refetch } = boardsApi.useGetBoardByIdQuery({ token, id: boardId });
   const [columnsDnd, setColumnsDnd] = useState<Column[]>(null);
   const [tasksDnd, setTasksDnd] = useState<BoardTasks>(null);
 
@@ -52,76 +44,15 @@ const Board = () => {
     setTasksDnd(newTasks);
   }, [board]);
 
-  const onDragEnd = useCallback(
-    ({ destination, source, draggableId, type }: DropResult) => {
-      if (
-        !destination ||
-        (destination.droppableId === source.droppableId && destination.index === source.index)
-      ) {
-        return;
-      }
-
-      const order = destination.index + 1;
-
-      if (type === 'column') {
-        const newColumns = [...columnsDnd];
-        const { title } = newColumns[source.index];
-
-        const [removed] = newColumns.splice(source.index, 1);
-        newColumns.splice(destination.index, 0, removed);
-
-        updateColumn({
-          boardId,
-          columnId: draggableId,
-          title,
-          order,
-          token,
-        });
-
-        setColumnsDnd(newColumns);
-        return;
-      }
-
-      if (type === 'task') {
-        const newTasksDnd = { ...tasksDnd };
-        const sourceList = newTasksDnd[source.droppableId].slice();
-        const destList = newTasksDnd[destination.droppableId].slice();
-        const { title, description, userId } = sourceList.find((task) => task.id === draggableId);
-        const [removed] = sourceList.splice(source.index, 1);
-
-        if (source.droppableId === destination.droppableId) {
-          sourceList.splice(destination.index, 0, removed);
-
-          newTasksDnd[source.droppableId] = sourceList;
-        } else {
-          destList.splice(destination.index, 0, removed);
-
-          newTasksDnd[source.droppableId] = sourceList;
-          newTasksDnd[destination.droppableId] = destList;
-        }
-
-        setTasksDnd(newTasksDnd);
-
-        updateTask({
-          id: draggableId,
-          title,
-          order,
-          description,
-          userId,
-          boardId,
-          columnId: source.droppableId,
-          newColumnId: destination.droppableId,
-          token,
-        });
-        return;
-      }
-    },
-    [boardId, columnsDnd, tasksDnd, token, updateColumn, updateTask]
-  );
-
   return (
     <StyledBox>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DndWrapper
+        columnsDnd={columnsDnd}
+        setColumnsDnd={setColumnsDnd}
+        tasksDnd={tasksDnd}
+        setTasksDnd={setTasksDnd}
+        boardId={boardId}
+      >
         <Droppable droppableId="all-columns" direction="horizontal" type="column">
           {(provided) => (
             <StyledGrid
@@ -148,7 +79,7 @@ const Board = () => {
             </StyledGrid>
           )}
         </Droppable>
-      </DragDropContext>
+      </DndWrapper>
     </StyledBox>
   );
 };
