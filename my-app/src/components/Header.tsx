@@ -26,9 +26,9 @@ const BoardRouteStyles = {
 
 const Header: FC = () => {
   const { t } = useTranslation();
-  const { login } = useAppSelector((store) => store.userReducer);
-  const token = useMemo(() => getToken(), [login]);
   const [show, setShow] = useState(false);
+  const { isLoading, login } = useAppSelector((store) => store.userReducer);
+  const token = useMemo(() => getToken(), [login, isLoading]);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();

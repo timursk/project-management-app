@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     if (token) dispatch(initUser());
-  }, [dispatch, token, login]);
+  }, [dispatch, token]);
 
   return (
     <StyledBox>

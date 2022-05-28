@@ -18,10 +18,12 @@ const UsersList = () => {
   const iconBtnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    getUsersService(token).then((result) => {
-      const names = result.map((item) => item.name);
-      setUsers(names);
-    });
+    if (token) {
+      getUsersService(token).then((result) => {
+        const names = result.map((item) => item.name);
+        setUsers(names);
+      });
+    }
   }, [token]);
 
   useEffect(() => {
