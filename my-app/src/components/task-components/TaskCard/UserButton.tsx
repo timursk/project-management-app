@@ -1,14 +1,17 @@
-import { FC, useState, useMemo, useCallback, useEffect } from 'react';
-import Button from '@mui/material/Button';
+import { FC, useState, useCallback, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useTranslation } from 'react-i18next';
 import PersonIcon from '@mui/icons-material/Person';
-import { ListItemIcon } from '@mui/material';
+import { ListItemIcon, Typography } from '@mui/material';
 import usersApi from '../../../services/usersService';
 import Loader from '../../Loader/Loader';
 import { getToken } from '../../../utils/utils';
 import StyledCentredButton from './StyledCentredButton';
+import { useAppDispatch } from '../../../store/hooks';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../../store/reducers/actionCreators';
+import { ErrorObject } from '../../../types/api/tasksApiTypes';
 
 interface UserButtonProps {
   userId: string;
@@ -17,10 +20,23 @@ interface UserButtonProps {
 
 const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [selectedId, setSelectedId] = useState(userId);
   const token = getToken();
-  const user = usersApi.useGetUserByIdQuery({ token, userId: selectedId || userId });
+  const { currentData: user, error } = usersApi.useGetUserByIdQuery({
+    token,
+    userId: selectedId || userId,
+  });
+
+  if (error) {
+    const { status } = error as ErrorObject;
+    if (status === 401) {
+      dispatch(logoutUser());
+      navigate('/welcome');
+    }
+  }
 
   const allUsers = usersApi.useGetAllUsersQuery({ token });
 
@@ -59,7 +75,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
         startIcon={<PersonIcon />}
         variant="outlined"
       >
-        {user && user.currentData && user.currentData.login}
+        <Typography noWrap> {user && user.login}</Typography>
       </StyledCentredButton>
 
       <Menu

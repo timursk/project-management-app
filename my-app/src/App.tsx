@@ -10,7 +10,7 @@ import Welcome from './pages/Welcome/Welcome';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { StyledBox, StyledContainer } from './app-styles';
 import { useEffect } from 'react';
-import { useAppDispatch } from './store/hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
 import EditProfileForm from './components/user-forms/EditProfileForm';
 import { getToken } from './utils/utils';
@@ -18,6 +18,7 @@ import { getToken } from './utils/utils';
 function App() {
   const dispatch = useAppDispatch();
   const token = getToken();
+  const { login } = useAppSelector((store) => store.userReducer);
 
   useEffect(() => {
     dispatch(initUser());
@@ -25,7 +26,7 @@ function App() {
 
   useEffect(() => {
     if (token) dispatch(initUser());
-  }, [dispatch, token]);
+  }, [dispatch, token, login]);
 
   return (
     <StyledBox>
