@@ -8,33 +8,25 @@ import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
 import { StyledColumnCard, StyledBox, StyledTitle } from './style';
 import TaskList from '../TasksList/TaskList';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
-import { Column } from '../../types/store/storeTypes';
+import { Column, ColumnTask } from '../../types/store/storeTypes';
+import { Test } from '../../pages/Board/Board';
 
 interface ColumnProps {
   boardId: string;
   column: Column;
   index: number;
+  // tasks: ColumnTask[];
+  tasks: Test;
 }
 
-const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index }) => {
+const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks }) => {
   const token = getToken();
   const { id: columnId, title } = column;
-
-  const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
-
+  const sortedTasks = tasks[columnId];
+  // const { data: tasks } = tasksApi.useGetAllTasksQuery({ token, columnId, boardId });
   const [isEdit, setEdit] = useState(false);
-  const [sortedTasks, setSortedTasks] = useState(tasks);
+  // const [sortedTasks, setSortedTasks] = useState<ColumnTask[]>();
   const [textValue, setText] = useState(title);
-
-  useEffect(() => {
-    if (!tasks || tasks.length === 0) {
-      return;
-    }
-
-    const newSortedTasks = [...tasks];
-    newSortedTasks.sort((a, b) => a.order - b.order);
-    setSortedTasks(newSortedTasks);
-  }, [tasks]);
 
   return (
     <Draggable draggableId={columnId} index={index}>

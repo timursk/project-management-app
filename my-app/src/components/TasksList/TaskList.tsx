@@ -1,12 +1,12 @@
 import React from 'react';
-import { Task } from '../../types/store/storeTypes';
+import { ColumnTask, Task } from '../../types/store/storeTypes';
 import TaskCard from '../task-components/TaskCard/TaskCard';
 import { Droppable } from 'react-beautiful-dnd';
 import { StyledStack } from './style';
 
 type Props = {
   columnId: string;
-  sortedTasks: Task[];
+  sortedTasks: ColumnTask[];
 };
 
 const TaskList = ({ columnId, sortedTasks }: Props) => {
