@@ -1,6 +1,6 @@
 export default {
   header: {
-    title: 'Header',
+    title: 'Final task!',
     registration: 'Sign up',
     login: 'Sign in',
     goBack: 'Back',

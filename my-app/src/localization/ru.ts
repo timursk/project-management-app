@@ -1,6 +1,6 @@
 export default {
   header: {
-    title: 'Заголовок',
+    title: 'Final task!',
     registration: 'Регистрация',
     login: 'Вход',
     goBack: 'Назад',
