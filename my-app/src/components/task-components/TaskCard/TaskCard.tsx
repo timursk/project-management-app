@@ -9,7 +9,7 @@ import HideIcon from '@mui/icons-material/VisibilityOff';
 import UserButton from './UserButton';
 import ConfirmModal from '../../modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
-import { ColumnTask, Task } from '../../../types/store/storeTypes';
+import { ColumnTask } from '../../../types/store/storeTypes';
 import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import StyledTaskCardControlsWrapper from './StyledTaskCardControlsWrapper';
@@ -18,11 +18,13 @@ import { Draggable } from 'react-beautiful-dnd';
 import React from 'react';
 
 interface TaskCardProps {
+  boardId: string;
+  columnId: string;
   task: ColumnTask;
   index: number;
 }
 
-const TaskCard: FC<TaskCardProps> = ({ task, index }) => {
+const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId }) => {
   const { t } = useTranslation();
 
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
@@ -47,13 +49,13 @@ const TaskCard: FC<TaskCardProps> = ({ task, index }) => {
   };
 
   const handleDelete = () => {
-    // deleteTask({ boardId: task.boardId, columnId: task.columnId, taskId: task.id, token });
-    // toggleModalDelete();
+    deleteTask({ boardId, columnId, taskId: task.id, token });
+    toggleModalDelete();
   };
 
   const handleChangeUser = (userId: string) => {
-    // const { title, description, order, id, boardId, columnId } = task;
-    // updateTask({ title, description, order, id, userId, token, boardId, columnId });
+    const { title, description, order, id } = task;
+    updateTask({ title, description, order, id, userId, token, boardId, columnId });
   };
 
   const handleEsc = (event: KeyboardEvent) => {
@@ -87,7 +89,7 @@ const TaskCard: FC<TaskCardProps> = ({ task, index }) => {
               <IconButton aria-label="edit" color="primary" size="small" onClick={toggleModal}>
                 <EditIcon />
               </IconButton>
-              {/* {isModalShown && <EditTaskForm task={task} onClose={toggleModal} />} */}
+
               <IconButton
                 aria-label="delete"
                 color="primary"
@@ -97,16 +99,22 @@ const TaskCard: FC<TaskCardProps> = ({ task, index }) => {
                 <DeleteIcon />
               </IconButton>
             </StyledTaskCardControlsWrapper>
+
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} noWrap={isCollapsed}>
               {task.title}
             </Typography>
+
             <Typography variant="body2" component="div" sx={{ flexGrow: 1 }} noWrap={isCollapsed}>
               {task.description}
             </Typography>
+
             <UserButton userId={task.userId} onSetUser={handleChangeUser} />
           </StyledTaskWrapper>
         )}
       </Draggable>
+      {isModalShown && (
+        <EditTaskForm task={task} onClose={toggleModal} boardId={boardId} columnId={columnId} />
+      )}
 
       {isModalDeleteShown && (
         <ConfirmModal

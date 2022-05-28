@@ -14,15 +14,17 @@ import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import UserButton from './UserButton';
 
-import { Task } from '../../../types/store/storeTypes';
+import { ColumnTask } from '../../../types/store/storeTypes';
 
 const OVERLAY_NAME = 'modal-overlay';
 
 interface EditTaskFormProps {
-  task: Task;
+  boardId: string;
+  columnId: string;
+  task: ColumnTask;
   onClose: () => void;
 }
-const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
+const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId }) => {
   const { t } = useTranslation();
   const token = getToken();
 
@@ -48,8 +50,8 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
     validationSchema: taskValidationSchema,
     onSubmit: (values) => {
       updateTask({
-        boardId: task.boardId,
-        columnId: task.columnId,
+        boardId,
+        columnId,
         token,
         id: task.id,
         order: task.order,
