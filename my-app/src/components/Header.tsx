@@ -1,13 +1,23 @@
 import styled from '@emotion/styled';
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { FC, useMemo, useState } from 'react';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  AppBar,
+  Button,
+  Fab,
+  IconButton,
+  Toolbar,
+  Typography,
+  useScrollTrigger,
+} from '@mui/material';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
 import { getToken } from '../utils/utils';
 import { useAppSelector } from '../store/hooks';
 import BoardEdit from './BoardEdit/BoardEdit';
+import ScrollTopButton from './ScrollTopButton';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -30,15 +40,20 @@ const Header: FC = () => {
   const { isLoading, login } = useAppSelector((store) => store.userReducer);
   const token = useMemo(() => getToken(), [login, isLoading]);
 
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isBoard = pathname.match(/board/i);
 
   return (
-    <Box sx={isBoard ? BoardRouteStyles : defaultStyles}>
+    <>
       <AppBar
-        position="static"
-        style={{ height: '100%', display: 'flex', justifyContent: 'center' }}
+        sx={isBoard ? BoardRouteStyles : defaultStyles}
+        position="sticky"
+        color={trigger ? 'secondary' : 'primary'}
       >
         <Toolbar>
           <IconButton
@@ -89,7 +104,12 @@ const Header: FC = () => {
           <LanguageToggle />
         </Toolbar>
       </AppBar>
-    </Box>
+      <ScrollTopButton>
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTopButton>
+    </>
   );
 };
 
