@@ -52,13 +52,13 @@ const tasksApi = createApi({
     }),
 
     updateTask: build.mutation<Task, UpdateTaskArg>({
-      query: ({ boardId, columnId, id, token, ...rest }) => ({
+      query: ({ boardId, columnId, id, token, newColumnId, ...rest }) => ({
         url: getTaskUrl(boardId, columnId, id),
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: { ...rest, boardId, columnId },
+        body: { ...rest, boardId, columnId: newColumnId ?? columnId },
       }),
       invalidatesTags: ['TaskList'],
     }),

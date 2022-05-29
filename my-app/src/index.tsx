@@ -9,18 +9,17 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { ThemeProvider } from '@mui/system';
 import theme from './theme';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <Suspense fallback={<Loader />}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </Suspense>
-  </React.StrictMode>
+  <Suspense fallback={<Loader />}>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </ThemeProvider>
+  </Suspense>
 );

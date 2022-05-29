@@ -1,44 +1,86 @@
 import { Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { StyledBox, StyledGrid } from './style';
 import columnsApi from '../../services/columnsService';
-import { getToken } from '../../utils/utils';
 import { initOrder } from '../../store/reducers/columnSlice';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
-import Column from '../../components/Column/Column';
+import { getToken } from '../../utils/utils';
+import { useState, useEffect } from 'react';
+import ColumnComponent from '../../components/ColumnComponent/ColumnComponent';
+import { Droppable } from 'react-beautiful-dnd';
+import boardsApi from '../../services/boardsService';
+import { Column, ColumnTask } from '../../types/store/storeTypes';
+import DndWrapper from '../../components/DndWrapper/DndWrapper';
+
+export type BoardTasks = {
+  [key: string]: ColumnTask[];
+};
 
 const Board = () => {
-  const { id } = useParams();
-  const { order } = useAppSelector((state) => state.columnReducer);
+  const { id: boardId } = useParams();
   const token = getToken();
-  const { data, isSuccess, isLoading } = columnsApi.useGetAllColumnsQuery({ token, boardId: id });
-  const [sortData, setData] = useState<ColumnResult[]>(data);
-  const [idColumns, setId] = useState<string[]>([]);
-  const dispatch = useAppDispatch();
+
+  const { data: board, refetch } = boardsApi.useGetBoardByIdQuery({ token, id: boardId });
+  const [columnsDnd, setColumnsDnd] = useState<Column[]>(null);
+  const [tasksDnd, setTasksDnd] = useState<BoardTasks>(null);
 
   useEffect(() => {
-    isSuccess && dispatch(initOrder(parseInt(data.length.toString()) + 1));
-
-    if (data) {
-      const sData = [...data];
-      sData.sort((a, b) => a.order - b.order);
-
-      setData(sData);
+    if (!board || !board?.columns || !board.columns.length) {
+      return;
     }
-  }, [data]);
+
+    const newColumns = [...board.columns];
+    newColumns.sort((a, b) => a.order - b.order);
+
+    const newTasks: BoardTasks = {};
+    newColumns.forEach(({ id, tasks }) => {
+      const tasksArr = [...tasks];
+      tasksArr.sort((a, b) => a.order - b.order);
+      newTasks[id] = tasksArr;
+    });
+
+    setColumnsDnd(newColumns);
+    setTasksDnd(newTasks);
+  }, [board]);
 
   return (
     <StyledBox>
-      <StyledGrid container marginTop={3} flexWrap="nowrap">
-        {sortData &&
-          sortData.map((column) => (
-            <Column key={column.id} boardId={id} columnId={column.id} title={column.title} />
-          ))}
-        <ColumnAdd boardId={id} order={order} />
-      </StyledGrid>
+      <DndWrapper
+        columnsDnd={columnsDnd}
+        setColumnsDnd={setColumnsDnd}
+        tasksDnd={tasksDnd}
+        setTasksDnd={setTasksDnd}
+        boardId={boardId}
+      >
+        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+          {(provided, snapshot) => (
+            <StyledGrid
+              container
+              marginTop={3}
+              flexWrap="nowrap"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {columnsDnd &&
+                columnsDnd.map((column, index) => (
+                  <ColumnComponent
+                    key={column.id}
+                    boardId={boardId}
+                    column={column}
+                    index={index}
+                    tasks={tasksDnd}
+                    refetch={refetch}
+                  />
+                ))}
+
+              <ColumnAdd snapshot={snapshot} boardId={boardId} refetch={refetch} />
+
+              {provided.placeholder}
+            </StyledGrid>
+          )}
+        </Droppable>
+      </DndWrapper>
     </StyledBox>
   );
 };

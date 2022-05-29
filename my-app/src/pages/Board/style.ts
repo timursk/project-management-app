@@ -1,10 +1,14 @@
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import styled from '@emotion/styled';
 
 export const StyledBox = styled.div(() => ({
-  overflowX: 'auto',
+  height: '84vh',
+  marginTop: '8vh',
 }));
 
 export const StyledGrid = styled(Grid)({
-  width: '320px',
+  width: '100%',
+  height: '100%',
+  margin: '0',
+  padding: '15px 0',
 });

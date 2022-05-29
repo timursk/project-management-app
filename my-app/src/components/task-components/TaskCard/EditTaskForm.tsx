@@ -14,15 +14,18 @@ import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import UserButton from './UserButton';
 
-import { Task } from '../../../types/store/storeTypes';
+import { ColumnTask } from '../../../types/store/storeTypes';
 
 const OVERLAY_NAME = 'modal-overlay';
 
 interface EditTaskFormProps {
-  task: Task;
+  boardId: string;
+  columnId: string;
+  task: ColumnTask;
   onClose: () => void;
+  refetch: () => void;
 }
-const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
+const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId, refetch }) => {
   const { t } = useTranslation();
   const token = getToken();
 
@@ -46,10 +49,10 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
       userId: task.userId,
     },
     validationSchema: taskValidationSchema,
-    onSubmit: (values) => {
-      updateTask({
-        boardId: task.boardId,
-        columnId: task.columnId,
+    onSubmit: async (values) => {
+      await updateTask({
+        boardId,
+        columnId,
         token,
         id: task.id,
         order: task.order,
@@ -57,6 +60,7 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose }) => {
         description: values.description,
         userId: values.userId,
       });
+      refetch();
       resetForm();
       onClose();
     },

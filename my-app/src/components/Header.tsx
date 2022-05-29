@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { FC, useMemo, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
@@ -14,6 +14,16 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 `;
 
+const defaultStyles = {
+  height: '8vh',
+};
+
+const BoardRouteStyles = {
+  position: 'fixed',
+  width: '100vw',
+  ...defaultStyles,
+};
+
 const Header: FC = () => {
   const { t } = useTranslation();
   const { login } = useAppSelector((store) => store.userReducer);
@@ -22,10 +32,14 @@ const Header: FC = () => {
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const isBoard = pathname.match(/board/i);
 
   return (
-    <Box>
-      <AppBar position="static">
+    <Box sx={isBoard ? BoardRouteStyles : defaultStyles}>
+      <AppBar
+        position="static"
+        style={{ height: '100%', display: 'flex', justifyContent: 'center' }}
+      >
         <Toolbar>
           <IconButton
             size="large"

@@ -9,9 +9,10 @@ interface ColumnDeleteProps {
   id: string;
   token: string;
   boardId: string;
+  refetch: () => void;
 }
 
-const ColumnDelete: FC<ColumnDeleteProps> = ({ id, token, boardId }) => {
+const ColumnDelete: FC<ColumnDeleteProps> = ({ id, token, boardId, refetch }) => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [deleteColumn, {}] = columnsApi.useDeleteColumnMutation();
@@ -20,9 +21,9 @@ const ColumnDelete: FC<ColumnDeleteProps> = ({ id, token, boardId }) => {
     setShow(false);
   };
 
-  const handleDelete = () => {
-    deleteColumn({ boardId, columnId: id, token });
-
+  const handleDelete = async () => {
+    await deleteColumn({ boardId, columnId: id, token });
+    refetch();
     setShow(false);
   };
 

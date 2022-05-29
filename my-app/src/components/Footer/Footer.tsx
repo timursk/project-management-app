@@ -1,5 +1,6 @@
 import { Box, Grid, Link, Typography } from '@mui/material';
 import React, { FC } from 'react';
+import { useLocation } from 'react-router-dom';
 import logo from '../../assets/rss-logo.svg';
 import Authors from '../Authors/Authors';
 import { StyledGrid, StyledImg } from './styles';
@@ -9,9 +10,27 @@ const gridProps = {
   columns: { xs: 4, sm: 12, md: 12 },
 };
 
+const DefaultStyles = {
+  backgroundColor: 'primary.main',
+  color: 'primary.contrastText',
+  height: '8vh',
+  display: 'flex',
+  justifyContent: 'center',
+};
+
+const BoardRouteStyles = {
+  position: 'fixed',
+  width: '100vw',
+  bottom: '0',
+  ...DefaultStyles,
+};
+
 const Footer: FC = () => {
+  const { pathname } = useLocation();
+  const isBoard = pathname.match(/board/i);
+
   return (
-    <Box sx={{ backgroundColor: 'primary.main', color: 'primary.contrastText' }}>
+    <Box sx={isBoard ? BoardRouteStyles : DefaultStyles}>
       <StyledGrid container {...gridProps}>
         <Grid item xs={4} sm={2} md>
           <Typography variant="h6" component="p">

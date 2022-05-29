@@ -21,8 +21,9 @@ const OVERLAY_NAME = 'modal-overlay';
 interface AddTaskFormProps {
   boardId: string;
   columnId: string;
+  refetch: () => void;
 }
-const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
+const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId, refetch }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -52,8 +53,8 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
       userId: curUserId,
     },
     validationSchema: taskValidationSchema,
-    onSubmit: (values) => {
-      createTask({
+    onSubmit: async (values) => {
+      await createTask({
         boardId,
         columnId,
         token,
@@ -61,6 +62,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId }) => {
         description: values.description,
         userId: values.userId,
       });
+      refetch();
       resetForm();
       toggleModal();
     },

@@ -1,19 +1,20 @@
 import { Button, Stack } from '@mui/material';
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import columnsApi from '../../services/columnsService';
-import { Column } from '../../types/store/storeTypes';
-import { StyledField } from '../Column/style';
+import { StyledField } from '../ColumnComponent/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { getToken } from '../../utils/utils';
+import { ColumnResult } from '../../types/api/columnsApiTypes';
 
 interface UpdateColumnProps {
   boardId: string;
   currentId: string;
   handlerSetEdit: Dispatch<SetStateAction<boolean>>;
   handlerSetText: Dispatch<SetStateAction<string>>;
-  column: Column;
+  column: ColumnResult;
   textValue: string;
+  refetch: () => void;
 }
 
 const UpdateColumn: FC<UpdateColumnProps> = ({
@@ -23,13 +24,21 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
   handlerSetText,
   column,
   textValue,
+  refetch,
 }) => {
   const token = getToken();
 
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
 
-  const handleUpdate = () => {
-    updateColumn({ token, boardId, columnId: currentId, title: textValue, order: column.order });
+  const handleUpdate = async () => {
+    await updateColumn({
+      token,
+      boardId,
+      columnId: currentId,
+      title: textValue,
+      order: column.order,
+    });
+    refetch();
     handlerSetEdit(false);
   };
 
