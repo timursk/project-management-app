@@ -1,17 +1,16 @@
 import { Grid } from '@mui/material';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
 import { StyledBox, StyledGrid } from './style';
-import columnsApi from '../../services/columnsService';
-import { initOrder } from '../../store/reducers/columnSlice';
-import { ColumnResult } from '../../types/api/columnsApiTypes';
 import { getToken } from '../../utils/utils';
 import { useState, useEffect } from 'react';
 import ColumnComponent from '../../components/ColumnComponent/ColumnComponent';
 import { Droppable } from 'react-beautiful-dnd';
 import boardsApi from '../../services/boardsService';
 import { Column, ColumnTask } from '../../types/store/storeTypes';
-import DndWrapper from '../../components/DndWrapper/DndWrapper';
+import DndWrapper from '../../containers/DndWrapper/DndWrapper';
+import TokenWrapper from '../../containers/TokenWrapper/TokenWrapper';
 
 export type BoardTasks = {
   [key: string]: ColumnTask[];
@@ -50,43 +49,45 @@ const Board = () => {
   }, [token]);
 
   return (
-    <StyledBox>
-      <DndWrapper
-        columnsDnd={columnsDnd}
-        setColumnsDnd={setColumnsDnd}
-        tasksDnd={tasksDnd}
-        setTasksDnd={setTasksDnd}
-        boardId={boardId}
-      >
-        <Droppable droppableId="all-columns" direction="horizontal" type="column">
-          {(provided, snapshot) => (
-            <StyledGrid
-              container
-              marginTop={3}
-              flexWrap="nowrap"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {columnsDnd &&
-                columnsDnd.map((column, index) => (
-                  <ColumnComponent
-                    key={column.id}
-                    boardId={boardId}
-                    column={column}
-                    index={index}
-                    tasks={tasksDnd}
-                    refetch={refetch}
-                  />
-                ))}
+    <TokenWrapper>
+      <StyledBox>
+        <DndWrapper
+          columnsDnd={columnsDnd}
+          setColumnsDnd={setColumnsDnd}
+          tasksDnd={tasksDnd}
+          setTasksDnd={setTasksDnd}
+          boardId={boardId}
+        >
+          <Droppable droppableId="all-columns" direction="horizontal" type="column">
+            {(provided, snapshot) => (
+              <StyledGrid
+                container
+                marginTop={3}
+                flexWrap="nowrap"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {columnsDnd &&
+                  columnsDnd.map((column, index) => (
+                    <ColumnComponent
+                      key={column.id}
+                      boardId={boardId}
+                      column={column}
+                      index={index}
+                      tasks={tasksDnd}
+                      refetch={refetch}
+                    />
+                  ))}
 
-              <ColumnAdd snapshot={snapshot} boardId={boardId} refetch={refetch} />
+                <ColumnAdd snapshot={snapshot} boardId={boardId} refetch={refetch} />
 
-              {provided.placeholder}
-            </StyledGrid>
-          )}
-        </Droppable>
-      </DndWrapper>
-    </StyledBox>
+                {provided.placeholder}
+              </StyledGrid>
+            )}
+          </Droppable>
+        </DndWrapper>
+      </StyledBox>
+    </TokenWrapper>
   );
 };
 

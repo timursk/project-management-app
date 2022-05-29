@@ -9,8 +9,12 @@ import BoardCard from '../../components/BoardCard/BoardCard';
 import BoardEdit from '../../components/BoardEdit/BoardEdit';
 import Loader from '../../components/Loader/Loader';
 import MainControls from '../../components/MainControls/MainControls';
+<<<<<<< HEAD
 import { logoutUser } from '../../store/reducers/actionCreators';
 import { useAppDispatch } from '../../store/hooks';
+=======
+import TokenWrapper from '../../containers/TokenWrapper/TokenWrapper';
+>>>>>>> bc0f005 (feat: add TokenWrapper component, fix boards search)
 
 const Main: FC = () => {
   const { t } = useTranslation();
@@ -24,12 +28,12 @@ const Main: FC = () => {
   const [boards, setBoards] = useState(boardsData);
   const [value, setValue] = useState('');
 
-  useEffect(() => {
-    if (isError && 'status' in error && error.status === 401) {
-      dispatch(logoutUser());
-      navigate('/welcome');
-    }
-  }, [error, isError, navigate]);
+  // useEffect(() => {
+  // if (isError && 'status' in error && error.status === 401) {
+  //   alert('Token has expired! Redirecting...');
+  //   navigate('/Welcome');
+  // }
+  // }, [error, isError, navigate]);
 
   useEffect(() => {
     setBoards(boardsData);
@@ -41,7 +45,7 @@ const Main: FC = () => {
       return;
     }
 
-    setBoards(filterByTitle(boards, value));
+    setBoards(filterByTitle(boardsData, value));
   }, [value, setValue, boardsData]);
 
   const handleAdd = () => {
@@ -53,7 +57,7 @@ const Main: FC = () => {
   }
 
   return (
-    <>
+    <TokenWrapper>
       <MainControls value={value} setValue={setValue} />
 
       <StyledGrid container spacing={4}>
@@ -71,7 +75,7 @@ const Main: FC = () => {
           {isEdit && <BoardEdit setIsEdit={setIsEdit} type="create" />}
         </StyledGridItem>
       </StyledGrid>
-    </>
+    </TokenWrapper>
   );
 };
 

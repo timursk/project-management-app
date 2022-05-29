@@ -7,7 +7,7 @@ import NotFound from './pages/NotFound/NotFound';
 import RegistrationForm from './components/user-forms/RegistrationForm';
 import Board from './pages/Board/Board';
 import Welcome from './pages/Welcome/Welcome';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import { StyledBox, StyledContainer } from './app-styles';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
