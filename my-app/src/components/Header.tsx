@@ -83,7 +83,7 @@ const Header: FC = () => {
             </Button>
           )}
           {show && <BoardEdit setIsEdit={setShow} type={'create'} />}
-          {pathname === '/Welcome' && token && (
+          {pathname.toLowerCase() === '/welcome' && token && (
             <Button color="inherit" onClick={() => navigate('/')} variant={'outlined'}>
               {t('header.goMain')}
             </Button>
