@@ -4,14 +4,14 @@ export default {
     registration: 'Регистрация',
     login: 'Вход',
     goBack: 'Назад',
+    create: 'Добавить доску',
+    goMain: 'Перейти на главную страницу',
   },
   main: {
     header: 'Доски',
     add: 'Добавить доску',
     search: 'Поиск',
-
     edit: 'Редактировать доску',
-
     deleteConfirmation: 'Удалить доску?',
     contributors: 'Участники',
   },

@@ -1,9 +1,8 @@
-import { Alert } from '@mui/material';
 import { useFormik } from 'formik';
-import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import boardsApi from '../../services/boardsService';
 import ConfirmModal from '../modals/ConfirmModal';
-import { StyledEditBox, StyledInput, StyledInputBox } from './styles';
+import { StyledAlert, StyledField } from './styles';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { getToken } from '../../utils/utils';
@@ -58,7 +57,9 @@ const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
         onConfirm={handleSubmit}
         actionText={(type === 'create' && t('main.add')) || (type === 'update' && t('main.edit'))}
       >
-        <StyledInput
+        <StyledField
+          label={'Title'}
+          fullWidth
           name="title"
           autoFocus
           onChange={handleChange}
@@ -67,8 +68,10 @@ const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
           type="text"
           value={values.title}
         />
-        {errors.title && <Alert severity="error">{errors.title}</Alert>}
-        <StyledInput
+        {errors.title && <StyledAlert severity="error">{errors.title}</StyledAlert>}
+        <StyledField
+          fullWidth
+          label={'Description'}
           name="description"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -76,7 +79,7 @@ const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
           type="text"
           value={values.description}
         />
-        {errors.description && <Alert severity="error">{errors.description}</Alert>}
+        {errors.description && <StyledAlert severity="error">{errors.description}</StyledAlert>}
       </ConfirmModal>
     </>
   );

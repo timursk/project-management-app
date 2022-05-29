@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle/LanguageToggle';
 import { useTranslation } from 'react-i18next';
 import UserMenu from './UserMenu/UserMenu';
 import { getToken } from '../utils/utils';
 import { useAppSelector } from '../store/hooks';
+import BoardEdit from './BoardEdit/BoardEdit';
 
 const StyledNavLink = styled(NavLink)`
   color: inherit;
@@ -17,6 +18,7 @@ const Header: FC = () => {
   const { t } = useTranslation();
   const { login } = useAppSelector((store) => store.userReducer);
   const token = useMemo(() => getToken(), [login]);
+  const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -46,6 +48,17 @@ const Header: FC = () => {
               {t('header.goBack')}
             </Button>
           )}
+          {pathname === '/' && (
+            <Button color="inherit" onClick={() => setShow(true)} variant={'outlined'}>
+              {t('header.create')}
+            </Button>
+          )}
+          {show && <BoardEdit setIsEdit={setShow} type={'create'} />}
+          {pathname === '/Welcome' && token && (
+            <Button color="inherit" onClick={() => navigate('/')} variant={'outlined'}>
+              {t('header.goMain')}
+            </Button>
+          )}
           {token ? (
             <UserMenu />
           ) : (
@@ -58,6 +71,7 @@ const Header: FC = () => {
               </Button>
             </>
           )}
+
           <LanguageToggle />
         </Toolbar>
       </AppBar>

@@ -1,10 +1,11 @@
+import { Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { StyledBox, StyledGrid } from './style';
 import columnsApi from '../../services/columnsService';
 import { getToken } from '../../utils/utils';
-import { useState, useEffect } from 'react';
 import { initOrder } from '../../store/reducers/columnSlice';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
 import Column from '../../components/Column/Column';
@@ -24,6 +25,7 @@ const Board = () => {
     if (data) {
       const sData = [...data];
       sData.sort((a, b) => a.order - b.order);
+
       setData(sData);
     }
   }, [data]);
