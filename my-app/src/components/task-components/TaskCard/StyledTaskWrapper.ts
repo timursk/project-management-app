@@ -15,9 +15,10 @@ const StyledTaskWrapper = styled.div(() => ({
   ':hover': {
     border: '1px solid black',
   },
-  ':first-child': {
+  ':first-of-type': {
     marginTop: '0px',
   },
+
   '&.div:last-child': {
     marginBottom: '0px',
   },
