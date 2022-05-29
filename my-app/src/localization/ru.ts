@@ -28,7 +28,11 @@ export default {
       registration: `Зарегистрироваться`,
     },
     about: {
-      team: { name: 'Команда', description: 'Что-то о команде' },
+      team: {
+        name: 'Команда',
+        description:
+          'Наша команда была собрана для решения командного таска в курсе «Разработка на React» от RS School',
+      },
       alice: 'Что-то',
       dmitriy: 'Что-то',
       timur: 'Что-то',

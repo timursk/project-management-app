@@ -57,8 +57,8 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   };
 
   useEffect(() => {
-    setSelectedId(userId);
-  }, [userId]);
+    if (token) setSelectedId(userId);
+  }, [token, userId]);
 
   const handleSelectId = useCallback(
     (id: string) => {

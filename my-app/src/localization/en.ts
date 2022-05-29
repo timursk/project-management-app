@@ -29,7 +29,11 @@ export default {
       registration: `Sign up-it's free!`,
     },
     about: {
-      team: { name: 'Team', description: 'Something about team' },
+      team: {
+        name: 'Team',
+        description:
+          'Our team was gathered to solve a team task in the course "Development on React" from RS School',
+      },
       alice: 'some',
       dmitriy: 'some',
       timur: 'some',
