@@ -100,5 +100,6 @@ export default {
     wrongPath: 'Путь не найден',
     tokenExpired: 'Ошибка авторизации',
     unknownError: 'Неизвестная ошибка',
+    cardWithoutUser: 'Некоторые задачи назначены несуществующему пользователю',
   },
 };

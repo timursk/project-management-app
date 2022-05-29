@@ -101,5 +101,6 @@ export default {
     wrongPath: 'Path not found',
     tokenExpired: 'Unauthorized access denied',
     unknownError: 'Unknown server error',
+    cardWithoutUser: 'Some tasks are assigned to a non-existent user',
   },
 };

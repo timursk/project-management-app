@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../store/reducers/actionCreators';
 import { ErrorObject } from '../../../types/api/tasksApiTypes';
+import ErrorMessage from '../../ErrorMessge/ErrorMessage';
 
 interface UserButtonProps {
   userId: string;
@@ -23,11 +24,12 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [selectedId, setSelectedId] = useState(userId);
+  const [isNoUser, setIsNoUser] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<string>(userId);
   const token = getToken();
   const { currentData: user, error } = usersApi.useGetUserByIdQuery({
     token,
-    userId: selectedId || userId,
+    userId: selectedId || userId || '',
   });
 
   if (error) {
@@ -35,6 +37,9 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
     if (status === 401) {
       dispatch(logoutUser());
       navigate('/welcome');
+    }
+    if (status === 400 && !isNoUser) {
+      setIsNoUser(true);
     }
   }
 
@@ -66,6 +71,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
 
   return (
     <>
+      {isNoUser && !selectedId && <ErrorMessage text={t('errors.cardWithoutUser')} />}
       <StyledCentredButton
         id="basic-button"
         aria-controls={open ? 'change-user-menu' : undefined}
