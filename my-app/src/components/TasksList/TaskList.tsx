@@ -8,13 +8,14 @@ type Props = {
   boardId: string;
   columnId: string;
   sortedTasks: ColumnTask[];
+  refetch: () => void;
 };
 
-const TaskList = ({ boardId, columnId, sortedTasks }: Props) => {
+const TaskList = ({ boardId, columnId, sortedTasks, refetch }: Props) => {
   return (
     <Droppable droppableId={columnId} type="task">
       {(provided) => (
-        <StyledStack {...provided.droppableProps} ref={provided.innerRef} spacing={2}>
+        <StyledStack {...provided.droppableProps} ref={provided.innerRef}>
           {sortedTasks &&
             sortedTasks.map((task, index) => (
               <TaskCard
@@ -23,6 +24,7 @@ const TaskList = ({ boardId, columnId, sortedTasks }: Props) => {
                 index={index}
                 boardId={boardId}
                 columnId={columnId}
+                refetch={refetch}
               />
             ))}
 

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import StyledTaskWrapper from './StyledTaskWrapper';
-import { IconButton, Typography } from '@mui/material';
+import { Card, IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShowIcon from '@mui/icons-material/Visibility';
@@ -22,15 +22,15 @@ interface TaskCardProps {
   columnId: string;
   task: ColumnTask;
   index: number;
+  refetch: () => void;
 }
 
-const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId }) => {
+const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }) => {
   const { t } = useTranslation();
 
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const toggleCollapsed = () => setIsCollapsed((prevState) => !prevState);
 
-  const [isHover, setIsHover] = useState<boolean>(false);
   const [isModalDeleteShown, setIsModalDeleteShown] = useState<boolean>(false);
   const toggleModalDelete = () => setIsModalDeleteShown((prevState) => !prevState);
   const token = getToken();
@@ -41,21 +41,16 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId }) => {
   const [deleteTask, {}] = tasksApi.useDeleteTaskMutation();
   const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
 
-  const handleMouseEnter = () => {
-    setIsHover(true);
-  };
-  const handleMouseLeave = () => {
-    setIsHover(false);
-  };
-
-  const handleDelete = () => {
-    deleteTask({ boardId, columnId, taskId: task.id, token });
+  const handleDelete = async () => {
+    await deleteTask({ boardId, columnId, taskId: task.id, token });
+    refetch();
     toggleModalDelete();
   };
 
-  const handleChangeUser = (userId: string) => {
+  const handleChangeUser = async (userId: string) => {
     const { title, description, order, id } = task;
-    updateTask({ title, description, order, id, userId, token, boardId, columnId });
+    await updateTask({ title, description, order, id, userId, token, boardId, columnId });
+    refetch();
   };
 
   const handleEsc = (event: KeyboardEvent) => {
@@ -75,9 +70,7 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId }) => {
       <Draggable draggableId={task.id} index={index}>
         {(provided) => (
           <StyledTaskWrapper
-            raised={isHover}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            style={{ overflow: 'hidden' }}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
@@ -112,8 +105,15 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId }) => {
           </StyledTaskWrapper>
         )}
       </Draggable>
+
       {isModalShown && (
-        <EditTaskForm task={task} onClose={toggleModal} boardId={boardId} columnId={columnId} />
+        <EditTaskForm
+          task={task}
+          onClose={toggleModal}
+          boardId={boardId}
+          columnId={columnId}
+          refetch={refetch}
+        />
       )}
 
       {isModalDeleteShown && (

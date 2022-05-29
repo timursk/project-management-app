@@ -23,8 +23,9 @@ interface EditTaskFormProps {
   columnId: string;
   task: ColumnTask;
   onClose: () => void;
+  refetch: () => void;
 }
-const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId }) => {
+const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId, refetch }) => {
   const { t } = useTranslation();
   const token = getToken();
 
@@ -48,8 +49,8 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId 
       userId: task.userId,
     },
     validationSchema: taskValidationSchema,
-    onSubmit: (values) => {
-      updateTask({
+    onSubmit: async (values) => {
+      await updateTask({
         boardId,
         columnId,
         token,
@@ -59,6 +60,7 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId 
         description: values.description,
         userId: values.userId,
       });
+      refetch();
       resetForm();
       onClose();
     },

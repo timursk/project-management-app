@@ -14,6 +14,7 @@ interface UpdateColumnProps {
   handlerSetText: Dispatch<SetStateAction<string>>;
   column: ColumnResult;
   textValue: string;
+  refetch: () => void;
 }
 
 const UpdateColumn: FC<UpdateColumnProps> = ({
@@ -23,13 +24,21 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
   handlerSetText,
   column,
   textValue,
+  refetch,
 }) => {
   const token = getToken();
 
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
 
-  const handleUpdate = () => {
-    updateColumn({ token, boardId, columnId: currentId, title: textValue, order: column.order });
+  const handleUpdate = async () => {
+    await updateColumn({
+      token,
+      boardId,
+      columnId: currentId,
+      title: textValue,
+      order: column.order,
+    });
+    refetch();
     handlerSetEdit(false);
   };
 

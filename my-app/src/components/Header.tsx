@@ -14,9 +14,14 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 `;
 
+const defaultStyles = {
+  height: '8vh',
+};
+
 const BoardRouteStyles = {
   position: 'fixed',
   width: '100vw',
+  ...defaultStyles,
 };
 
 const Header: FC = () => {
@@ -30,10 +35,10 @@ const Header: FC = () => {
   const isBoard = pathname.match(/board/i);
 
   return (
-    <Box sx={isBoard ? BoardRouteStyles : null}>
+    <Box sx={isBoard ? BoardRouteStyles : defaultStyles}>
       <AppBar
         position="static"
-        style={{ height: '8vh', display: 'flex', justifyContent: 'center' }}
+        style={{ height: '100%', display: 'flex', justifyContent: 'center' }}
       >
         <Toolbar>
           <IconButton

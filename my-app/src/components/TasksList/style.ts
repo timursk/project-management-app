@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Stack } from '@mui/material';
 
-export const StyledStack = styled(Stack)({
-  height: 'min-content',
-  maxHeight: '1000px',
-  overflowY: 'auto',
-});
+export const StyledStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0 10px;
+`;

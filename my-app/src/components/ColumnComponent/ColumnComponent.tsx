@@ -14,9 +14,10 @@ interface ColumnProps {
   column: Column;
   index: number;
   tasks: BoardTasks;
+  refetch: () => void;
 }
 
-const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks }) => {
+const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks, refetch }) => {
   const token = getToken();
   const { id: columnId, title } = column;
   const sortedTasks = tasks[columnId];
@@ -34,10 +35,9 @@ const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks }) => 
             e.currentTarget === e.target && setEdit(false);
           }}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <StyledBox>
+          <StyledBox {...provided.dragHandleProps}>
             {isEdit ? (
               <UpdateColumn
                 boardId={boardId}
@@ -46,6 +46,7 @@ const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks }) => 
                 handlerSetEdit={setEdit}
                 handlerSetText={setText}
                 textValue={textValue}
+                refetch={refetch}
               />
             ) : (
               <StyledTitle
@@ -57,12 +58,17 @@ const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks }) => 
                 {textValue}
               </StyledTitle>
             )}
-            <ColumnDelete id={columnId} token={token} boardId={boardId} />
+            <ColumnDelete id={columnId} token={token} boardId={boardId} refetch={refetch} />
           </StyledBox>
 
-          <TaskList boardId={boardId} columnId={columnId} sortedTasks={sortedTasks} />
+          <TaskList
+            boardId={boardId}
+            columnId={columnId}
+            sortedTasks={sortedTasks}
+            refetch={refetch}
+          />
 
-          <AddTaskForm boardId={boardId} columnId={columnId} />
+          <AddTaskForm boardId={boardId} columnId={columnId} refetch={refetch} />
         </StyledColumnCard>
       )}
     </Draggable>

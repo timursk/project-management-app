@@ -54,7 +54,7 @@ const Board = () => {
         boardId={boardId}
       >
         <Droppable droppableId="all-columns" direction="horizontal" type="column">
-          {(provided) => (
+          {(provided, snapshot) => (
             <StyledGrid
               container
               marginTop={3}
@@ -70,10 +70,11 @@ const Board = () => {
                     column={column}
                     index={index}
                     tasks={tasksDnd}
+                    refetch={refetch}
                   />
                 ))}
 
-              <ColumnAdd boardId={boardId} />
+              <ColumnAdd snapshot={snapshot} boardId={boardId} refetch={refetch} />
 
               {provided.placeholder}
             </StyledGrid>
