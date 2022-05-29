@@ -17,9 +17,7 @@ const CardDevelop: FC<CardDevelopProps> = ({ name, description }) => {
             {name}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {description} + Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex temporibus
-            molestias obcaecati minus iusto, magnam totam unde quo, exercitationem doloremque
-            perspiciatis veniam et? Provident, blanditiis.
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>

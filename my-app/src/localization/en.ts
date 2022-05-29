@@ -34,9 +34,9 @@ export default {
         description:
           'Our team was gathered to solve a team task in the course "Development on React" from RS School',
       },
-      alice: 'some',
-      dmitriy: 'some',
-      timur: 'some',
+      alice: 'authorization and user menu, task card, modal confirmation window',
+      dmitriy: 'Header component, footer, board page, collumns, welcome page, routing',
+      timur: "Application structure, drag'n'drop, main page with boards",
     },
   },
   notFound: {
