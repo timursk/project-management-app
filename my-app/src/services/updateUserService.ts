@@ -19,6 +19,6 @@ export const updateUserService: UpdateUserService = async (user) => {
   });
   if (response.status === 403) throw new Error('Invalid user or password');
   if (response.status === 409) throw new Error('Duplicate user');
-  if (response.status !== 201) throw new Error('Unknown error');
-  return response.json();
+  if (response.ok) return response.json();
+  throw new Error('Unknown error');
 };

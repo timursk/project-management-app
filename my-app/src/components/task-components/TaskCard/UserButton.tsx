@@ -8,7 +8,7 @@ import usersApi from '../../../services/usersService';
 import Loader from '../../Loader/Loader';
 import { getToken } from '../../../utils/utils';
 import StyledCentredButton from './StyledCentredButton';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../store/reducers/actionCreators';
 import { ErrorObject } from '../../../types/api/tasksApiTypes';
@@ -24,10 +24,17 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const { login, name } = useAppSelector((state) => state.userReducer);
+
   const [isNoUser, setIsNoUser] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string>(userId);
   const token = getToken();
-  const { currentData: user, error } = usersApi.useGetUserByIdQuery({
+
+  const {
+    currentData: user,
+    error,
+    refetch,
+  } = usersApi.useGetUserByIdQuery({
     token,
     userId: selectedId || userId || '',
   });
@@ -43,7 +50,11 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
     }
   }
 
-  const allUsers = usersApi.useGetAllUsersQuery({ token });
+  const { currentData: allUsers, refetch: refetchAll } = usersApi.useGetAllUsersQuery({ token });
+  useEffect(() => {
+    refetch();
+    refetchAll();
+  }, [login, name, refetch]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -93,8 +104,8 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {allUsers && allUsers.currentData ? (
-          allUsers.currentData.map(({ login, id }) => (
+        {allUsers ? (
+          allUsers.map(({ login, id }) => (
             <MenuItem key={id} onClick={() => handleSelectId(id)}>
               <ListItemIcon>
                 <PersonIcon />

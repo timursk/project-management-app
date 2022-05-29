@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { deleteUser, updateUser } from '../../store/reducers/actionCreators';
+import { deleteUser, initUser, updateUser } from '../../store/reducers/actionCreators';
 import { getToken } from '../../utils/utils';
 import ConfirmModal from '../modals/ConfirmModal';
 import FormErrorMessage from './FormErrorMessage';
@@ -37,6 +37,7 @@ const RegistrationForm = () => {
       onSubmit: (values) => {
         const { login, name, password } = values;
         dispatch(updateUser({ login, name, password, token }));
+        navigate('/');
       },
     });
 

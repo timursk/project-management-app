@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { deleteUser, initUser, loginUser, logoutUser, signupUser } from './actionCreators';
+import {
+  deleteUser,
+  initUser,
+  loginUser,
+  logoutUser,
+  signupUser,
+  updateUser,
+} from './actionCreators';
 import { SignupUser, UserInfo } from '../../types/api/authTypes';
 
 interface User {
@@ -120,6 +127,22 @@ const userReducer = createSlice({
     },
 
     [deleteUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    [updateUser.fulfilled.type]: (state, action: PayloadAction<SignupUser>) => {
+      state.name = action.payload.name;
+      state.login = action.payload.login;
+      state.error = '';
+      state.isLoading = false;
+    },
+
+    [updateUser.pending.type]: (state) => {
+      state.isLoading = true;
+      state.error = '';
+    },
+
+    [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.isLoading = false;
     },
