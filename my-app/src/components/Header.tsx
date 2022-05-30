@@ -26,6 +26,8 @@ const StyledNavLink = styled(NavLink)`
 
 const defaultStyles = {
   height: '8vh',
+  display: 'flex',
+  justifyContent: 'center',
 };
 
 const BoardRouteStyles = {
