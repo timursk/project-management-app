@@ -7,7 +7,7 @@ import ShowIcon from '@mui/icons-material/Visibility';
 import HideIcon from '@mui/icons-material/VisibilityOff';
 
 import UserButton from './UserButton';
-import ConfirmModal from '../../modals/ConfirmModal';
+import ConfirmModal from '../../Modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 import { ColumnTask } from '../../../types/store/storeTypes';
 import tasksApi from '../../../services/tasksService';

@@ -7,10 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginUser } from '../../store/reducers/actionCreators';
 import { resetInfo, resetLoading, saveInfo } from '../../store/reducers/userSlice';
 import { getToken } from '../../utils/utils';
-import FormErrorMessage from './FormErrorMessage';
 import StyledField from '../common/StyledField';
 import StyledForm from '../common/StyledForm';
-import StyledPasswordSwitch from './StyledPasswordSwitch';
+import { CentredSwitchLabel, FormErrorMessage } from './styles';
 import { loginValidationSchema } from './validation-schemas';
 
 const LoginForm: FC = () => {
@@ -87,7 +86,7 @@ const LoginForm: FC = () => {
         label={t('userForms.password')}
       />
 
-      <StyledPasswordSwitch
+      <CentredSwitchLabel
         control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
         label={t('userForms.showPassword')}
       />

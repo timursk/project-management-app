@@ -6,14 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteUser, initUser, updateUser } from '../../store/reducers/actionCreators';
 import { getToken } from '../../utils/utils';
-import ConfirmModal from '../modals/ConfirmModal';
-import FormErrorMessage from './FormErrorMessage';
+import ConfirmModal from '../Modals/ConfirmModal';
 import StyledField from '../common/StyledField';
 import StyledForm from '../common/StyledForm';
-import StyledPasswordSwitch from './StyledPasswordSwitch';
 import { registrationValidationSchema } from './validation-schemas';
+import { CentredSwitchLabel, FormErrorMessage } from './styles';
 
-const RegistrationForm = () => {
+const EditProfileForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -108,7 +107,7 @@ const RegistrationForm = () => {
           value={values.passwordConfirmation}
           label={t('userForms.passwordConfirmation')}
         />
-        <StyledPasswordSwitch
+        <CentredSwitchLabel
           control={<Switch onChange={togglePasswordShown} checked={isPasswordShown} />}
           label={t('userForms.showPassword')}
         />
@@ -138,4 +137,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default EditProfileForm;

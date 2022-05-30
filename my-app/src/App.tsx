@@ -1,10 +1,10 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header';
-import Login from './components/user-forms/LoginForm';
+import Login from './components/UserForms/LoginForm';
 import Main from './pages/Main/Main';
 import NotFound from './pages/NotFound/NotFound';
-import RegistrationForm from './components/user-forms/RegistrationForm';
+import RegistrationForm from './components/UserForms/RegistrationForm';
 import Board from './pages/Board/Board';
 import Welcome from './pages/Welcome/Welcome';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
@@ -12,7 +12,7 @@ import { StyledBox, StyledContainer } from './app-styles';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { initUser } from './store/reducers/actionCreators';
-import EditProfileForm from './components/user-forms/EditProfileForm';
+import EditProfileForm from './components/UserForms/EditProfileForm';
 import { getToken } from './utils/utils';
 
 const BoardRouteFix = {

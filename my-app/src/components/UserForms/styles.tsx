@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { FormControlLabel } from '@mui/material';
 
-const FormErrorMessage = styled.div(() => ({
+export const CentredSwitchLabel = styled(FormControlLabel)(() => ({ alignSelf: 'center' }));
+
+export const FormErrorMessage = styled.div(() => ({
   width: '100%',
   color: '#D8000C',
   backgroundColor: '#FFD2D2',
@@ -9,5 +12,3 @@ const FormErrorMessage = styled.div(() => ({
   boxSizing: 'border-box',
   textAlign: 'center',
 }));
-
-export default FormErrorMessage;
