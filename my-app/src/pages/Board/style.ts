@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import styled from '@emotion/styled';
 
 export const StyledBox = styled.div(() => ({
-  height: '84vh',
+  height: 'calc(84vh - 10px);',
   marginTop: '8vh',
 }));
 

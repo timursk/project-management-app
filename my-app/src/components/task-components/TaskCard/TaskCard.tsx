@@ -25,6 +25,11 @@ interface TaskCardProps {
   refetch: () => void;
 }
 
+const OverflowText = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+};
+
 const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }) => {
   const { t } = useTranslation();
 
@@ -97,7 +102,13 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }
               {task.title}
             </Typography>
 
-            <Typography variant="body2" component="div" sx={{ flexGrow: 1 }} noWrap={isCollapsed}>
+            <Typography
+              style={OverflowText}
+              variant="body2"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              noWrap={isCollapsed}
+            >
               {task.description}
             </Typography>
 

@@ -5,4 +5,5 @@ export const StyledStack = styled.div`
   flex-direction: column;
   overflow-y: auto;
   padding: 0 10px;
+  min-height: 30px;
 `;

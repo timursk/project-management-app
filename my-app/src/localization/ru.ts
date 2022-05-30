@@ -86,7 +86,7 @@ export default {
   column: {
     button: '+ Добавьте еще одну колонку',
     delete: 'Удалить колонку',
-    add: 'Добавить?',
+    add: 'Добавить колонку',
   },
   task: {
     deleteTask: 'Удалить задачу "{{title}}"',
