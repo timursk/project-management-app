@@ -20,17 +20,11 @@ const Main: FC = () => {
   const token = getToken();
 
   const { data: boardsData, isError, isLoading, error } = boardsApi.useGetAllBoardsQuery({ token });
+  const { data: boardsData, isLoading } = boardsApi.useGetAllBoardsQuery({ token });
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [boards, setBoards] = useState(boardsData);
   const [value, setValue] = useState('');
-
-  // useEffect(() => {
-  // if (isError && 'status' in error && error.status === 401) {
-  //   alert('Token has expired! Redirecting...');
-  //   navigate('/Welcome');
-  // }
-  // }, [error, isError, navigate]);
 
   useEffect(() => {
     setBoards(boardsData);

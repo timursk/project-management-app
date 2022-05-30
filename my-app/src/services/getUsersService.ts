@@ -21,6 +21,7 @@ export const getUsersService: GetUsersService = async (token: string) => {
   });
 
   if (response.status === 404) throw new Error('User not found');
+  if (response.status === 401) throw new Error('Unauthorized');
   if (response.status !== 200) throw new Error('Unknown error');
   return response.json();
 };
