@@ -9,12 +9,9 @@ import BoardCard from '../../components/BoardCard/BoardCard';
 import BoardEdit from '../../components/BoardEdit/BoardEdit';
 import Loader from '../../components/Loader/Loader';
 import MainControls from '../../components/MainControls/MainControls';
-<<<<<<< HEAD
 import { logoutUser } from '../../store/reducers/actionCreators';
 import { useAppDispatch } from '../../store/hooks';
-=======
 import TokenWrapper from '../../containers/TokenWrapper/TokenWrapper';
->>>>>>> bc0f005 (feat: add TokenWrapper component, fix boards search)
 
 const Main: FC = () => {
   const { t } = useTranslation();

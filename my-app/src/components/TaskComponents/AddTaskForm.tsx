@@ -2,8 +2,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { Alert, AlertTitle, Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import StyledField from '../common/StyledField';
 import StyledForm from '../common/StyledForm';
 import Portal from '../Modals/Portal';
@@ -96,11 +95,11 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId, refetch }) => {
     }
   }, []);
 
-  const handleEsc = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && isModalShown) toggleModal();
-  };
-
   useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isModalShown) toggleModal();
+    };
+
     document.addEventListener('keydown', handleEsc);
 
     return () => {

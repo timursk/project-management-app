@@ -1,12 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import { Card, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShowIcon from '@mui/icons-material/Visibility';
 import HideIcon from '@mui/icons-material/VisibilityOff';
 
 import UserButton from './UserButton';
-// import ConfirmModal from '../Modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 import { ColumnTask } from '../../types/store/storeTypes';
 import tasksApi from '../../services/tasksService';
@@ -58,11 +57,11 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }
     refetch();
   };
 
-  const handleEsc = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && isModalShown) toggleModal();
-  };
-
   useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isModalShown) toggleModal();
+    };
+
     document.addEventListener('keydown', handleEsc);
 
     return () => {

@@ -1,4 +1,4 @@
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import columnsApi from '../../services/columnsService';
 import { StyledField } from '../ColumnComponent/style';
@@ -6,7 +6,6 @@ import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { getToken } from '../../utils/utils';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
-import IconButton from '@mui/material/IconButton';
 
 interface UpdateColumnProps {
   boardId: string;

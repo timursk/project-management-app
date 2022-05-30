@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,6 +1,4 @@
-import { DecodedToken } from '../types/api/authTypes';
 import { API_URL, ENDPOINTS } from '../utils/constants';
-import jwt_decode from 'jwt-decode';
 
 type User = {
   id: string;

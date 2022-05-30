@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import React, { Dispatch, SetStateAction } from 'react';
 import boardsApi from '../../services/boardsService';
 import ConfirmModal from '../Modals/ConfirmModal';
-import { StyledAlert, StyledField } from './styles';
+import { StyledField } from './styles';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { getToken } from '../../utils/utils';

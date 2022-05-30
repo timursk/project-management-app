@@ -1,4 +1,4 @@
-import { Board, ColumnTask } from '../types/store/storeTypes';
+import { Board } from '../types/store/storeTypes';
 import { ENDPOINTS } from './constants';
 
 export const getColumnUrl = (boardId: string, columnId?: string) =>

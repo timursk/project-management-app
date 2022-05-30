@@ -1,7 +1,6 @@
 import { FC, useState, useCallback, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useTranslation } from 'react-i18next';
 import PersonIcon from '@mui/icons-material/Person';
 import { ListItemIcon, Typography } from '@mui/material';
 import usersApi from '../../../services/usersService';
@@ -33,6 +32,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
 
   const [isNoUser, setIsNoUser] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string>(userId);
+  const [selectedId, setSelectedId] = useState(userId);
   const token = getToken();
 
   const {
