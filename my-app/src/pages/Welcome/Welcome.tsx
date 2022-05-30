@@ -57,16 +57,16 @@ const Welcome: FC = () => {
         </Typography>
         <Grid container justifyContent={'space-around'}>
           <StyledGridItem item lg={3} sm={4} md={4}>
-            <CardDevelop name="Dmitriy" description="something about Dmitriy" />
+            <CardDevelop name="Dmitriy" description={t('welcome.about.dmitriy')} />
           </StyledGridItem>
           <StyledGridItem item lg={3} sm={4} md={4}>
-            <CardDevelop name="Timur" description="something about Timur" />
+            <CardDevelop name="Timur" description={t('welcome.about.timur')} />
           </StyledGridItem>
           <StyledGridItem item lg={3} sm={4} md={4}>
-            <CardDevelop name="Alice" description="something about Alice" />
+            <CardDevelop name="Alice" description={t('welcome.about.alice')} />
           </StyledGridItem>
         </Grid>
-        <Typography mt={3} variant="subtitle1">
+        <Typography mt={3} variant="subtitle1" paragraph>
           {t('welcome.about.team.description')}
         </Typography>
       </div>

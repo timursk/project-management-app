@@ -1,6 +1,6 @@
 export default {
   header: {
-    title: 'Header',
+    title: 'Final task!',
     registration: 'Sign up',
     login: 'Sign in',
     goBack: 'Back',
@@ -29,10 +29,14 @@ export default {
       registration: `Sign up-it's free!`,
     },
     about: {
-      team: { name: 'Team', description: 'Something about team' },
-      alice: 'some',
-      dmitriy: 'some',
-      timur: 'some',
+      team: {
+        name: 'Team',
+        description:
+          'Our team was gathered to solve a team task in the course "Development on React" from RS School',
+      },
+      alice: 'authorization and user menu, task card, modal confirmation window',
+      dmitriy: 'Header component, footer, board page, collumns, welcome page, routing',
+      timur: "Application structure, drag'n'drop, main page with boards",
     },
   },
   notFound: {
@@ -94,5 +98,13 @@ export default {
     titleIsLong: 'Title is too long. Use description for details',
     descriptionIsLong: 'Description is too long.',
     addTask: 'Add new task',
+  },
+  errors: {
+    noColumn: 'Wrong target collumn',
+    noBoard: 'Wrong target board',
+    wrongPath: 'Path not found',
+    tokenExpired: 'Unauthorized access denied',
+    unknownError: 'Unknown server error',
+    cardWithoutUser: 'Some tasks are assigned to a non-existent user',
   },
 };

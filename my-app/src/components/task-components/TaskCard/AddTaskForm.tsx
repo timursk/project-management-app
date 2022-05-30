@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Alert, AlertTitle, Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import tasksApi from '../../../services/tasksService';
 import { getToken } from '../../../utils/utils';
 import UserButton from './UserButton';
+import { logoutUser } from '../../../store/reducers/actionCreators';
+import { ErrorObject } from '../../../types/api/tasksApiTypes';
+import ErrorMessage from '../../ErrorMessge/ErrorMessage';
 
 const OVERLAY_NAME = 'modal-overlay';
 
@@ -27,13 +30,33 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId, refetch }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const token = getToken();
 
   const curUserId = useAppSelector((state) => state.userReducer.id);
-  const [createTask, {}] = tasksApi.useCreateTaskMutation();
+  const [createTask, { error }] = tasksApi.useCreateTaskMutation();
 
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const toggleModal = () => setIsModalShown((prevState) => !prevState);
+
+  const errorMessage = () => {
+    if (!error) return '';
+    const {
+      status,
+      data: { message },
+    } = error as ErrorObject;
+    if (status === 404) {
+      if (message === 'Column was not founded!') return t('errors.noColumn');
+      if (message === 'Border was not founded!') return t('errors.noBorder');
+      return t('errors.wrongPath');
+    }
+    if (status === 401) {
+      dispatch(logoutUser());
+      navigate('/welcome');
+      return t('errors.tokenExpired');
+    }
+    return t('errors.unknownError');
+  };
 
   const {
     errors,
@@ -89,6 +112,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId, refetch }) => {
 
   return (
     <>
+      {error && <ErrorMessage text={errorMessage()} />}
       <Button variant="text" type="button" onClick={toggleModal}>
         {t('task.addTask')}
       </Button>

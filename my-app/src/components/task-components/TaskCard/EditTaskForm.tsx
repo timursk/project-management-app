@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { Button } from '@mui/material';
+import { Button, Alert } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import StyledField from '../../common/StyledField';
@@ -15,6 +15,11 @@ import { getToken } from '../../../utils/utils';
 import UserButton from './UserButton';
 
 import { ColumnTask } from '../../../types/store/storeTypes';
+import { ErrorObject } from '../../../types/api/tasksApiTypes';
+import { useAppDispatch } from '../../../store/hooks';
+import { logoutUser } from '../../../store/reducers/actionCreators';
+import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../../ErrorMessge/ErrorMessage';
 
 const OVERLAY_NAME = 'modal-overlay';
 
@@ -28,8 +33,28 @@ interface EditTaskFormProps {
 const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId, refetch }) => {
   const { t } = useTranslation();
   const token = getToken();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [updateTask, { error }] = tasksApi.useUpdateTaskMutation();
 
-  const [updateTask, {}] = tasksApi.useUpdateTaskMutation();
+  const errorMessage = () => {
+    if (!error) return '';
+    const {
+      status,
+      data: { message },
+    } = error as ErrorObject;
+    if (status === 404) {
+      if (message === 'Column was not founded!') return t('errors.noColumn');
+      if (message === 'Border was not founded!') return t('errors.noBorder');
+      return t('errors.wrongPath');
+    }
+    if (status === 401) {
+      dispatch(logoutUser());
+      navigate('/welcome');
+      return t('errors.tokenExpired');
+    }
+    return t('errors.unknownError');
+  };
 
   const {
     errors,
@@ -62,7 +87,7 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId,
       });
       refetch();
       resetForm();
-      onClose();
+      if (!error) onClose();
     },
   });
 
@@ -76,6 +101,7 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ task, onClose, boardId, columnId,
   return (
     <>
       <Portal>
+        {error && <ErrorMessage text={errorMessage()} />}
         <StyledOverlay data-role={OVERLAY_NAME} onClick={handleClickOverlay}>
           <StyledModal>
             <StyledModalCloseButton onClick={onClose}>

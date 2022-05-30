@@ -13,6 +13,11 @@ import { deleteUser, logoutUser } from '../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../modals/ConfirmModal';
 import { getToken } from '../../utils/utils';
+import styled from '@emotion/styled';
+
+const ButtonWithMargin = styled(Button)({
+  margin: '0 10px',
+});
 
 const UserMenu: FC = () => {
   const { t } = useTranslation();
@@ -65,18 +70,19 @@ const UserMenu: FC = () => {
   };
 
   return (
-    <div>
-      <Button
+    <>
+      <ButtonWithMargin
         id="basic-button"
         aria-controls={openMenu ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={openMenu ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<PersonIcon />}
-        variant="contained"
+        variant="text"
+        color="inherit"
       >
         {login}
-      </Button>
+      </ButtonWithMargin>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -119,7 +125,7 @@ const UserMenu: FC = () => {
           actionText={t('userForms.logoutConfirmation', { login })}
         />
       )}
-    </div>
+    </>
   );
 };
 

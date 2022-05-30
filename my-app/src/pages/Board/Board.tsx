@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
 import { StyledBox, StyledGrid } from './style';
 import columnsApi from '../../services/columnsService';
@@ -20,6 +20,7 @@ export type BoardTasks = {
 const Board = () => {
   const { id: boardId } = useParams();
   const token = getToken();
+  const navigate = useNavigate();
 
   const { data: board, refetch } = boardsApi.useGetBoardByIdQuery({ token, id: boardId });
   const [columnsDnd, setColumnsDnd] = useState<Column[]>(null);
@@ -43,6 +44,10 @@ const Board = () => {
     setColumnsDnd(newColumns);
     setTasksDnd(newTasks);
   }, [board]);
+
+  useEffect(() => {
+    if (!token) navigate('/welcome');
+  }, [token]);
 
   return (
     <StyledBox>

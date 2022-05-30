@@ -1,14 +1,18 @@
-import { FC, useState, useMemo, useCallback, useEffect } from 'react';
-import Button from '@mui/material/Button';
+import { FC, useState, useCallback, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useTranslation } from 'react-i18next';
 import PersonIcon from '@mui/icons-material/Person';
-import { ListItemIcon } from '@mui/material';
+import { ListItemIcon, Typography } from '@mui/material';
 import usersApi from '../../../services/usersService';
 import Loader from '../../Loader/Loader';
 import { getToken } from '../../../utils/utils';
 import StyledCentredButton from './StyledCentredButton';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../../store/reducers/actionCreators';
+import { ErrorObject } from '../../../types/api/tasksApiTypes';
+import ErrorMessage from '../../ErrorMessge/ErrorMessage';
 
 interface UserButtonProps {
   userId: string;
@@ -17,12 +21,40 @@ interface UserButtonProps {
 
 const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const [selectedId, setSelectedId] = useState(userId);
+  const { login, name } = useAppSelector((state) => state.userReducer);
+
+  const [isNoUser, setIsNoUser] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<string>(userId);
   const token = getToken();
-  const user = usersApi.useGetUserByIdQuery({ token, userId: selectedId || userId });
 
-  const allUsers = usersApi.useGetAllUsersQuery({ token });
+  const {
+    currentData: user,
+    error,
+    refetch,
+  } = usersApi.useGetUserByIdQuery({
+    token,
+    userId: selectedId || userId || '',
+  });
+
+  if (error) {
+    const { status } = error as ErrorObject;
+    if (status === 401) {
+      dispatch(logoutUser());
+      navigate('/welcome');
+    }
+    if (status === 400 && !isNoUser) {
+      setIsNoUser(true);
+    }
+  }
+
+  const { currentData: allUsers, refetch: refetchAll } = usersApi.useGetAllUsersQuery({ token });
+  useEffect(() => {
+    refetch();
+    refetchAll();
+  }, [login, name, refetch]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -36,8 +68,8 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   };
 
   useEffect(() => {
-    setSelectedId(userId);
-  }, [userId]);
+    if (token) setSelectedId(userId);
+  }, [token, userId]);
 
   const handleSelectId = useCallback(
     (id: string) => {
@@ -50,6 +82,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
 
   return (
     <>
+      {isNoUser && !selectedId && <ErrorMessage text={t('errors.cardWithoutUser')} />}
       <StyledCentredButton
         id="basic-button"
         aria-controls={open ? 'change-user-menu' : undefined}
@@ -59,7 +92,7 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
         startIcon={<PersonIcon />}
         variant="outlined"
       >
-        {user && user.currentData && user.currentData.login}
+        <Typography noWrap> {user && user.login}</Typography>
       </StyledCentredButton>
 
       <Menu
@@ -71,8 +104,8 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {allUsers && allUsers.currentData ? (
-          allUsers.currentData.map(({ login, id }) => (
+        {allUsers ? (
+          allUsers.map(({ login, id }) => (
             <MenuItem key={id} onClick={() => handleSelectId(id)}>
               <ListItemIcon>
                 <PersonIcon />
