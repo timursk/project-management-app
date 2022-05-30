@@ -45,7 +45,7 @@ const Main: FC = () => {
       return;
     }
 
-    setBoards(filterByTitle(boardsData, value));
+    setBoards(filterByTitle(boardsData, value.trim()));
   }, [value, setValue, boardsData]);
 
   const handleAdd = () => {
