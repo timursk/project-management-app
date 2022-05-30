@@ -1,11 +1,11 @@
-import { Tooltip, Zoom, IconButton, Alert } from '@mui/material';
+import { Tooltip, Zoom, IconButton } from '@mui/material';
 import React, { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ClearIcon from '@mui/icons-material/Clear';
 import boardsApi from '../../services/boardsService';
 import EditIcon from '@mui/icons-material/Edit';
 import { StyledBox, StyledColumn, StyledTooltip } from './styles';
-import ConfirmModal from '../modals/ConfirmModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 import { getToken } from '../../utils/utils';
 import { ErrorObject } from '../../types/api/tasksApiTypes';
 import { useNavigate } from 'react-router-dom';

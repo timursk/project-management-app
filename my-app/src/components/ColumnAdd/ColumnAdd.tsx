@@ -4,7 +4,7 @@ import { StyledAddButton } from './style';
 import columnsApi from '../../services/columnsService';
 import { Grid, TextField } from '@mui/material';
 import { useAppDispatch } from '../../store/hooks';
-import ConfirmModal from '../modals/ConfirmModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 import { getToken } from '../../utils/utils';
 import { setOrder } from '../../store/reducers/columnSlice';
 import { DroppableStateSnapshot } from 'react-beautiful-dnd';

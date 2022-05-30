@@ -1,8 +1,8 @@
 import React from 'react';
 import { ColumnTask } from '../../types/store/storeTypes';
-import TaskCard from '../task-components/TaskCard/TaskCard';
 import { Droppable } from 'react-beautiful-dnd';
 import { StyledStack } from './style';
+import TaskCard from '../TaskComponents/TaskCard';
 
 type Props = {
   boardId: string;

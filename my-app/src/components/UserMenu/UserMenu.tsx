@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ListItemIcon } from '@mui/material';
 import { deleteUser, logoutUser } from '../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
-import ConfirmModal from '../modals/ConfirmModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 import { getToken } from '../../utils/utils';
 import styled from '@emotion/styled';
 

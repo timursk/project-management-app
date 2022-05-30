@@ -1,23 +1,21 @@
 import { FC, useCallback, useEffect, useState } from 'react';
-import { Alert, AlertTitle, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import StyledField from '../../common/StyledField';
-import StyledForm from '../../common/StyledForm';
-import Portal from '../../modals/Portal';
-import StyledModal from '../../modals/StyledModal';
-import StyledModalCloseButton from '../../modals/StyledModalCloseButton';
-import StyledOverlay from '../../modals/StyledOverlay';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import StyledField from '../common/StyledField';
+import StyledForm from '../common/StyledForm';
+import Portal from '../Modals/Portal';
 import { taskValidationSchema } from './validation-schema';
 import CloseIcon from '@mui/icons-material/Close';
-import tasksApi from '../../../services/tasksService';
-import { getToken } from '../../../utils/utils';
+import tasksApi from '../../services/tasksService';
+import { getToken } from '../../utils/utils';
 import UserButton from './UserButton';
-import { logoutUser } from '../../../store/reducers/actionCreators';
-import { ErrorObject } from '../../../types/api/tasksApiTypes';
-import ErrorMessage from '../../ErrorMessge/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../store/reducers/actionCreators';
+import { ErrorObject } from '../../types/api/tasksApiTypes';
+import { StyledOverlay, StyledModal, StyledModalCloseButton } from '../Modals/styles';
+import ErrorMessage from '../ErrorMessge/ErrorMessage';
 
 const OVERLAY_NAME = 'modal-overlay';
 
@@ -98,11 +96,11 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ boardId, columnId, refetch }) => {
     }
   }, []);
 
-  const handleEsc = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && isModalShown) toggleModal();
-  };
-
   useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isModalShown) toggleModal();
+    };
+
     document.addEventListener('keydown', handleEsc);
 
     return () => {

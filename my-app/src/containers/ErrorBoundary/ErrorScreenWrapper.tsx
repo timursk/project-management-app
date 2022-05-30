@@ -6,6 +6,9 @@ const ErrorScreenWrapper = styled(Container)(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   flexGrow: 1,
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
 }));
 
 export default ErrorScreenWrapper;

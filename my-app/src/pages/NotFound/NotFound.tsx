@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import ErrorScreen from '../../components/ErrorBoundary/ErrorScreen';
+import ErrorScreen from '../../containers/ErrorBoundary/ErrorScreen';
 import { useNavigate } from 'react-router-dom';
 
 const NotFound: FC = () => {

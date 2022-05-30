@@ -1,8 +1,6 @@
 import { Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { string } from 'yup';
-import StyledLanguageSwitch from '../LanguageToggle/StyledLanguageSwitch';
 import ErrorScreenWrapper from './ErrorScreenWrapper';
 
 interface ErrorScreenProps {

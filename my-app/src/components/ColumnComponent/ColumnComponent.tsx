@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { getToken } from '../../utils/utils';
 import ColumnDelete from '../ColumnDelete/ColumnDelete';
 import UpdateColumn from '../ColumnUpdate/UpdateColumn';
-import AddTaskForm from '../task-components/TaskCard/AddTaskForm';
+import AddTaskForm from '../TaskComponents/AddTaskForm';
 import { StyledColumnCard, StyledBox, StyledTitle } from './style';
 import TaskList from '../TasksList/TaskList';
 import { Column } from '../../types/store/storeTypes';
@@ -50,7 +50,7 @@ const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks, refet
               />
             ) : (
               <StyledTitle
-                variant="h5"
+                variant="h6"
                 onClick={() => {
                   setEdit(true);
                 }}

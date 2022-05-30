@@ -1,4 +1,4 @@
-import i18n from '../../../localization/i18n';
+import i18n from '../../localization/i18n';
 import * as yup from 'yup';
 
 export const taskValidationSchema = yup.object().shape({

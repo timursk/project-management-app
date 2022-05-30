@@ -87,7 +87,7 @@ export default {
   column: {
     button: '+ Add another column',
     delete: 'Delete column',
-    add: 'Add?',
+    add: 'Add column',
   },
   task: {
     deleteTask: 'Delete task "{{title}}"',

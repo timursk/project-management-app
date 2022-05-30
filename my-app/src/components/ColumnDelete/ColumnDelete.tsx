@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ConfirmModal from '../modals/ConfirmModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 import columnsApi from '../../services/columnsService';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from '@mui/material';

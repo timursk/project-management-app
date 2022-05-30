@@ -91,7 +91,7 @@ const userReducer = createSlice({
       state.error = '';
     },
 
-    [initUser.rejected.type]: (state, action: PayloadAction<string>) => {
+    [initUser.rejected.type]: (state) => {
       state.name = '';
       state.login = '';
       state.id = '';

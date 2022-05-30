@@ -1,7 +1,19 @@
 import styled from '@emotion/styled';
-import { Card } from '@mui/material';
+import { Button } from '@mui/material';
 
-const StyledTaskWrapper = styled.div(() => ({
+export const StyledCentredButton = styled(Button)(() => ({
+  margin: '10px auto',
+  overflow: 'hidden',
+  maxWidth: '100%',
+  justifyContent: 'start',
+}));
+
+export const StyledTaskCardControlsWrapper = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'flex-end',
+}));
+
+export const StyledTaskWrapper = styled.div(() => ({
   color: 'rgba(0, 0, 0, 0.87)',
   transition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 0.3s',
   borderRadius: '4px',
@@ -23,5 +35,3 @@ const StyledTaskWrapper = styled.div(() => ({
     marginBottom: '0px',
   },
 }));
-
-export default StyledTaskWrapper;

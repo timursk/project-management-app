@@ -45,4 +45,6 @@ export const StyledBox = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
+  height: '50px',
+  marginBottom: '35px',
 });

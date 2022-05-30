@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Alert } from '@mui/material';
-import theme from '../../theme';
 
 const StyledAlert = styled(Alert)(() => ({
   position: 'fixed',

@@ -1,21 +1,20 @@
 import { FC, useEffect, useState } from 'react';
-import StyledTaskWrapper from './StyledTaskWrapper';
-import { Card, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShowIcon from '@mui/icons-material/Visibility';
 import HideIcon from '@mui/icons-material/VisibilityOff';
 
 import UserButton from './UserButton';
-import ConfirmModal from '../../modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
-import { ColumnTask } from '../../../types/store/storeTypes';
-import tasksApi from '../../../services/tasksService';
-import { getToken } from '../../../utils/utils';
-import StyledTaskCardControlsWrapper from './StyledTaskCardControlsWrapper';
+import { ColumnTask } from '../../types/store/storeTypes';
+import tasksApi from '../../services/tasksService';
+import { getToken } from '../../utils/utils';
 import EditTaskForm from './EditTaskForm';
 import { Draggable } from 'react-beautiful-dnd';
 import React from 'react';
+import { StyledTaskCardControlsWrapper, StyledTaskWrapper } from './styles';
+import ConfirmModal from '../Modals/ConfirmModal';
 
 interface TaskCardProps {
   boardId: string;
@@ -24,6 +23,11 @@ interface TaskCardProps {
   index: number;
   refetch: () => void;
 }
+
+const OverflowText = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+};
 
 const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }) => {
   const { t } = useTranslation();
@@ -53,11 +57,11 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }
     refetch();
   };
 
-  const handleEsc = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && isModalShown) toggleModal();
-  };
-
   useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isModalShown) toggleModal();
+    };
+
     document.addEventListener('keydown', handleEsc);
 
     return () => {
@@ -97,7 +101,13 @@ const TaskCard: FC<TaskCardProps> = ({ task, index, boardId, columnId, refetch }
               {task.title}
             </Typography>
 
-            <Typography variant="body2" component="div" sx={{ flexGrow: 1 }} noWrap={isCollapsed}>
+            <Typography
+              style={OverflowText}
+              variant="body2"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              noWrap={isCollapsed}
+            >
               {task.description}
             </Typography>
 

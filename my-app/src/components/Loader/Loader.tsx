@@ -1,6 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { FC } from 'react';
-import ErrorScreenWrapper from '../ErrorBoundary/ErrorScreenWrapper';
+import ErrorScreenWrapper from '../../containers/ErrorBoundary/ErrorScreenWrapper';
 
 const Loader: FC = () => (
   <ErrorScreenWrapper>
