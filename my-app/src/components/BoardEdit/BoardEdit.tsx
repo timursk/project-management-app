@@ -15,18 +15,17 @@ type Props = {
   type: string;
 };
 
+const validation = yup.object().shape({
+  title: yup.string().min(2, 'Min 2').max(40, 'Max 40').required('This field necessarily'),
+  description: yup.string().min(2, 'Min 2').max(40, 'Max 40').required('This field necessarily'),
+});
+
 const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
   const [updateBoard, {}] = boardsApi.useUpdateBoardMutation();
   const [createBoard, {}] = boardsApi.useCreateBoardMutation();
 
   const token = getToken();
-
   const { t } = useTranslation();
-
-  const validation = yup.object().shape({
-    title: yup.string().min(2, 'Min 2').max(40, 'Max 40').required('This field necessarily'),
-    description: yup.string().min(2, 'Min 2').max(40, 'Max 40').required('This field necessarily'),
-  });
 
   const { handleBlur, handleChange, handleSubmit, errors, values } = useFormik({
     initialValues: {
@@ -58,7 +57,8 @@ const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
         actionText={(type === 'create' && t('main.add')) || (type === 'update' && t('main.edit'))}
       >
         <StyledField
-          label={'Title'}
+          label={errors.title || 'Title'}
+          error={!!errors.title}
           fullWidth
           name="title"
           autoFocus
@@ -68,10 +68,11 @@ const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
           type="text"
           value={values.title}
         />
-        {errors.title && <StyledAlert severity="error">{errors.title}</StyledAlert>}
+
         <StyledField
+          label={errors.description || 'Description'}
+          error={!!errors.description}
           fullWidth
-          label={'Description'}
           name="description"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -79,7 +80,6 @@ const BoardEdit = ({ id, title, setIsEdit, description, type }: Props) => {
           type="text"
           value={values.description}
         />
-        {errors.description && <StyledAlert severity="error">{errors.description}</StyledAlert>}
       </ConfirmModal>
     </>
   );

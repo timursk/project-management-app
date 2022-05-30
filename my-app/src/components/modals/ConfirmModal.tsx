@@ -1,4 +1,4 @@
-import { Portal } from '@mui/material';
+import { Portal, Typography } from '@mui/material';
 import { FC, useCallback, useEffect } from 'react';
 import ModalButtons from './ModalButtons';
 import StyledModal from './StyledModal';
@@ -44,18 +44,10 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ onConfirm, onClose, actionText, c
           <StyledModalCloseButton onClick={onClose}>
             <CloseIcon color="primary" aria-label={t('modal.closeModal')} />
           </StyledModalCloseButton>
-          {children ? (
-            <>
-              <h3>{t<string>('modal.confirmHeader')}</h3>
-              <span>{actionText}</span>
-              {children}
-            </>
-          ) : (
-            <>
-              <h3>{t<string>('modal.confirmHeader')}</h3>
-              <span>{actionText}</span>
-            </>
-          )}
+          <>
+            <Typography variant="h6">{actionText}</Typography>
+            {children ? children : null}
+          </>
 
           <ModalButtons onConfirm={onConfirm} onDeny={onClose} />
         </StyledModal>
