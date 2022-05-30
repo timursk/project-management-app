@@ -6,7 +6,7 @@ import ShowIcon from '@mui/icons-material/Visibility';
 import HideIcon from '@mui/icons-material/VisibilityOff';
 
 import UserButton from './UserButton';
-import ConfirmModal from '../Modals/ConfirmModal';
+// import ConfirmModal from '../Modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 import { ColumnTask } from '../../types/store/storeTypes';
 import tasksApi from '../../services/tasksService';
@@ -15,6 +15,7 @@ import EditTaskForm from './EditTaskForm';
 import { Draggable } from 'react-beautiful-dnd';
 import React from 'react';
 import { StyledTaskCardControlsWrapper, StyledTaskWrapper } from './styles';
+import ConfirmModal from '../Modals/ConfirmModal';
 
 interface TaskCardProps {
   boardId: string;
