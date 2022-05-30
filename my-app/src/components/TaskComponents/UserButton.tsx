@@ -13,6 +13,11 @@ import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../store/reducers/actionCreators';
 import { ErrorObject } from '../../../types/api/tasksApiTypes';
 import ErrorMessage from '../../ErrorMessge/ErrorMessage';
+import { ListItemIcon } from '@mui/material';
+import { StyledCentredButton } from './styles';
+import usersApi from '../../services/usersService';
+import { getToken } from '../../utils/utils';
+import Loader from '../Loader/Loader';
 
 interface UserButtonProps {
   userId: string;

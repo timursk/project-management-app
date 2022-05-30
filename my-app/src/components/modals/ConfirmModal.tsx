@@ -3,7 +3,7 @@ import { FC, useCallback, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import ModalButtons from './ModalButtons';
-import { StyledOverlay, StyledModal, StyledModalCloseButton } from './styles.tsx';
+import { StyledOverlay, StyledModal, StyledModalCloseButton } from './styles';
 
 const OVERLAY_NAME = 'modal-overlay';
 

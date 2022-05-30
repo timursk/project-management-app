@@ -2,16 +2,13 @@ import { FC, useCallback } from 'react';
 import { Button, Alert } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import StyledField from '../../common/StyledField';
-import StyledForm from '../../common/StyledForm';
-import Portal from '../../Modals/Portal';
-import StyledModal from '../../Modals/StyledModal';
-import StyledModalCloseButton from '../../Modals/StyledModalCloseButton';
-import StyledOverlay from '../../Modals/StyledOverlay';
+import StyledField from '../common/StyledField';
+import StyledForm from '../common/StyledForm';
+import Portal from '../Modals/Portal';
 import { taskValidationSchema } from './validation-schema';
 import CloseIcon from '@mui/icons-material/Close';
-import tasksApi from '../../../services/tasksService';
-import { getToken } from '../../../utils/utils';
+import tasksApi from '../../services/tasksService';
+import { getToken } from '../../utils/utils';
 import UserButton from './UserButton';
 
 import { ColumnTask } from '../../../types/store/storeTypes';
@@ -20,6 +17,8 @@ import { useAppDispatch } from '../../../store/hooks';
 import { logoutUser } from '../../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../ErrorMessge/ErrorMessage';
+import { ColumnTask } from '../../types/store/storeTypes';
+import { StyledOverlay, StyledModal, StyledModalCloseButton } from '../Modals/styles';
 
 const OVERLAY_NAME = 'modal-overlay';
 

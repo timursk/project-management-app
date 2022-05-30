@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import StyledTaskWrapper from './StyledTaskWrapper';
 import { Card, IconButton, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,15 +6,15 @@ import ShowIcon from '@mui/icons-material/Visibility';
 import HideIcon from '@mui/icons-material/VisibilityOff';
 
 import UserButton from './UserButton';
-import ConfirmModal from '../../Modals/ConfirmModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
-import { ColumnTask } from '../../../types/store/storeTypes';
-import tasksApi from '../../../services/tasksService';
-import { getToken } from '../../../utils/utils';
-import StyledTaskCardControlsWrapper from './StyledTaskCardControlsWrapper';
+import { ColumnTask } from '../../types/store/storeTypes';
+import tasksApi from '../../services/tasksService';
+import { getToken } from '../../utils/utils';
 import EditTaskForm from './EditTaskForm';
 import { Draggable } from 'react-beautiful-dnd';
 import React from 'react';
+import { StyledTaskCardControlsWrapper, StyledTaskWrapper } from './styles';
 
 interface TaskCardProps {
   boardId: string;
