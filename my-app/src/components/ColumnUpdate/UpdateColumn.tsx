@@ -1,11 +1,12 @@
-import { Button, Stack } from '@mui/material';
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import { Button, Grid, Stack } from '@mui/material';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import columnsApi from '../../services/columnsService';
 import { StyledField } from '../ColumnComponent/style';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { getToken } from '../../utils/utils';
 import { ColumnResult } from '../../types/api/columnsApiTypes';
+import IconButton from '@mui/material/IconButton';
 
 interface UpdateColumnProps {
   boardId: string;
@@ -28,6 +29,7 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
 }) => {
   const token = getToken();
 
+  const [value, setValue] = useState(textValue);
   const [updateColumn, {}] = columnsApi.useUpdateColumnMutation();
 
   const handleUpdate = async () => {
@@ -35,15 +37,29 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
       token,
       boardId,
       columnId: currentId,
-      title: textValue,
+      title: value,
       order: column.order,
     });
     refetch();
+    handlerSetText(value);
     handlerSetEdit(false);
   };
 
   return (
     <>
+      <StyledField
+        value={value}
+        autoFocus
+        onChange={(e) => setValue(e.target.value)}
+        inputProps={{
+          style: {
+            fontWeight: '500',
+            border: 'none',
+            background: 'white',
+          },
+        }}
+      />
+
       <Stack>
         <Button onClick={() => handlerSetEdit(false)} variant="outlined">
           <ClearSharpIcon />
@@ -52,19 +68,6 @@ const UpdateColumn: FC<UpdateColumnProps> = ({
           <CheckSharpIcon />
         </Button>
       </Stack>
-
-      <StyledField
-        value={textValue}
-        autoFocus
-        onChange={(e) => handlerSetText(e.target.value)}
-        inputProps={{
-          style: {
-            fontSize: '1.5rem',
-            border: 'none',
-            background: 'white',
-          },
-        }}
-      ></StyledField>
     </>
   );
 };

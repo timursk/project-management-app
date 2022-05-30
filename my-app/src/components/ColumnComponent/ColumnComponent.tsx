@@ -50,7 +50,7 @@ const ColumnComponent: FC<ColumnProps> = ({ boardId, column, index, tasks, refet
               />
             ) : (
               <StyledTitle
-                variant="h5"
+                variant="h6"
                 onClick={() => {
                   setEdit(true);
                 }}
