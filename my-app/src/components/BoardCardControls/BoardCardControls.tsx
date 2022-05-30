@@ -1,4 +1,4 @@
-import { Tooltip, Zoom, IconButton, Alert } from '@mui/material';
+import { Tooltip, Zoom, IconButton } from '@mui/material';
 import React, { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ClearIcon from '@mui/icons-material/Clear';

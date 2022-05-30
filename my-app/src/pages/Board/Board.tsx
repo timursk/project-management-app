@@ -1,6 +1,4 @@
-import { Grid } from '@mui/material';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ColumnAdd from '../../components/ColumnAdd/ColumnAdd';
 import { StyledBox, StyledGrid } from './style';
 import { getToken } from '../../utils/utils';
@@ -46,7 +44,7 @@ const Board = () => {
 
   useEffect(() => {
     if (!token) navigate('/welcome');
-  }, [token]);
+  }, [navigate, token]);
 
   return (
     <TokenWrapper>

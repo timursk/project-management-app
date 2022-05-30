@@ -22,7 +22,6 @@ const BoardRouteFix = {
 function App() {
   const dispatch = useAppDispatch();
   const token = getToken();
-  const { login } = useAppSelector((store) => store.userReducer);
   const { pathname } = useLocation();
   const isBoard = pathname.match(/board/i);
 

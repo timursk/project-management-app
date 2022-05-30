@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { Button, Alert } from '@mui/material';
+import { Button } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import StyledField from '../common/StyledField';
@@ -10,15 +10,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import tasksApi from '../../services/tasksService';
 import { getToken } from '../../utils/utils';
 import UserButton from './UserButton';
-
-import { ColumnTask } from '../../../types/store/storeTypes';
-import { ErrorObject } from '../../../types/api/tasksApiTypes';
-import { useAppDispatch } from '../../../store/hooks';
-import { logoutUser } from '../../../store/reducers/actionCreators';
 import { useNavigate } from 'react-router-dom';
-import ErrorMessage from '../../ErrorMessge/ErrorMessage';
+import { useAppDispatch } from '../../store/hooks';
+import { logoutUser } from '../../store/reducers/actionCreators';
+import { ErrorObject } from '../../types/api/tasksApiTypes';
 import { ColumnTask } from '../../types/store/storeTypes';
 import { StyledOverlay, StyledModal, StyledModalCloseButton } from '../Modals/styles';
+import ErrorMessage from '../ErrorMessge/ErrorMessage';
 
 const OVERLAY_NAME = 'modal-overlay';
 

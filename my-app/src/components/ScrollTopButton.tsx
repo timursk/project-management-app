@@ -13,7 +13,7 @@ const ScrollTopButton: FC<ScrollTopButtonProps> = ({ children }) => {
     threshold: 200,
   });
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = () => {
     window.scroll({
       top: 0,
       behavior: 'smooth',

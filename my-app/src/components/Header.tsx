@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React, { FC, useMemo, useState } from 'react';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   AppBar,
   Button,

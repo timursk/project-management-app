@@ -2,21 +2,17 @@ import { FC, useState, useCallback, useEffect } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PersonIcon from '@mui/icons-material/Person';
-import { ListItemIcon, Typography } from '@mui/material';
-import usersApi from '../../../services/usersService';
-import Loader from '../../Loader/Loader';
-import { getToken } from '../../../utils/utils';
-import StyledCentredButton from './StyledCentredButton';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../../../store/reducers/actionCreators';
-import { ErrorObject } from '../../../types/api/tasksApiTypes';
-import ErrorMessage from '../../ErrorMessge/ErrorMessage';
-import { ListItemIcon } from '@mui/material';
-import { StyledCentredButton } from './styles';
+import { Typography, ListItemIcon } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import usersApi from '../../services/usersService';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logoutUser } from '../../store/reducers/actionCreators';
+import { ErrorObject } from '../../types/api/tasksApiTypes';
 import { getToken } from '../../utils/utils';
 import Loader from '../Loader/Loader';
+import { StyledCentredButton } from './styles';
+import ErrorMessage from '../ErrorMessge/ErrorMessage';
 
 interface UserButtonProps {
   userId: string;
@@ -27,13 +23,12 @@ const UserButton: FC<UserButtonProps> = ({ userId, onSetUser }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const token = getToken();
 
   const { login, name } = useAppSelector((state) => state.userReducer);
 
   const [isNoUser, setIsNoUser] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string>(userId);
-  const [selectedId, setSelectedId] = useState(userId);
-  const token = getToken();
 
   const {
     currentData: user,
