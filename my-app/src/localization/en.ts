@@ -6,6 +6,7 @@ export default {
     goBack: 'Back',
     create: 'Add board',
     goMain: 'Go to Main Page',
+    goMainCut: 'Main',
   },
   main: {
     header: 'Boards',
