@@ -1,6 +1,6 @@
 export default {
   header: {
-    title: 'Final task!',
+    title: 'PMA',
     registration: 'Sign up',
     login: 'Sign in',
     goBack: 'Back',

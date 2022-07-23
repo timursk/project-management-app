@@ -1,6 +1,7 @@
+import MenuItem from '@mui/material/MenuItem';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import StyledLanguageSwitch from './StyledLanguageSwitch';
+import StyledSelect from './StyledSelect';
 
 const LanguageToggle: FC = () => {
   const { i18n } = useTranslation();
@@ -11,7 +12,12 @@ const LanguageToggle: FC = () => {
     changeLanguage();
   };
 
-  return <StyledLanguageSwitch checked={i18n.language === 'en'} onChange={handleChange} />;
+  return (
+    <StyledSelect value={i18n.language} onChange={handleChange} displayEmpty>
+      <MenuItem value="en">EN</MenuItem>
+      <MenuItem value="ru">RU</MenuItem>
+    </StyledSelect>
+  );
 };
 
 export default LanguageToggle;
