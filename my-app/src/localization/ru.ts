@@ -72,6 +72,7 @@ export default {
     createUser: 'Создать пользователя',
     deleteConfirmation: 'Удалить пользователя "{{login}}"',
     logoutConfirmation: 'Выйти из учетной записи "{{login}}"',
+    guestLogin: 'Войти как гость',
   },
   userMenu: {
     logout: 'Выйти',

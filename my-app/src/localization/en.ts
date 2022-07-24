@@ -72,6 +72,7 @@ export default {
     createUser: 'Create user',
     deleteConfirmation: 'Delete user "{{login}}"',
     logoutConfirmation: 'Logout user "{{login}}"',
+    guestLogin: 'Enter as a guest',
   },
   userMenu: {
     logout: 'Logout',

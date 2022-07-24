@@ -55,6 +55,15 @@ const LoginForm: FC = () => {
     return t('userForms.unknownError');
   }, [error, isLoading, t]);
 
+  const handleQuestLogin = () => {
+    const guest = {
+      login: 'guest',
+      password: 'guest1234',
+    };
+    dispatch(saveInfo({ login: guest.login, name: '' }));
+    dispatch(loginUser(guest));
+  };
+
   useEffect(() => {
     dispatch(resetLoading());
     if (token) navigate('/');
@@ -96,6 +105,9 @@ const LoginForm: FC = () => {
       </Button>
       <Button variant="contained" type="submit" disabled={!isValid}>
         {t('userForms.enter')}
+      </Button>
+      <Button variant="text" color="info" onClick={handleQuestLogin}>
+        {t('userForms.guestLogin')}
       </Button>
     </StyledForm>
   );
