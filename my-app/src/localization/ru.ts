@@ -11,6 +11,7 @@ export default {
   main: {
     header: 'Доски',
     add: 'Добавить доску',
+    delete: 'Удалить',
     search: 'Поиск',
     edit: 'Редактировать доску',
     deleteConfirmation: 'Удалить доску?',
