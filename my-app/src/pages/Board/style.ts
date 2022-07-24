@@ -11,4 +11,8 @@ export const StyledGrid = styled(Grid)({
   height: '100%',
   margin: '0',
   padding: '15px 0',
+
+  '@media (max-width: 970px)': {
+    overflow: 'auto',
+  },
 });
