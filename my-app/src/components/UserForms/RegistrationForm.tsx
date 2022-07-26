@@ -2,7 +2,7 @@ import { Button, Switch } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { signupUser } from '../../store/reducers/actionCreators';
 import { resetLoading } from '../../store/reducers/userSlice';
@@ -11,11 +11,13 @@ import StyledForm from '../common/StyledForm';
 import { registrationValidationSchema } from './validation-schemas';
 import { getToken } from '../../utils/utils';
 import { CentredSwitchLabel, FormErrorMessage } from './styles';
+import { LocationRegistrationState } from './types';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const locationState = useLocation().state as LocationRegistrationState;
 
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
 
@@ -27,7 +29,7 @@ const RegistrationForm = () => {
   const { errors, values, isValid, handleSubmit, handleReset, handleBlur, handleChange, touched } =
     useFormik({
       initialValues: {
-        login: login || '',
+        login: login || locationState?.email || '',
         name: '',
         password: '',
         passwordConfirmation: '',
