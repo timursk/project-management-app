@@ -11,6 +11,7 @@ import StyledField from '../common/StyledField';
 import StyledForm from '../common/StyledForm';
 import { CentredSwitchLabel, FormErrorMessage } from './styles';
 import { loginValidationSchema } from './validation-schemas';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -103,9 +104,9 @@ const LoginForm: FC = () => {
       <Button variant="text" type="reset">
         {t('userForms.reset')}
       </Button>
-      <Button variant="contained" type="submit" disabled={!isValid}>
+      <LoadingButton loading={isLoading} variant="contained" type="submit" disabled={!isValid}>
         {t('userForms.enter')}
-      </Button>
+      </LoadingButton>
       <Button variant="text" color="info" onClick={handleQuestLogin}>
         {t('userForms.guestLogin')}
       </Button>
