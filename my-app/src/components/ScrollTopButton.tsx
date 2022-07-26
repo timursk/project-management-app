@@ -25,7 +25,7 @@ const ScrollTopButton: FC<ScrollTopButtonProps> = ({ children }) => {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: 'fixed', bottom: 70, right: 16 }}
+        sx={{ position: 'fixed', bottom: 70, right: 16, zIndex: '100' }}
       >
         {children}
       </Box>
