@@ -1,11 +1,12 @@
 export default {
   header: {
-    title: 'Final task!',
+    title: 'PMA',
     registration: 'Sign up',
     login: 'Sign in',
     goBack: 'Back',
     create: 'Add board',
     goMain: 'Go to Main Page',
+    goMainCut: 'Main',
   },
   main: {
     header: 'Boards',
@@ -26,7 +27,7 @@ export default {
     header: 'Trello-clone helps teams move work forward.',
     main: `Collaborate, manage projects, and reach new productivity peaks. From high rises to the home office, the way your team works is unique—accomplish it all with Trello-clone.`,
     button: {
-      registration: `Sign up-it's free!`,
+      registration: `Sign up`,
     },
     about: {
       team: {
@@ -36,7 +37,7 @@ export default {
       },
       alice: 'authorization and user menu, task card, modal confirmation window',
       dmitriy: 'Header component, footer, board page, collumns, welcome page, routing',
-      timur: "Application structure, drag'n'drop, main page with boards",
+      timur: "Teamlead, application structure, drag'n'drop, main page with boards",
     },
   },
   notFound: {
@@ -71,6 +72,7 @@ export default {
     createUser: 'Create user',
     deleteConfirmation: 'Delete user "{{login}}"',
     logoutConfirmation: 'Logout user "{{login}}"',
+    guestLogin: 'Enter as a guest',
   },
   userMenu: {
     logout: 'Logout',

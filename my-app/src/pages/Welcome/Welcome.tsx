@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import CardDevelop from '../../components/CardDevelop/CardDevelop';
-import { StyledForm, StyledGridItem, StyledImg, StyledTextField } from './style';
+import { StyledButton, StyledGridItem, StyledImg, StyledStack, StyledTextField } from './style';
 import welcomeHero from '../../assets/images/welcomeHero.png';
 
 const Welcome: FC = () => {
@@ -18,7 +18,7 @@ const Welcome: FC = () => {
   };
   return (
     <Container>
-      <Grid container height={760} alignItems={'center'}>
+      <Grid container height={matches ? 500 : 760} alignItems={'center'}>
         <Grid item xs={matches ? 12 : 8}>
           <Typography variant={!matches ? 'h3' : 'h4'} component={'h3'}>
             {t('welcome.header')}
@@ -26,14 +26,14 @@ const Welcome: FC = () => {
           <Typography mt={3} mb={3} variant={!matches ? 'subtitle1' : 'subtitle2'} component={'p'}>
             {t('welcome.main')}
           </Typography>
-          <StyledForm>
+          <StyledStack direction="row" spacing={0.5}>
             <StyledTextField
               label="Email"
               variant="outlined"
               value={email}
               onChange={(event) => handlerEmail(event)}
             />
-            <Button
+            <StyledButton
               onClick={() => navigate('/registration', { state: { email } })}
               variant="contained"
               color="primary"
@@ -41,8 +41,8 @@ const Welcome: FC = () => {
               <Typography variant="button" component={'span'}>
                 {t('welcome.button.registration')}
               </Typography>
-            </Button>
-          </StyledForm>
+            </StyledButton>
+          </StyledStack>
         </Grid>
 
         {!matches && (

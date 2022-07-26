@@ -1,5 +1,4 @@
-// export const API_URL = 'http://82.146.49.187:4000';
-export const API_URL = 'https://komalapa.ru';
+export const API_URL = 'https://pacific-waters-10193.herokuapp.com';
 
 export const ENDPOINTS = {
   USERS: '/users',

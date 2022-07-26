@@ -1,15 +1,17 @@
 export default {
   header: {
-    title: 'Final task!',
+    title: 'PMA',
     registration: 'Регистрация',
     login: 'Вход',
     goBack: 'Назад',
     create: 'Добавить доску',
     goMain: 'Перейти на главную страницу',
+    goMainCut: 'Главная',
   },
   main: {
     header: 'Доски',
     add: 'Добавить доску',
+    delete: 'Удалить',
     search: 'Поиск',
     edit: 'Редактировать доску',
     deleteConfirmation: 'Удалить доску?',
@@ -35,7 +37,7 @@ export default {
       },
       alice: 'Авторизация и меню пользователя, карточка задачи, модальное окно подтверждения',
       dmitriy: 'Компонент заголовка, футера, страница доски страница приветствия, роутинг',
-      timur: "Структура приложения, drag'n'drop, главная страница с досками",
+      timur: "Тимлид, структура приложения, drag'n'drop, главная страница с досками",
     },
   },
   notFound: {
@@ -70,6 +72,7 @@ export default {
     createUser: 'Создать пользователя',
     deleteConfirmation: 'Удалить пользователя "{{login}}"',
     logoutConfirmation: 'Выйти из учетной записи "{{login}}"',
+    guestLogin: 'Войти как гость',
   },
   userMenu: {
     logout: 'Выйти',

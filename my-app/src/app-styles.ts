@@ -12,4 +12,5 @@ export const StyledBox = styled(Box)`
 export const StyledContainer = styled(Container)`
   display: flex;
   flex-direction: column;
+  width: 100vw;
 `;
